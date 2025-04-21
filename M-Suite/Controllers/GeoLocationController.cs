@@ -51,7 +51,7 @@ namespace M_Suite.Controllers
 
         // POST: GeoLocation/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GlId,GlCdIdGeo,GlGlId,GlLevel,GlCode,GlDescriptionLan1,GlDescriptionLan2,GlDescriptionLan3")] GeoLocation geoLocation)
