@@ -2,64 +2,103 @@
 
 @{
     ViewData["Title"] = "Delete";
+    var geoTypes = new Dictionary<short, string>
+    {
+        { 1, "AREA" },
+        { 2, "Country" },
+        { 3, "Region" },
+        { 4, "City" }
+    };
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/site.css" />
 }
 <div class="profile-content">
-        <div class="profile-header">
-            <h2>GeoLocation Delete</h2>
+    <div class="profile-header">
+        <h2>Delete GeoLocation</h2>
+    </div>
+
+    <div class="profile-details">
+        <div class="profile-section">
+            <h3 class="text-danger">Are you sure you want to delete this location?</h3>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.GlCode)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.GlCode)
+                </dd>
+
+                <dt class="col-sm-2">
+                    Type
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.GlCdIdGeo.HasValue && geoTypes.ContainsKey((short)Model.GlCdIdGeo.Value))
+                    {
+                        <span class="badge bg-info">@geoTypes[(short)Model.GlCdIdGeo.Value]</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Not Set</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-2">
+                    Parent Location
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.GlGlId.HasValue)
+                    {
+                        var parent = ViewBag.ParentLocation as M_Suite.Models.GeoLocation;
+                        if (parent != null)
+                        {
+                            <span>@parent.GlCode - @parent.GlDescriptionLan1</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Parent not found</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-muted">Root</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.GlDescriptionLan1)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.GlDescriptionLan1)
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.GlDescriptionLan2)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.GlDescriptionLan2)
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.GlDescriptionLan3)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.GlDescriptionLan3)
+                </dd>
+            </dl>
         </div>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlCdIdGeo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlCdIdGeo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlGlId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlGlId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlLevel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlLevel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlDescriptionLan1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlDescriptionLan1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlDescriptionLan2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlDescriptionLan2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlDescriptionLan3)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlDescriptionLan3)
-        </dd>
-    </dl>
-    
+    </div>
+</div>
+
+<div class="mt-4">
     <form asp-action="Delete">
         <input type="hidden" asp-for="GlId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash"></i> Delete
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
     </form>
-</div>
 </div>

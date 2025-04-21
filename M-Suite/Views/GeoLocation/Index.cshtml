@@ -1,98 +1,114 @@
 ﻿@model IEnumerable<M_Suite.Models.GeoLocation>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Geographic Locations";
+    var geoTypes = new Dictionary<short, string>
+    {
+        { 1, "AREA" },
+        { 2, "Country" },
+        { 3, "Region" },
+        { 4, "City" }
+    };
 }
-@section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
-}
-<div class="profile-content">
-    <div class="profile-header">
-        <div class="button-container">
-            <a asp-action="Create" class="new-button">
-                New
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="text-primary">Geographic Locations</h2>
+            <p class="text-muted">Manage your geographic locations and their hierarchy</p>
+        </div>
+        <div class="col-auto">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> New Location
             </a>
         </div>
     </div>
 
-<div class="table-container">
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.GlCdIdGeo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GlGlId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GlLevel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GlCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GlDescriptionLan1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GlDescriptionLan2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GlDescriptionLan3)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GlCdIdGeo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GlGlId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GlLevel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GlCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GlDescriptionLan1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GlDescriptionLan2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GlDescriptionLan3)
-            </td>
-             <td>
-                            <a asp-action="Edit" asp-route-id="@item.GlId">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                    <path d="M 19.171875 2 C 18.448125 2 17.724375 2.275625 17.171875 2.828125 L 16 4 L 20 8 L 21.171875 6.828125 C 22.275875 5.724125 22.275875 3.933125 21.171875 2.828125 C 20.619375 2.275625 19.895625 2 19.171875 2 z M 14.5 5.5 L 3 17 L 3 21 L 7 21 L 18.5 9.5 L 14.5 5.5 z"></path>
-                                </svg>
-                            </a>
-                            <a asp-action="Details" asp-route-id="@item.GlId">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
-                                    <path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 25 11 A 3 3 0 0 0 22 14 A 3 3 0 0 0 25 17 A 3 3 0 0 0 28 14 A 3 3 0 0 0 25 11 z M 21 21 L 21 23 L 22 23 L 23 23 L 23 36 L 22 36 L 21 36 L 21 38 L 22 38 L 23 38 L 27 38 L 28 38 L 29 38 L 29 36 L 28 36 L 27 36 L 27 21 L 26 21 L 22 21 L 21 21 z"></path>
-                                </svg>
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@item.GlId">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 30 30">
-                                    <path d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"></path>
-                                </svg>
-                            </a>
-                        </td>
-                    
-        </tr>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.GlCode)</th>
+                            <th>@Html.DisplayNameFor(model => model.GlDescriptionLan1)</th>
+                            <th>Type</th>
+                            <th>Parent Location</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.GlCode)</td>
+                                <td>@Html.DisplayFor(modelItem => item.GlDescriptionLan1)</td>
+                                <td>
+                                    @if (item.GlCdIdGeo.HasValue && geoTypes.ContainsKey((short)item.GlCdIdGeo.Value))
+                                    {
+                                        <span class="badge bg-info">@geoTypes[(short)item.GlCdIdGeo.Value]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Not Set</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.GlGlId.HasValue)
+                                    {
+                                        var parent = Model.FirstOrDefault(p => p.GlId == item.GlGlId);
+                                        if (parent != null)
+                                        {
+                                            <span>@parent.GlCode - @parent.GlDescriptionLan1</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Parent not found</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Root</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.GlId" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.GlId" class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.GlId" class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        .table th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        .badge {
+            font-weight: 500;
+            padding: 0.35em 0.65em;
+        }
+        .btn-group .btn {
+            padding: 0.25rem 0.5rem;
+        }
+    </style>
 }
-    </tbody>
-</table>
-</div>
-</div>
 

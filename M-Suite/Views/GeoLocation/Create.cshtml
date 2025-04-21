@@ -2,7 +2,16 @@
 
 @{
     ViewData["Title"] = "Create";
+    var geoTypes = new List<SelectListItem>
+    {
+
+        new SelectListItem { Value = "1", Text = "AREA" },
+        new SelectListItem { Value = "2", Text = "Country" },
+        new SelectListItem { Value = "3", Text = "Region" },
+        new SelectListItem { Value = "4", Text = "City" }
+    };
 }
+
 @section Styles {
     <link rel="stylesheet" href="~/css/site.css" />
 }
@@ -25,23 +34,24 @@
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="GlGlId" class="control-label">
+                            <label asp-for="GlCdIdGeo" class="control-label">
                                 <span class="color-indicator color-red"></span>Type
                             </label>
-                            <select @*asp-for=""*@ class="form-control" />
-                            <span @*asp-validation-for=""*@ class="text-danger"></span>
+                            <select asp-for="GlCdIdGeo" asp-items="geoTypes" class="form-control">
+                                <option value="">-- Select Type --</option>
                             </select>
+                            <span asp-validation-for="GlCdIdGeo" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="GlLevel" class="control-label">
-                                <span class="color-indicator color-green"></span>Parent
+                            <label asp-for="GlGlId" class="control-label">
+                                <span class="color-indicator color-green"></span>Parent Location
                             </label>
-                            <select @*asp-for=""*@ class="form-control" />
-                            <span @*asp-validation-for=""*@ class="text-danger"></span>
+                            <select asp-for="GlGlId" class="form-control" asp-items="ViewBag.ParentLocations">
+                                <option value="">-- Select Parent --</option>
                             </select>
+                            <span asp-validation-for="GlGlId" class="text-danger"></span>
                         </div>
-
 
                         <div class="form-group">
                             <label asp-for="GlDescriptionLan1" class="control-label">

@@ -2,66 +2,94 @@
 
 @{
     ViewData["Title"] = "Details";
+    var geoTypes = new Dictionary<short, string>
+    {
+        { 1, "AREA" },
+        { 2, "Country" },
+        { 3, "Region" },
+        { 4, "City" }
+    };
 }
+
 @section Styles {
     <link rel="stylesheet" href="~/css/site.css" />
 }
 <div class="profile-content">
     <div class="profile-header">
         <h2>GeoLocation Details</h2>
-            </div>
+    </div>
 
     <div class="profile-details">
         <div class="profile-section">
             <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlCdIdGeo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlCdIdGeo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlGlId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlGlId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlLevel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlLevel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlDescriptionLan1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlDescriptionLan1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlDescriptionLan2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlDescriptionLan2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GlDescriptionLan3)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GlDescriptionLan3)
-        </dd>
-    </dl>
-</div>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.GlCode)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.GlCode)
+                </dd>
+
+                <dt class="col-sm-2">
+                    Type
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.GlCdIdGeo.HasValue && geoTypes.ContainsKey((short)Model.GlCdIdGeo.Value))
+                    {
+                        <span class="badge bg-info">@geoTypes[(short)Model.GlCdIdGeo.Value]</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Not Set</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-2">
+                    Parent Location
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.GlGlId.HasValue)
+                    {
+                        var parent = ViewBag.ParentLocation as M_Suite.Models.GeoLocation;
+                        if (parent != null)
+                        {
+                            <span>@parent.GlCode - @parent.GlDescriptionLan1</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Parent not found</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-muted">Root</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.GlDescriptionLan1)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.GlDescriptionLan1)
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.GlDescriptionLan2)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.GlDescriptionLan2)
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.GlDescriptionLan3)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.GlDescriptionLan3)
+                </dd>
+            </dl>
+        </div>
     </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.GlId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <a asp-action="Edit" asp-route-id="@Model?.GlId" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

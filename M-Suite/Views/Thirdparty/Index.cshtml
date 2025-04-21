@@ -1,161 +1,84 @@
 ﻿@model IEnumerable<M_Suite.Models.Thirdparty>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Third Parties";
 }
 
-<h1>Index</h1>
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col">
+            <h1>Third Parties</h1>
+        </div>
+        <div class="col text-end">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New
+            </a>
+        </div>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpOrgId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpNameLan1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpNameLan2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpNameLan3)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpIsCustomer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpIsSupplier)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpIsCompany)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpCreateDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpModifiedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpImpUid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpRemarks)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpImported)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpReadonly)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpUsIdCreated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpNewcode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpPrintLang)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpPrintarabic)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpIsB2b)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpCdIdTpgNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThpCdIdTpsNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpOrgId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpNameLan1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpNameLan2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpNameLan3)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpIsCustomer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpIsSupplier)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpIsCompany)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpCreateDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpModifiedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpImpUid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpRemarks)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpImported)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpReadonly)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpUsIdCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpNewcode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpPrintLang)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpPrintarabic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpIsB2b)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpCdIdTpgNavigation.CdId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThpCdIdTpsNavigation.CdId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ThpId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ThpId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ThpId">Delete</a>
-            </td>
-        </tr>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.ThpCode)</th>
+                    <th>@Html.DisplayNameFor(model => model.ThpNameLan1)</th>
+                    <th>Type</th>
+                    <th>@Html.DisplayNameFor(model => model.ThpActive)</th>
+                    <th>@Html.DisplayNameFor(model => model.ThpCreateDate)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ThpCode)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ThpNameLan1)</td>
+                        <td>
+                            @if (item.ThpIsCustomer==1)
+                            {
+                                <span class="badge bg-primary">Customer</span>
+                            }
+                            @if (item.ThpIsSupplier==1)
+                            {
+                                <span class="badge bg-success">Supplier</span>
+                            }
+                            @if (item.ThpIsCompany==1)
+                            {
+                                <span class="badge bg-info">Company</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.ThpActive==1)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Inactive</span>
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.ThpCreateDate)</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-route-id="@item.ThpId" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.ThpId" class="btn btn-sm btn-outline-info">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.ThpId" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-    </tbody>
-</table>

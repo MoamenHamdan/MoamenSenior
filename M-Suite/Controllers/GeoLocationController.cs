@@ -40,12 +40,30 @@ namespace M_Suite.Controllers
                 return NotFound();
             }
 
+            // Get parent location if exists
+            if (geoLocation.GlGlId.HasValue)
+            {
+                var parentLocation = await _context.GeoLocations
+                    .FirstOrDefaultAsync(p => p.GlId == geoLocation.GlGlId);
+                ViewBag.ParentLocation = parentLocation;
+            }
+
             return View(geoLocation);
         }
 
         // GET: GeoLocation/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            // Get all existing geolocations for the parent dropdown
+            var parentLocations = await _context.GeoLocations
+                .Select(g => new SelectListItem
+                {
+                    Value = g.GlId.ToString(),
+                    Text = $"{g.GlCode} - {g.GlDescriptionLan1}"
+                })
+                .ToListAsync();
+
+            ViewBag.ParentLocations = parentLocations;
             return View();
         }
 
@@ -78,6 +96,18 @@ namespace M_Suite.Controllers
             {
                 return NotFound();
             }
+
+            // Get all existing geolocations for the parent dropdown, excluding the current one
+            var parentLocations = await _context.GeoLocations
+                .Where(g => g.GlId != id) // Exclude current location from parent options
+                .Select(g => new SelectListItem
+                {
+                    Value = g.GlId.ToString(),
+                    Text = $"{g.GlCode} - {g.GlDescriptionLan1}"
+                })
+                .ToListAsync();
+
+            ViewBag.ParentLocations = parentLocations;
             return View(geoLocation);
         }
 
@@ -129,6 +159,14 @@ namespace M_Suite.Controllers
             if (geoLocation == null)
             {
                 return NotFound();
+            }
+
+            // Get parent location if exists
+            if (geoLocation.GlGlId.HasValue)
+            {
+                var parentLocation = await _context.GeoLocations
+                    .FirstOrDefaultAsync(p => p.GlId == geoLocation.GlGlId);
+                ViewBag.ParentLocation = parentLocation;
             }
 
             return View(geoLocation);
