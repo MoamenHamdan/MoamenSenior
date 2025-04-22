@@ -1,168 +1,215 @@
 @model M_Suite.Models.Item
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Item";
 }
-@section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
-}
- <div class="profile-content">
-                    <div class="tabs">
-                        <div class="tab active" data-tab="general-info">General Info</div>
-                        <div class="tab" data-tab="item-properties">Item Properties</div>
-                        <div class="tab" data-tab="uom">UOM</div>
-                    </div>
-                    
-                    <div class="tab-content active" id="general-info">
-                        <div class="form-row">
-                            <div class="form-field">
-                                <div class="form-group">
-                                    <label asp-for="ItCode"><span class="color-indicator color-red"></span>Code</label>
-                                    <input asp-for="ItCode" class="form-control">
-                                    <span asp-validation-for="ItCode" class="text-danger"></span>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label asp-for="ItCdIdIgp"><span class="color-indicator color-red"></span>Item Group</label>
-                                    <input asp-for="ItCdIdIgp" class="form-control">
-                                    <span asp-validation-for="ItCdIdIgp" class="text-danger"></span>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label asp-for="ItWeight"><span class="color-indicator color-green"></span>Weight</label>
-                                    <input asp-for="ItWeight" class="form-control">
-                                    <span asp-validation-for="ItWeight" class="text-danger"></span>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label asp-for="ItDescriptionLan1"><span class="color-indicator color-red"></span>Description AR</label>
-                                    <input asp-for="ItDescriptionLan1" class="form-control">
-                                    <span asp-validation-for="ItDescriptionLan1" class="text-danger"></span>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label asp-for="ItDescriptionLan2"><span class="color-indicator color-red"></span>Description EN</label>
-                                    <input asp-for="ItDescriptionLan2" class="form-control">
-                                    <span asp-validation-for="ItDescriptionLan2" class="text-danger"></span>
-                                </div>
 
-                                <div class="form-group">
-                                    <label asp-for="ItDescriptionLan3"><span class="color-indicator color-red"></span>Description FR</label>
-                                    <input asp-for="ItDescriptionLan3" class="form-control">
-                                    <span asp-validation-for="ItDescriptionLan3" class="text-danger"></span>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label><span class="color-indicator color-red"></span>Base Unit</label>
-                                    <input type="text">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label><span class="color-indicator color-green"></span>Barcode</label>
-                                    <input type="text">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label><span class="color-indicator color-red"></span>Business Unit</label>
-                                    <div class="password-input">
-                                        <input type="text" id="businessUnitInput">
-                                        <div class="form-field-actions">
-                                            <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
-                                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>
-                                            <svg id="plusIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer; margin-left: 5px;">
-                                                <path d="M5 12h14"></path>
-                                                <path d="M12 5v14"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col">
+            <h1>Create Item</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Basic Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ItCode" class="form-label required"></label>
+                                <input asp-for="ItCode" class="form-control" required />
+                                <span asp-validation-for="ItCode" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ItUomId" class="form-label required"></label>
+                                <select asp-for="ItUomId" class="form-select" asp-items="ViewBag.ItUomId" required>
+                                    <option value="">-- Select UOM --</option>
+                                </select>
+                                <span asp-validation-for="ItUomId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ItCdIdItg" class="form-label required"></label>
+                                <select asp-for="ItCdIdItg" class="form-select" asp-items="ViewBag.ItCdIdItg" required>
+                                    <option value="">-- Select Item Group --</option>
+                                </select>
+                                <span asp-validation-for="ItCdIdItg" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ItItId" class="form-label"></label>
+                                <select asp-for="ItItId" class="form-select" asp-items="ViewBag.ItItId">
+                                    <option value="">-- Select Parent Item --</option>
+                                </select>
+                                <span asp-validation-for="ItItId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ItDescriptionLan1" class="form-label required"></label>
+                            <input asp-for="ItDescriptionLan1" class="form-control" required />
+                            <span asp-validation-for="ItDescriptionLan1" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ItDescriptionLan2" class="form-label"></label>
+                            <input asp-for="ItDescriptionLan2" class="form-control" />
+                            <span asp-validation-for="ItDescriptionLan2" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ItDescriptionLan3" class="form-label"></label>
+                            <input asp-for="ItDescriptionLan3" class="form-control" />
+                            <span asp-validation-for="ItDescriptionLan3" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Item Type</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="ItIsService" value="0" />
+                                    <input type="checkbox" class="form-check-input" name="ItIsService" value="1" />
+                                    <label class="form-check-label">Service</label>
                                 </div>
                             </div>
-                            
-                            <div class="right-side">
-                                <div class="form-group">
-                                    <label>Active</label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked>
-                                        <span asp-validation-for="ItActive" class="slider"></span>
-                                    </label>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="ItIsAsset" value="0" />
+                                    <input type="checkbox" class="form-check-input" name="ItIsAsset" value="1" />
+                                    <label class="form-check-label">Asset</label>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label>Saleable</label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked>
-                                        <span asp-validation-for="ItIsSaleable" class="slider"></span>
-                                    </label>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Lot Enabled</label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked>
-                                        <span asp-validation-for="ItHasLot" class="slider"></span>
-                                    </label>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Production Date</label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span asp-validation-for="ItHasProductionDate" class="slider"></span>
-                                    </label>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Expiry Date</label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked>
-                                        <span asp-validation for="ItHasExpiryDate" class="slider"></span>
-                                    </label>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Service Defined</label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span asp-validation-for="ItIsService" class="slider"></span>
-                                    </label>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Asset Defined</label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span asp-validation-for="ItIsAsset" class="slider"></span>
-                                    </label>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Serial Enabled</label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span asp-validation-for="ItHasSerial" class="slider"></span>
-                                    </label>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Bad Return</label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span asp-validation-for="ItIsBadReturn" class="slider"></span>
-                                    </label>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="ItIsSaleable" value="0" />
+                                    <input type="checkbox" class="form-check-input" name="ItIsSaleable" value="1" />
+                                    <label class="form-check-label">Saleable</label>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="actions">
-                            <a asp-action="Index" class="btn btn-cancel">Cancel</a>
-                            <button type="submit" class="btn btn-save">Save</button>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Item Properties</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="ItHasLot" value="0" />
+                                    <input type="checkbox" class="form-check-input" name="ItHasLot" value="1" />
+                                    <label class="form-check-label">Has Lot</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="ItHasSerial" value="0" />
+                                    <input type="checkbox" class="form-check-input" name="ItHasSerial" value="1" />
+                                    <label class="form-check-label">Has Serial</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="ItHasMultipleUom" value="0" />
+                                    <input type="checkbox" class="form-check-input" name="ItHasMultipleUom" value="1" />
+                                    <label class="form-check-label">Has Multiple UOM</label>
+                                </div>
+                            </div>
                         </div>
-      
-                  </div>
- </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="ItHasProductionDate" value="0" />
+                                    <input type="checkbox" class="form-check-input" name="ItHasProductionDate" value="1" />
+                                    <label class="form-check-label">Has Production Date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="ItHasExpiryDate" value="0" />
+                                    <input type="checkbox" class="form-check-input" name="ItHasExpiryDate" value="1" />
+                                    <label class="form-check-label">Has Expiry Date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="ItIsBadReturn" value="0" />
+                                    <input type="checkbox" class="form-check-input" name="ItIsBadReturn" value="1" />
+                                    <label class="form-check-label">Is Bad Return</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Additional Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ItWeight" class="form-label"></label>
+                                <input asp-for="ItWeight" class="form-control" type="number" step="0.01" />
+                                <span asp-validation-for="ItWeight" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ItOrder" class="form-label"></label>
+                                <input asp-for="ItOrder" class="form-control" type="number" />
+                                <span asp-validation-for="ItOrder" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input type="hidden" name="ItActive" value="0" />
+                                <input type="checkbox" class="form-check-input" name="ItActive" value="1" checked />
+                                <label class="form-check-label">Active</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Create
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Set default values for required fields
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default values for required fields
+            document.querySelector('input[name="ItHasLot"]').value = '0';
+            document.querySelector('input[name="ItHasProductionDate"]').value = '0';
+            document.querySelector('input[name="ItHasExpiryDate"]').value = '0';
+            document.querySelector('input[name="ItActive"]').value = '1';
+            
+            // Add required field indicators
+            document.querySelectorAll('.required').forEach(function(element) {
+                element.innerHTML += ' <span class="text-danger">*</span>';
+            });
+        });
+    </script>
 }

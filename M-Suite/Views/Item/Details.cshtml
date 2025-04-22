@@ -164,6 +164,15 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ItUom.UomId)
         </dd>
+        @if (Model.ItUom?.UomNameLan1 != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ItUom.UomNameLan1)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ItUom.UomNameLan1)
+            </dd>
+        }
     </dl>
 </div>
     </div>

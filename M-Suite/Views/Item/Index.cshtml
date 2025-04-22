@@ -1,208 +1,100 @@
 @model IEnumerable<M_Suite.Models.Item>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Items";
 }
-@section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
-}
-<div class="profile-content">
-    <div class="profile-header">
-        <div class="button-container">
-            <a asp-action="Create" class="new-button">
-                New
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
+
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col">
+            <h1>Items</h1>
+        </div>
+        <div class="col text-end">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New
             </a>
         </div>
     </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-<<<<<<< HEAD
-                @Html.DisplayNameFor(model => model.ItCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIsDescription)
-            </th>
-             <th>
-                @Html.DisplayNameFor(model => model.ItActive)
-            </th>
-            @*<th>
-=======
-                @Html.DisplayNameFor(model => model.ItCdIdItg)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCdIdIbd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCdIdIgp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCdIdIsg)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCdIdItp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItDescriptionLan1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItDescriptionLan2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItDescriptionLan3)
-            </th>
-            <th>
->>>>>>> b0b3b472c25ed4f547c69e93340e911c0421e574
-                @Html.DisplayNameFor(model => model.ItWeight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasLot)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasProductionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasExpiryDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasMultipleUom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasSerial)
-            </th>
-            <th>
-<<<<<<< HEAD
-=======
-                @Html.DisplayNameFor(model => model.ItIsDescription)
-            </th>
-            <th>
->>>>>>> b0b3b472c25ed4f547c69e93340e911c0421e574
-                @Html.DisplayNameFor(model => model.ItIsSaleable)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIsService)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIsAsset)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItImpUid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItOrder)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIsBadReturn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItUom)
-            </th>
-            <th></th>
-        </tr>
-    </thead>*@
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-           @*<td>
-                @Html.DisplayFor(modelItem => item.ItCdIdItg)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCdIdIbd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCdIdIgp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCdIdIsg)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCdIdItp)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItActive)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.ItWeight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasLot)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasProductionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasExpiryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasMultipleUom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasSerial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsSaleable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsService)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsAsset)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItImpUid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItOrder)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsBadReturn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIt.ItId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItUom.UomId)
-            </td>*@
-           <td>
-                            <a asp-action="Edit" asp-route-id="@item.ItId">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                    <path d="M 19.171875 2 C 18.448125 2 17.724375 2.275625 17.171875 2.828125 L 16 4 L 20 8 L 21.171875 6.828125 C 22.275875 5.724125 22.275875 3.933125 21.171875 2.828125 C 20.619375 2.275625 19.895625 2 19.171875 2 z M 14.5 5.5 L 3 17 L 3 21 L 7 21 L 18.5 9.5 L 14.5 5.5 z"></path>
-                                </svg>
-                            </a>
-                            <a asp-action="Details" asp-route-id="@item.ItId">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
-                                    <path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 25 11 A 3 3 0 0 0 22 14 A 3 3 0 0 0 25 17 A 3 3 0 0 0 28 14 A 3 3 0 0 0 25 11 z M 21 21 L 21 23 L 22 23 L 23 23 L 23 36 L 22 36 L 21 36 L 21 38 L 22 38 L 23 38 L 27 38 L 28 38 L 29 38 L 29 36 L 28 36 L 27 36 L 27 21 L 26 21 L 22 21 L 21 21 z"></path>
-                                </svg>
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@item.ItId">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 30 30">
-                                    <path d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"></path>
-                                </svg>
-                            </a>
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @ViewBag.SuccessMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.ItCode)</th>
+                    <th>@Html.DisplayNameFor(model => model.ItDescriptionLan1)</th>
+                    <th>UOM</th>
+                    <th>Item Group</th>
+                    <th>Type</th>
+                    <th>Properties</th>
+                    <th>@Html.DisplayNameFor(model => model.ItActive)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ItCode)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ItDescriptionLan1)</td>
+                        <td>@(item.ItUom?.UomCode ?? "N/A")</td>
+                        <td>@(item.ItCdIdItgNavigation?.CdId.ToString() ?? "N/A")</td>
+                        <td>
+                            @if (item.ItIsService == 1) { <span class="badge bg-info">Service</span> }
+                            @if (item.ItIsAsset == 1) { <span class="badge bg-warning">Asset</span> }
+                            @if (item.ItIsSaleable == 1) { <span class="badge bg-success">Saleable</span> }
                         </td>
-        </tr>
+                        <td>
+                            @if (item.ItHasLot == 1) { <span class="badge bg-secondary">Lot</span> }
+                            @if (item.ItHasSerial == 1) { <span class="badge bg-secondary">Serial</span> }
+                            @if (item.ItHasMultipleUom == 1) { <span class="badge bg-secondary">Multi-UOM</span> }
+                        </td>
+                        <td>
+                            @if (item.ItActive == 1)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Inactive</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-route-id="@item.ItId" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.ItId" class="btn btn-sm btn-outline-info">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.ItId" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Auto-dismiss success message after 5 seconds
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('.alert-success').fadeOut('slow');
+            }, 5000);
+        });
+    </script>
 }
-    </tbody>
-</table>
-</div>
-</div>
