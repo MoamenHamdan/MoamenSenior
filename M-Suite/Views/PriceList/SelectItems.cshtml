@@ -1,0 +1,201 @@
+@model M_Suite.Models.Listprice
+
+@{
+    ViewData["Title"] = "Select Items for Price List";
+}
+
+<div class="container">
+    <h1>Select Items for Price List</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="CreateWithItems" method="post" id="selectItemsForm">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Price List Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="LpCode" class="control-label">Code</label>
+                                    <input asp-for="LpCode" class="form-control" required />
+                                    <span asp-validation-for="LpCode" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="LpDescriptionLan1" class="control-label">Description</label>
+                                    <input asp-for="LpDescriptionLan1" class="form-control" required />
+                                    <span asp-validation-for="LpDescriptionLan1" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="LpBuId" class="control-label">Business Unit</label>
+                                    <select asp-for="LpBuId" class="form-control" asp-items="ViewBag.LpBuId" required>
+                                        <option value="">-- Select Business Unit --</option>
+                                    </select>
+                                    <span asp-validation-for="LpBuId" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="LpCdIdCur" class="control-label">Currency</label>
+                                    <select asp-for="LpCdIdCur" class="form-control" asp-items="ViewBag.LpCdIdCur" required>
+                                        <option value="">-- Select Currency --</option>
+                                    </select>
+                                    <span asp-validation-for="LpCdIdCur" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="LpFromDate" class="control-label">From Date</label>
+                                    <input asp-for="LpFromDate" class="form-control" type="date" required />
+                                    <span asp-validation-for="LpFromDate" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="LpToDate" class="control-label">To Date</label>
+                                    <input asp-for="LpToDate" class="form-control" type="date" required />
+                                    <span asp-validation-for="LpToDate" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <div class="form-check">
+                                        <input type="hidden" asp-for="LpActive" value="0" />
+                                        <input type="checkbox" class="form-check-input" id="LpActiveCheckbox" checked />
+                                        <label class="form-check-label" for="LpActiveCheckbox">Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Select Items</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Select</th>
+                                        <th>Item Code</th>
+                                        <th>Description</th>
+                                        <th>UOM</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.AvailableItems)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input type="checkbox" name="selectedItems" value="@item.ItId" class="form-check-input item-checkbox" />
+                                                </div>
+                                            </td>
+                                            <td>@item.ItCode</td>
+                                            <td>@item.ItDescriptionLan1</td>
+                                            <td>@item.ItUom?.UomCode</td>
+                                            <td>
+                                                <input type="number" name="prices" class="form-control price-input" step="0.01" min="0" disabled />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary" id="submitButton" disabled>Create Price List</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function() {
+            // Set up the active checkbox
+            $('#LpActiveCheckbox').change(function() {
+                $('#LpActive').val(this.checked ? '1' : '0');
+            });
+
+            // Set default dates
+            var today = new Date();
+            var tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            $('#LpFromDate').val(today.toISOString().split('T')[0]);
+            $('#LpToDate').val(tomorrow.toISOString().split('T')[0]);
+
+            // Enable/disable price input based on checkbox
+            $('.item-checkbox').change(function() {
+                var priceInput = $(this).closest('tr').find('.price-input');
+                priceInput.prop('disabled', !this.checked);
+                if (!this.checked) {
+                    priceInput.val('');
+                }
+                updateSubmitButton();
+            });
+
+            // Update submit button state
+            function updateSubmitButton() {
+                var hasSelectedItems = $('.item-checkbox:checked').length > 0;
+                var allPricesFilled = true;
+
+                $('.item-checkbox:checked').each(function() {
+                    var priceInput = $(this).closest('tr').find('.price-input');
+                    if (!priceInput.val()) {
+                        allPricesFilled = false;
+                        return false;
+                    }
+                });
+
+                $('#submitButton').prop('disabled', !hasSelectedItems || !allPricesFilled);
+            }
+
+            // Listen for price input changes
+            $('.price-input').on('input', function() {
+                updateSubmitButton();
+            });
+
+            // Form submission handler
+            $('#selectItemsForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    $(this).addClass('was-validated');
+                    return false;
+                }
+
+                // Submit the form
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.redirect) {
+                            window.location.href = response.redirect;
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('An error occurred while creating the Price List. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+} 

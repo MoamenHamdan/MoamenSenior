@@ -1,0 +1,91 @@
+@{
+    ViewData["Title"] = "Add Items to Price List";
+    var listprice = ViewBag.Listprice as M_Suite.Models.Listprice;
+    var availableItems = ViewBag.AvailableItems as List<M_Suite.Models.Item>;
+}
+
+<div class="container">
+    <h1>Add Items to Price List</h1>
+    <h4>@listprice.LpCode - @listprice.LpDescriptionLan1</h4>
+
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="AddItems" asp-route-id="@listprice.LpId" method="post">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Item Code</th>
+                                <th>Description</th>
+                                <th>UOM</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < availableItems.Count; i++)
+                            {
+                                var item = availableItems[i];
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="selectedItems" value="@item.ItId" class="form-check-input item-checkbox" />
+                                        </div>
+                                    </td>
+                                    <td>@item.ItCode</td>
+                                    <td>@item.ItDescriptionLan1</td>
+                                    <td>@item.ItUom?.UomCode</td>
+                                    <td>
+                                        <input type="number" name="prices" class="form-control price-input" step="0.01" min="0" disabled />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary" id="submitButton" disabled>Add Selected Items</button>
+                    <a asp-action="Details" asp-route-id="@listprice.LpId" class="btn btn-secondary">Back to Details</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Enable/disable price input based on checkbox
+            $('.item-checkbox').change(function () {
+                var priceInput = $(this).closest('tr').find('.price-input');
+                priceInput.prop('disabled', !this.checked);
+                if (!this.checked) {
+                    priceInput.val('');
+                }
+                updateSubmitButton();
+            });
+
+            // Update submit button state
+            function updateSubmitButton() {
+                var hasSelectedItems = $('.item-checkbox:checked').length > 0;
+                var allPricesFilled = true;
+
+                $('.item-checkbox:checked').each(function () {
+                    var priceInput = $(this).closest('tr').find('.price-input');
+                    if (!priceInput.val()) {
+                        allPricesFilled = false;
+                        return false;
+                    }
+                });
+
+                $('#submitButton').prop('disabled', !hasSelectedItems || !allPricesFilled);
+            }
+
+            // Listen for price input changes
+            $('.price-input').on('input', function () {
+                updateSubmitButton();
+            });
+        });
+    </script>
+} 
