@@ -1,0 +1,63 @@
+﻿@model M_Suite.Models.Uom
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Uom</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UomCode" class="control-label"></label>
+                <input asp-for="UomCode" class="form-control" />
+                <span asp-validation-for="UomCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UomNameLan1" class="control-label"></label>
+                <input asp-for="UomNameLan1" class="form-control" />
+                <span asp-validation-for="UomNameLan1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UomNameLan2" class="control-label"></label>
+                <input asp-for="UomNameLan2" class="form-control" />
+                <span asp-validation-for="UomNameLan2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UomNameLan3" class="control-label"></label>
+                <input asp-for="UomNameLan3" class="form-control" />
+                <span asp-validation-for="UomNameLan3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UomRoundingPrecision" class="control-label"></label>
+                <input asp-for="UomRoundingPrecision" class="form-control" />
+                <span asp-validation-for="UomRoundingPrecision" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UomIsBase" class="control-label"></label>
+                <input asp-for="UomIsBase" class="form-control" />
+                <span asp-validation-for="UomIsBase" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UomOrder" class="control-label"></label>
+                <input asp-for="UomOrder" class="form-control" />
+                <span asp-validation-for="UomOrder" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
