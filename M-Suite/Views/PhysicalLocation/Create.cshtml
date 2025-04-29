@@ -1,0 +1,74 @@
+﻿@model M_Suite.Models.PhysicalLocation
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>PhysicalLocation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PlPlId" class="control-label"></label>
+                <select asp-for="PlPlId" class ="form-control" asp-items="ViewBag.PlPlId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlCdIdPlt" class="control-label"></label>
+                <select asp-for="PlCdIdPlt" class ="form-control" asp-items="ViewBag.PlCdIdPlt"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlMdId" class="control-label"></label>
+                <select asp-for="PlMdId" class ="form-control" asp-items="ViewBag.PlMdId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlLevel" class="control-label"></label>
+                <input asp-for="PlLevel" class="form-control" />
+                <span asp-validation-for="PlLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlCode" class="control-label"></label>
+                <input asp-for="PlCode" class="form-control" />
+                <span asp-validation-for="PlCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlDescriptionLan1" class="control-label"></label>
+                <input asp-for="PlDescriptionLan1" class="form-control" />
+                <span asp-validation-for="PlDescriptionLan1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlDescriptionLan2" class="control-label"></label>
+                <input asp-for="PlDescriptionLan2" class="form-control" />
+                <span asp-validation-for="PlDescriptionLan2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlDescriptionLan3" class="control-label"></label>
+                <input asp-for="PlDescriptionLan3" class="form-control" />
+                <span asp-validation-for="PlDescriptionLan3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlBuId" class="control-label"></label>
+                <select asp-for="PlBuId" class ="form-control" asp-items="ViewBag.PlBuId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlImpUid" class="control-label"></label>
+                <input asp-for="PlImpUid" class="form-control" />
+                <span asp-validation-for="PlImpUid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

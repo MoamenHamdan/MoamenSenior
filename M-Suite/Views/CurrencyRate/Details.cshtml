@@ -1,0 +1,78 @@
+﻿@model M_Suite.Models.CurrencyRate
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CurrencyRate</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrCdIdCurFrom)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrCdIdCurFrom)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrCdIdCurTo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrCdIdCurTo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrBuId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrBuId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrRateBuy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrRateBuy)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrRateSell)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrRateSell)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrMaxRateBuy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrMaxRateBuy)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrMaxRateSell)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrMaxRateSell)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrMinRateBuy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrMinRateBuy)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CrMinRateSell)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CrMinRateSell)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.CrId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

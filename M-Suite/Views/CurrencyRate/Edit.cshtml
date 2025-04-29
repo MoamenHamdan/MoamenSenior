@@ -1,0 +1,79 @@
+﻿@model M_Suite.Models.CurrencyRate
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CurrencyRate</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CrId" />
+            <div class="form-group">
+                <label asp-for="CrDate" class="control-label"></label>
+                <input asp-for="CrDate" class="form-control" />
+                <span asp-validation-for="CrDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrCdIdCurFrom" class="control-label"></label>
+                <input asp-for="CrCdIdCurFrom" class="form-control" />
+                <span asp-validation-for="CrCdIdCurFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrCdIdCurTo" class="control-label"></label>
+                <input asp-for="CrCdIdCurTo" class="form-control" />
+                <span asp-validation-for="CrCdIdCurTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrBuId" class="control-label"></label>
+                <input asp-for="CrBuId" class="form-control" />
+                <span asp-validation-for="CrBuId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrRateBuy" class="control-label"></label>
+                <input asp-for="CrRateBuy" class="form-control" />
+                <span asp-validation-for="CrRateBuy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrRateSell" class="control-label"></label>
+                <input asp-for="CrRateSell" class="form-control" />
+                <span asp-validation-for="CrRateSell" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrMaxRateBuy" class="control-label"></label>
+                <input asp-for="CrMaxRateBuy" class="form-control" />
+                <span asp-validation-for="CrMaxRateBuy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrMaxRateSell" class="control-label"></label>
+                <input asp-for="CrMaxRateSell" class="form-control" />
+                <span asp-validation-for="CrMaxRateSell" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrMinRateBuy" class="control-label"></label>
+                <input asp-for="CrMinRateBuy" class="form-control" />
+                <span asp-validation-for="CrMinRateBuy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CrMinRateSell" class="control-label"></label>
+                <input asp-for="CrMinRateSell" class="form-control" />
+                <span asp-validation-for="CrMinRateSell" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
