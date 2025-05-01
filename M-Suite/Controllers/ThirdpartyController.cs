@@ -49,26 +49,83 @@ namespace M_Suite.Controllers
         // GET: Thirdparty/Create
         public IActionResult Create()
         {
-            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in Create GET: {ex.Message}");
+                return View("Error");
+            }
         }
 
         // POST: Thirdparty/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ThpId,ThpOrgId,ThpCdIdTpg,ThpCdIdTps,ThpCode,ThpNameLan1,ThpNameLan2,ThpNameLan3,ThpIsCustomer,ThpIsSupplier,ThpIsCompany,ThpCreateDate,ThpModifiedDate,ThpActive,ThpImpUid,ThpRemarks,ThpImported,ThpReadonly,ThpUsIdCreated,ThpNewcode,ThpPrintLang,ThpPrintarabic,ThpIsB2b")] Thirdparty thirdparty)
+        public async Task<IActionResult> Create([Bind("ThpCode,ThpNameLan1,ThpNameLan2,ThpIsCustomer,ThpIsSupplier,ThpIsCompany")] Thirdparty thirdparty)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(thirdparty);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Set default values for required fields
+                thirdparty.ThpActive = 1;
+                thirdparty.ThpCreateDate = DateTime.Now;
+                thirdparty.ThpImpUid = Guid.NewGuid().ToString();
+                thirdparty.ThpImported = 0;
+                thirdparty.ThpReadonly = 0;
+                thirdparty.ThpPrintarabic = 0;
+                thirdparty.ThpIsB2b = 0;
+                thirdparty.ThpCdIdTpg = 1; // Default value
+                thirdparty.ThpCdIdTps = 1; // Default value
+
+                // Convert checkbox values to short
+                thirdparty.ThpIsCustomer = (short)(thirdparty.ThpIsCustomer == 1 ? 1 : 0);
+                thirdparty.ThpIsSupplier = (short)(thirdparty.ThpIsSupplier == 1 ? 1 : 0);
+                thirdparty.ThpIsCompany = (short)(thirdparty.ThpIsCompany == 1 ? 1 : 0);
+
+                // Validate required fields
+                if (string.IsNullOrWhiteSpace(thirdparty.ThpCode))
+                {
+                    ModelState.AddModelError("ThpCode", "Code is required");
+                }
+                if (string.IsNullOrWhiteSpace(thirdparty.ThpNameLan1))
+                {
+                    ModelState.AddModelError("ThpNameLan1", "Name (English) is required");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    // Check if code already exists
+                    var existingThirdparty = await _context.Thirdparties
+                        .FirstOrDefaultAsync(t => t.ThpCode == thirdparty.ThpCode);
+                    
+                    if (existingThirdparty != null)
+                    {
+                        ModelState.AddModelError("ThpCode", "A third party with this code already exists");
+                        return View(thirdparty);
+                    }
+
+                    _context.Add(thirdparty);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Third party created successfully!";
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdId", thirdparty.ThpCdIdTpg);
-            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdId", thirdparty.ThpCdIdTps);
+            catch (DbUpdateException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Database Error: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                }
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"General Error: {ex.Message}");
+                ModelState.AddModelError("", "An unexpected error occurred. Please try again.");
+            }
+
             return View(thirdparty);
         }
 
