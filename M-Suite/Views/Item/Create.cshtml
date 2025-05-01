@@ -1,121 +1,210 @@
 ﻿@model M_Suite.Models.Item
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Item";
 }
 
-<h1>Create</h1>
+<h2>Create Item</h2>
 
-<h4>Item</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ItItId" class="control-label"></label>
-                <select asp-for="ItItId" class ="form-control" asp-items="ViewBag.ItItId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItUomId" class="control-label"></label>
-                <select asp-for="ItUomId" class ="form-control" asp-items="ViewBag.ItUomId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdItg" class="control-label"></label>
-                <select asp-for="ItCdIdItg" class ="form-control" asp-items="ViewBag.ItCdIdItg"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdIbd" class="control-label"></label>
-                <select asp-for="ItCdIdIbd" class ="form-control" asp-items="ViewBag.ItCdIdIbd"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdIgp" class="control-label"></label>
-                <select asp-for="ItCdIdIgp" class ="form-control" asp-items="ViewBag.ItCdIdIgp"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdIsg" class="control-label"></label>
-                <select asp-for="ItCdIdIsg" class ="form-control" asp-items="ViewBag.ItCdIdIsg"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdItp" class="control-label"></label>
-                <select asp-for="ItCdIdItp" class ="form-control" asp-items="ViewBag.ItCdIdItp"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCode" class="control-label"></label>
-                <input asp-for="ItCode" class="form-control" />
-                <span asp-validation-for="ItCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItDescriptionLan1" class="control-label"></label>
-                <input asp-for="ItDescriptionLan1" class="form-control" />
-                <span asp-validation-for="ItDescriptionLan1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItDescriptionLan2" class="control-label"></label>
-                <input asp-for="ItDescriptionLan2" class="form-control" />
-                <span asp-validation-for="ItDescriptionLan2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItDescriptionLan3" class="control-label"></label>
-                <input asp-for="ItDescriptionLan3" class="form-control" />
-                <span asp-validation-for="ItDescriptionLan3" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItHasMultipleUom" class="control-label"></label>
-                <input asp-for="ItHasMultipleUom" class="form-control" />
-                <span asp-validation-for="ItHasMultipleUom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItHasSerial" class="control-label"></label>
-                <input asp-for="ItHasSerial" class="form-control" />
-                <span asp-validation-for="ItHasSerial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsDescription" class="control-label"></label>
-                <input asp-for="ItIsDescription" class="form-control" />
-                <span asp-validation-for="ItIsDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsSaleable" class="control-label"></label>
-                <input asp-for="ItIsSaleable" class="form-control" />
-                <span asp-validation-for="ItIsSaleable" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsService" class="control-label"></label>
-                <input asp-for="ItIsService" class="form-control" />
-                <span asp-validation-for="ItIsService" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsAsset" class="control-label"></label>
-                <input asp-for="ItIsAsset" class="form-control" />
-                <span asp-validation-for="ItIsAsset" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItImpUid" class="control-label"></label>
-                <input asp-for="ItImpUid" class="form-control" />
-                <span asp-validation-for="ItImpUid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItOrder" class="control-label"></label>
-                <input asp-for="ItOrder" class="form-control" />
-                <span asp-validation-for="ItOrder" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsBadReturn" class="control-label"></label>
-                <input asp-for="ItIsBadReturn" class="form-control" />
-                <span asp-validation-for="ItIsBadReturn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- ItCode Field -->
+    <div class="form-group">
+        <label asp-for="ItCode" class="control-label"></label>
+        <input asp-for="ItCode" class="form-control" />
+        <span asp-validation-for="ItCode" class="text-danger"></span>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <!-- ItDescriptionLan1 Field -->
+    <div class="form-group">
+        <label asp-for="ItDescriptionLan1" class="control-label"></label>
+        <input asp-for="ItDescriptionLan1" class="form-control" />
+        <span asp-validation-for="ItDescriptionLan1" class="text-danger"></span>
+    </div>
+
+    <!-- ItUomId (UOM) Dropdown -->
+    <div class="form-group">
+        <label asp-for="ItUomId" class="control-label"></label>
+        <select asp-for="ItUomId" class="form-control">
+            <option value="">Select UOM --</option>
+         @if (ViewBag.Uoms != null)
+{
+    @foreach (var item in ViewBag.Uoms as SelectList)
+    {
+        <option value="@item.Value">@item.Text</option>
+    }
+}
+else
+{
+    <p>No data available for UOM.</p>
+}
+
+        </select>
+        <span asp-validation-for="ItUomId" class="text-danger"></span>
+    </div>
+
+    <!-- ItCdIdItg Dropdown -->
+    <div class="form-group">
+        <label asp-for="ItCdIdItg" class="control-label"></label>
+        <select asp-for="ItCdIdItg" class="form-control">
+            <option value="">-- Select Itg --</option>
+            @foreach (var item in ViewBag.CdIdItg as SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+        <span asp-validation-for="ItCdIdItg" class="text-danger"></span>
+    </div>
+
+    <!-- ItCdIdIbd Dropdown -->
+    <div class="form-group">
+        <label asp-for="ItCdIdIbd" class="control-label"></label>
+        <select asp-for="ItCdIdIbd" class="form-control">
+            <option value="">-- Select Ibd --</option>
+            @foreach (var item in ViewBag.CdIdIbd as SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+        <span asp-validation-for="ItCdIdIbd" class="text-danger"></span>
+    </div>
+
+    <!-- ItCdIdIgp Dropdown -->
+    <div class="form-group">
+        <label asp-for="ItCdIdIgp" class="control-label"></label>
+        <select asp-for="ItCdIdIgp" class="form-control">
+            <option value="">-- Select Igp --</option>
+            @foreach (var item in ViewBag.CdIdIgp as SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+        <span asp-validation-for="ItCdIdIgp" class="text-danger"></span>
+    </div>
+
+    <!-- ItCdIdIsg Dropdown -->
+    <div class="form-group">
+        <label asp-for="ItCdIdIsg" class="control-label"></label>
+        <select asp-for="ItCdIdIsg" class="form-control">
+            <option value="">-- Select Isg --</option>
+            @foreach (var item in ViewBag.CdIdIsg as SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+        <span asp-validation-for="ItCdIdIsg" class="text-danger"></span>
+    </div>
+
+    <!-- ItCdIdItp Dropdown -->
+    <div class="form-group">
+        <label asp-for="ItCdIdItp" class="control-label"></label>
+        <select asp-for="ItCdIdItp" class="form-control">
+            <option value="">-- Select Itp --</option>
+            @foreach (var item in ViewBag.CdIdItp as SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+        <span asp-validation-for="ItCdIdItp" class="text-danger"></span>
+    </div>
+
+    <!-- ItWeight Field -->
+    <div class="form-group">
+        <label asp-for="ItWeight" class="control-label"></label>
+        <input asp-for="ItWeight" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="ItWeight" class="text-danger"></span>
+    </div>
+
+    <!-- ItHasLot Field -->
+    <div class="form-group">
+        <label asp-for="ItHasLot" class="control-label"></label>
+        <select asp-for="ItHasLot" class="form-control">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <span asp-validation-for="ItHasLot" class="text-danger"></span>
+    </div>
+
+    <!-- ItHasProductionDate Field -->
+    <div class="form-group">
+        <label asp-for="ItHasProductionDate" class="control-label"></label>
+        <select asp-for="ItHasProductionDate" class="form-control">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <span asp-validation-for="ItHasProductionDate" class="text-danger"></span>
+    </div>
+
+    <!-- ItHasExpiryDate Field -->
+    <div class="form-group">
+        <label asp-for="ItHasExpiryDate" class="control-label"></label>
+        <select asp-for="ItHasExpiryDate" class="form-control">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <span asp-validation-for="ItHasExpiryDate" class="text-danger"></span>
+    </div>
+
+    <!-- ItIsSaleable Field -->
+    <div class="form-group">
+        <label asp-for="ItIsSaleable" class="control-label"></label>
+        <select asp-for="ItIsSaleable" class="form-control">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <span asp-validation-for="ItIsSaleable" class="text-danger"></span>
+    </div>
+
+    <!-- ItIsService Field -->
+    <div class="form-group">
+        <label asp-for="ItIsService" class="control-label"></label>
+        <select asp-for="ItIsService" class="form-control">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <span asp-validation-for="ItIsService" class="text-danger"></span>
+    </div>
+
+    <!-- ItIsAsset Field -->
+    <div class="form-group">
+        <label asp-for="ItIsAsset" class="control-label"></label>
+        <select asp-for="ItIsAsset" class="form-control">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <span asp-validation-for="ItIsAsset" class="text-danger"></span>
+    </div>
+
+    <!-- ItActive Field -->
+    <div class="form-group">
+        <label asp-for="ItActive" class="control-label"></label>
+        <select asp-for="ItActive" class="form-control">
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+        </select>
+        <span asp-validation-for="ItActive" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Set default values for required fields
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default values for required fields
+            document.querySelector('input[name="ItHasLot"]').value = '0';
+            document.querySelector('input[name="ItHasProductionDate"]').value = '0';
+            document.querySelector('input[name="ItHasExpiryDate"]').value = '0';
+            document.querySelector('input[name="ItActive"]').value = '1';
+            
+            // Add required field indicators
+            document.querySelectorAll('.required').forEach(function(element) {
+                element.innerHTML += ' <span class="text-danger">*</span>';
+            });
+        });
+    </script>
 }
