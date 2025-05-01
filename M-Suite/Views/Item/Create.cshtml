@@ -1,215 +1,121 @@
-@model M_Suite.Models.Item
+﻿@model M_Suite.Models.Item
 
 @{
-    ViewData["Title"] = "Create Item";
+    ViewData["Title"] = "Create";
 }
 
-<div class="container-fluid">
-    <div class="row mb-3">
-        <div class="col">
-            <h1>Create Item</h1>
-        </div>
+<h1>Create</h1>
+
+<h4>Item</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ItItId" class="control-label"></label>
+                <select asp-for="ItItId" class ="form-control" asp-items="ViewBag.ItItId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItUomId" class="control-label"></label>
+                <select asp-for="ItUomId" class ="form-control" asp-items="ViewBag.ItUomId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItCdIdItg" class="control-label"></label>
+                <select asp-for="ItCdIdItg" class ="form-control" asp-items="ViewBag.ItCdIdItg"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItCdIdIbd" class="control-label"></label>
+                <select asp-for="ItCdIdIbd" class ="form-control" asp-items="ViewBag.ItCdIdIbd"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItCdIdIgp" class="control-label"></label>
+                <select asp-for="ItCdIdIgp" class ="form-control" asp-items="ViewBag.ItCdIdIgp"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItCdIdIsg" class="control-label"></label>
+                <select asp-for="ItCdIdIsg" class ="form-control" asp-items="ViewBag.ItCdIdIsg"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItCdIdItp" class="control-label"></label>
+                <select asp-for="ItCdIdItp" class ="form-control" asp-items="ViewBag.ItCdIdItp"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItCode" class="control-label"></label>
+                <input asp-for="ItCode" class="form-control" />
+                <span asp-validation-for="ItCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItDescriptionLan1" class="control-label"></label>
+                <input asp-for="ItDescriptionLan1" class="form-control" />
+                <span asp-validation-for="ItDescriptionLan1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItDescriptionLan2" class="control-label"></label>
+                <input asp-for="ItDescriptionLan2" class="form-control" />
+                <span asp-validation-for="ItDescriptionLan2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItDescriptionLan3" class="control-label"></label>
+                <input asp-for="ItDescriptionLan3" class="form-control" />
+                <span asp-validation-for="ItDescriptionLan3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItHasMultipleUom" class="control-label"></label>
+                <input asp-for="ItHasMultipleUom" class="form-control" />
+                <span asp-validation-for="ItHasMultipleUom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItHasSerial" class="control-label"></label>
+                <input asp-for="ItHasSerial" class="form-control" />
+                <span asp-validation-for="ItHasSerial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItIsDescription" class="control-label"></label>
+                <input asp-for="ItIsDescription" class="form-control" />
+                <span asp-validation-for="ItIsDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItIsSaleable" class="control-label"></label>
+                <input asp-for="ItIsSaleable" class="form-control" />
+                <span asp-validation-for="ItIsSaleable" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItIsService" class="control-label"></label>
+                <input asp-for="ItIsService" class="form-control" />
+                <span asp-validation-for="ItIsService" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItIsAsset" class="control-label"></label>
+                <input asp-for="ItIsAsset" class="form-control" />
+                <span asp-validation-for="ItIsAsset" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItImpUid" class="control-label"></label>
+                <input asp-for="ItImpUid" class="form-control" />
+                <span asp-validation-for="ItImpUid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItOrder" class="control-label"></label>
+                <input asp-for="ItOrder" class="form-control" />
+                <span asp-validation-for="ItOrder" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItIsBadReturn" class="control-label"></label>
+                <input asp-for="ItIsBadReturn" class="form-control" />
+                <span asp-validation-for="ItIsBadReturn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <form asp-action="Create" method="post">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-                
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Basic Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="ItCode" class="form-label required"></label>
-                                <input asp-for="ItCode" class="form-control" required />
-                                <span asp-validation-for="ItCode" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="ItUomId" class="form-label required"></label>
-                                <select asp-for="ItUomId" class="form-select" asp-items="ViewBag.ItUomId" required>
-                                    <option value="">-- Select UOM --</option>
-                                </select>
-                                <span asp-validation-for="ItUomId" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="ItCdIdItg" class="form-label required"></label>
-                                <select asp-for="ItCdIdItg" class="form-select" asp-items="ViewBag.ItCdIdItg" required>
-                                    <option value="">-- Select Item Group --</option>
-                                </select>
-                                <span asp-validation-for="ItCdIdItg" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="ItItId" class="form-label"></label>
-                                <select asp-for="ItItId" class="form-select" asp-items="ViewBag.ItItId">
-                                    <option value="">-- Select Parent Item --</option>
-                                </select>
-                                <span asp-validation-for="ItItId" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="ItDescriptionLan1" class="form-label required"></label>
-                            <input asp-for="ItDescriptionLan1" class="form-control" required />
-                            <span asp-validation-for="ItDescriptionLan1" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="ItDescriptionLan2" class="form-label"></label>
-                            <input asp-for="ItDescriptionLan2" class="form-control" />
-                            <span asp-validation-for="ItDescriptionLan2" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="ItDescriptionLan3" class="form-label"></label>
-                            <input asp-for="ItDescriptionLan3" class="form-control" />
-                            <span asp-validation-for="ItDescriptionLan3" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Item Type</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="ItIsService" value="0" />
-                                    <input type="checkbox" class="form-check-input" name="ItIsService" value="1" />
-                                    <label class="form-check-label">Service</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="ItIsAsset" value="0" />
-                                    <input type="checkbox" class="form-check-input" name="ItIsAsset" value="1" />
-                                    <label class="form-check-label">Asset</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="ItIsSaleable" value="0" />
-                                    <input type="checkbox" class="form-check-input" name="ItIsSaleable" value="1" />
-                                    <label class="form-check-label">Saleable</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Item Properties</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="ItHasLot" value="0" />
-                                    <input type="checkbox" class="form-check-input" name="ItHasLot" value="1" />
-                                    <label class="form-check-label">Has Lot</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="ItHasSerial" value="0" />
-                                    <input type="checkbox" class="form-check-input" name="ItHasSerial" value="1" />
-                                    <label class="form-check-label">Has Serial</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="ItHasMultipleUom" value="0" />
-                                    <input type="checkbox" class="form-check-input" name="ItHasMultipleUom" value="1" />
-                                    <label class="form-check-label">Has Multiple UOM</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="ItHasProductionDate" value="0" />
-                                    <input type="checkbox" class="form-check-input" name="ItHasProductionDate" value="1" />
-                                    <label class="form-check-label">Has Production Date</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="ItHasExpiryDate" value="0" />
-                                    <input type="checkbox" class="form-check-input" name="ItHasExpiryDate" value="1" />
-                                    <label class="form-check-label">Has Expiry Date</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="ItIsBadReturn" value="0" />
-                                    <input type="checkbox" class="form-check-input" name="ItIsBadReturn" value="1" />
-                                    <label class="form-check-label">Is Bad Return</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Additional Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="ItWeight" class="form-label"></label>
-                                <input asp-for="ItWeight" class="form-control" type="number" step="0.01" />
-                                <span asp-validation-for="ItWeight" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="ItOrder" class="form-label"></label>
-                                <input asp-for="ItOrder" class="form-control" type="number" />
-                                <span asp-validation-for="ItOrder" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check form-switch">
-                                <input type="hidden" name="ItActive" value="0" />
-                                <input type="checkbox" class="form-check-input" name="ItActive" value="1" checked />
-                                <label class="form-check-label">Active</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Create
-                    </button>
-                    <a asp-action="Index" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Back to List
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
-    <script>
-        // Set default values for required fields
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set default values for required fields
-            document.querySelector('input[name="ItHasLot"]').value = '0';
-            document.querySelector('input[name="ItHasProductionDate"]').value = '0';
-            document.querySelector('input[name="ItHasExpiryDate"]').value = '0';
-            document.querySelector('input[name="ItActive"]').value = '1';
-            
-            // Add required field indicators
-            document.querySelectorAll('.required').forEach(function(element) {
-                element.innerHTML += ' <span class="text-danger">*</span>';
-            });
-        });
-    </script>
 }
