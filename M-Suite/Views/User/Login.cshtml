@@ -3,22 +3,14 @@
     ViewData["Title"] = "Login";
 }
 
-@section Styles {
+@section Styles { 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 }
 
 <div class="login-container">
-    <!-- Left Panel (Image) - Visible on larger screens -->
-    <div class="login-image-panel">
-        <div class="image-overlay"></div>
-        <img src="/Images/malialogin.jpg" alt="Company Background" class="login-image">
-        <div class="image-logo">
-            <img src="/Images/logo.png" alt="Company Logo">
-        </div>
-    </div>
-
-    <!-- Right Panel (Login Form) -->
-    <div class="login-form-panel">
+    <!-- Floating Glass Panel Design -->
+    <div class="login-glass-panel">
         <!-- Language Selector -->
         <div class="language-selector">
             <select class="language-dropdown" aria-label="Select language">
@@ -28,24 +20,30 @@
             </select>
         </div>
 
+        <!-- Company Logo -->
+        <div class="floating-logo">
+            <img src="/Images/logo.png" alt="Company Logo">
+        </div>
+
         <!-- Login Form -->
         <form class="login-form" method="post" asp-controller="User" asp-action="Login">
-            <h1 class="login-title">Welcome</h1>
+            <h1 class="login-title">Welcome Back</h1>
+            <p class="login-subtitle">Sign in to access your account</p>
 
             @if (ViewBag.Error != null)
             {
                 <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
             }
 
-            <div class="form-group">
-                <label for="username" class="sr-only">Username</label>
-                <input type="text" id="username" name="username" placeholder="Username" required class="form-input">
+            <div class="form-group floating-input">
+                <input type="text" id="username" name="username" class="form-input" placeholder=" " required>
+                <label for="username">Username</label>
                 <i class="fas fa-user input-icon"></i>
             </div>
             
-            <div class="form-group">
-                <label for="password" class="sr-only">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password" required class="form-input">
+            <div class="form-group floating-input">
+                <input type="password" id="password" name="password" class="form-input" placeholder=" " required>
+                <label for="password">Password</label>
                 <i class="fas fa-lock input-icon"></i>
             </div>
             
@@ -55,33 +53,95 @@
                     <span class="checkmark"></span>
                     Remember me
                 </label>
+                <a href="#" class="forgot-password">Forgot password?</a>
             </div>
             
             <button type="submit" class="login-button">
                 <span>LOG IN</span>
-                <i class="fas fa-arrow-right"></i>
+                <i class="fas fa-arrow-right button-icon"></i>
             </button>
 
-            <div class="support-section">
-                <h2 class="support-title">Support</h2>
-                <div class="support-links">
-                    <a href="#" onclick="showPhoneSupport()" class="support-link" aria-label="Phone support">
-                        <i class="fas fa-phone"></i>
-                        <span class="support-text">+961 1 900 100</span>
-                    </a>
-                    <a href="#" onclick="showEmailSupport()" class="support-link" aria-label="Email support">
-                        <i class="fas fa-envelope"></i>
-                        <span class="support-text">support@molloitec.com</span>
-                    </a>
-                </div>
-            </div>
+           
         </form>
+
+        <!-- Support Section -->
+        <div class="support-section">
+            <h2 class="support-title">Need Help?</h2>
+            <div class="support-links">
+                <a href="#" onclick="showPhoneSupport()" class="support-link" aria-label="Phone support">
+                    <i class="fas fa-phone-alt"></i>
+                    <span class="support-text">+961 1 900 100</span>
+                </a>
+                <a href="#" onclick="showEmailSupport()" class="support-link" aria-label="Email support">
+                    <i class="fas fa-envelope"></i>
+                    <span class="support-text">support@molloitec.com</span>
+                </a>
+            </div>
+        </div>
     </div>
 
-    <!-- Background Image for Mobile -->
-    <div class="mobile-background-image"></div>
+    <!-- Animated Background -->
+    <div class="login-background">
+        <div class="background-overlay"></div>
+        <div class="particles-container">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <!-- More particles will be added via JavaScript -->
+        </div>
+    </div>
 </div>
 
-@section Scripts {
+@section Scripts { 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+        // Add floating label functionality
+        document.querySelectorAll('.floating-input .form-input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.previousElementSibling.classList.add('active');
+            });
+            
+            input.addEventListener('blur', () => {
+                if (input.value === '') {
+                    input.previousElementSibling.classList.remove('active');
+                }
+            });
+            
+            // Initialize labels if input has value
+            if (input.value !== '') {
+                input.previousElementSibling.classList.add('active');
+            }
+        });
+
+        // Create animated particles
+        function createParticles() {
+            const container = document.querySelector('.particles-container');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 15 + 10;
+                const opacity = Math.random() * 0.4 + 0.1;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.opacity = opacity;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
 }
