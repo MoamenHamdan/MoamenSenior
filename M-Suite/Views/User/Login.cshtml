@@ -1,70 +1,65 @@
-﻿@section Styles {
+﻿@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    ViewData["Title"] = "Login";
+}
+
+@section Styles {
     <link rel="stylesheet" href="~/css/site.css" />
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-    @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true">*@
-</head>
-<body>
-    <div class="container">
-        <!-- Left Panel (Image) -->
-        <div class="left-panel">
-            <div class="picture-placeholder">
-                <img src="/Images/malialogin.jpg" alt="Background Image" class="picture-placeholder">
-            </div>
-        </div>
-
-        <!-- Right Panel (Login Form) -->
-        <div class="right-panel">
-            <div class="language-selector">
-                <select>
-                    <option>English</option>
-                    <option>Arabic</option>
-                    <option>French</option>
-                </select>
-            </div>
-
-            <form class="login-form" method="post" asp-controller="User" asp-action="Login">
-                <h1>Welcome</h1>
-
-                @if (ViewBag.Error != null)
-                {
-                    <div class="alert alert-danger">@ViewBag.Error</div>
-                }
-
-                <div class="input-group">
-                    <input type="text" name="username" placeholder="Username" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" name="password" placeholder="Password" required>
-                </div>
-                <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
-                </div>
-                <button type="submit" class="login-btn">LOG IN</button>
-
-                <div class="support-section">
-                    <div class="support-title">Support</div>
-                    <div class="support-links">
-                        <a href="#" onclick="showPhoneSupport()">
-                            <i class="fas fa-phone"></i>
-                        </a>
-                        <a href="#" onclick="showEmailSupport()">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                </div>
-            </form>
+<div class="container">
+    <!-- Left Panel (Image) -->
+    <div class="left-panel">
+        <div class="picture-placeholder">
+            <img src="/Images/malialogin.jpg" alt="Background Image" class="picture-placeholder">
         </div>
     </div>
 
+    <!-- Right Panel (Login Form) -->
+    <div class="right-panel">
+        <div class="language-selector">
+            <select>
+                <option>English</option>
+                <option>Arabic</option>
+                <option>French</option>
+            </select>
+        </div>
 
-</body>
-</html>
+        <form class="login-form" method="post" asp-controller="User" asp-action="Login">
+            <h1>Welcome</h1>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">@ViewBag.Error</div>
+            }
+
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">Remember me</label>
+            </div>
+            <button type="submit" class="login-btn">LOG IN</button>
+
+            <div class="support-section">
+                <div class="support-title">Support</div>
+                <div class="support-links">
+                    <a href="#" onclick="showPhoneSupport()">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                    <a href="#" onclick="showEmailSupport()">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+}
