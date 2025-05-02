@@ -1,0 +1,84 @@
+﻿@model M_Suite.Models.PhysicalLocation
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PhysicalLocation</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlLevel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlLevel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlCode)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlCode)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlDescriptionLan1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlDescriptionLan1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlDescriptionLan2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlDescriptionLan2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlDescriptionLan3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlDescriptionLan3)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlActive)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlActive)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlImpUid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlImpUid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlBu)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlBu.BuId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlCdIdPltNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlCdIdPltNavigation.CdId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlMd)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlMd.MdId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlPl)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlPl.PlId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.PlId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

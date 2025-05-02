@@ -1,0 +1,126 @@
+@model M_Suite.Models.Listprice
+
+@{
+    ViewData["Title"] = "Create Price List";
+}
+
+<div class="container">
+    <h1>Create Price List</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post" id="createForm">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="LpCode" class="control-label">Code</label>
+                    <input asp-for="LpCode" class="form-control" required />
+                    <span asp-validation-for="LpCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="LpDescriptionLan1" class="control-label">Description</label>
+                    <input asp-for="LpDescriptionLan1" class="form-control" required />
+                    <span asp-validation-for="LpDescriptionLan1" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="LpBuId" class="control-label">Business Unit</label>
+                    <select asp-for="LpBuId" class="form-control" asp-items="ViewBag.LpBuId" required>
+                        <option value="">-- Select Business Unit --</option>
+                    </select>
+                    <span asp-validation-for="LpBuId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="LpCdIdCur" class="control-label">Currency</label>
+                    <select asp-for="LpCdIdCur" class="form-control" asp-items="ViewBag.LpCdIdCur" required>
+                        <option value="">-- Select Currency --</option>
+                    </select>
+                    <span asp-validation-for="LpCdIdCur" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="LpFromDate" class="control-label">From Date</label>
+                    <input asp-for="LpFromDate" class="form-control" type="date" required />
+                    <span asp-validation-for="LpFromDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="LpToDate" class="control-label">To Date</label>
+                    <input asp-for="LpToDate" class="form-control" type="date" required />
+                    <span asp-validation-for="LpToDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="form-check">
+                        <input type="hidden" asp-for="LpActive" value="0" />
+                        <input type="checkbox" class="form-check-input" id="LpActiveCheckbox" checked />
+                        <label class="form-check-label" for="LpActiveCheckbox">Active</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function() {
+            // Set up the active checkbox
+            $('#LpActiveCheckbox').change(function() {
+                $('#LpActive').val(this.checked ? '1' : '0');
+            });
+
+            // Set default dates
+            var today = new Date();
+            var tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            $('#LpFromDate').val(today.toISOString().split('T')[0]);
+            $('#LpToDate').val(tomorrow.toISOString().split('T')[0]);
+
+            // Form submission handler
+            $('#createForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                if (!this.checkValidity()) {
+                    e.stopPropagation();
+                    $(this).addClass('was-validated');
+                    return false;
+                }
+
+                // Submit the form
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.redirect) {
+                            window.location.href = response.redirect;
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('An error occurred while creating the Price List. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+} 

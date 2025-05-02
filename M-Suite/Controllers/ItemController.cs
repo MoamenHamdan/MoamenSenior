@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,136 +70,7 @@ namespace M_Suite.Controllers
             return View(item);
         }
 
-        // GET: Item/Create
-        public IActionResult Create()
-        {
-            ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItCode");
-            ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomCode");
-            ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            return View();
-        }
-
-        // POST: Item/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItId,ItItId,ItUomId,ItCdIdItg,ItCdIdIbd,ItCdIdIgp,ItCdIdIsg,ItCdIdItp,ItCode,ItDescriptionLan1,ItDescriptionLan2,ItDescriptionLan3,ItWeight,ItHasLot,ItHasProductionDate,ItHasExpiryDate,ItHasMultipleUom,ItHasSerial,ItIsDescription,ItIsSaleable,ItIsService,ItIsAsset,ItActive,ItImpUid,ItOrder,ItIsBadReturn")] Item item)
-        {
-            try
-            {
-                // Log the incoming item data
-                System.Diagnostics.Debug.WriteLine($"Creating new item with code: {item.ItCode}");
-                System.Diagnostics.Debug.WriteLine($"UOM ID: {item.ItUomId}");
-                System.Diagnostics.Debug.WriteLine($"Item Group ID: {item.ItCdIdItg}");
-                System.Diagnostics.Debug.WriteLine($"Description: {item.ItDescriptionLan1}");
-
-                // Log model state errors
-                if (!ModelState.IsValid)
-                {
-                    System.Diagnostics.Debug.WriteLine("Model state is invalid. Errors:");
-                    foreach (var modelState in ModelState.Values)
-                    {
-                        foreach (var error in modelState.Errors)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Validation Error: {error.ErrorMessage}");
-                        }
-                    }
-                }
-
-                // Set default values for required fields if not provided
-                if (item.ItActive == 0)
-                {
-                    item.ItActive = 1;
-                }
-
-                // Set default values for checkbox fields
-                item.ItHasLot = item.ItHasLot == 1 ? (short)1 : (short)0;
-                item.ItHasProductionDate = item.ItHasProductionDate == 1 ? (short)1 : (short)0;
-                item.ItHasExpiryDate = item.ItHasExpiryDate == 1 ? (short)1 : (short)0;
-                item.ItIsService = item.ItIsService == 1 ? (short)1 : (short)0;
-                item.ItIsAsset = item.ItIsAsset == 1 ? (short)1 : (short)0;
-                item.ItIsSaleable = item.ItIsSaleable == 1 ? (short)1 : (short)0;
-                item.ItHasSerial = item.ItHasSerial == 1 ? (short)1 : (short)0;
-                item.ItHasMultipleUom = item.ItHasMultipleUom == 1 ? (short)1 : (short)0;
-                item.ItIsBadReturn = item.ItIsBadReturn == 1 ? (short)1 : (short)0;
-
-                // Check if the UOM exists
-                var uomExists = await _context.Uoms.AnyAsync(u => u.UomId == item.ItUomId);
-                if (!uomExists)
-                {
-                    System.Diagnostics.Debug.WriteLine($"UOM with ID {item.ItUomId} does not exist");
-                    ModelState.AddModelError("ItUomId", "Selected UOM does not exist");
-                    ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomCode", item.ItUomId);
-                    ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItg);
-                    ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItCode", item.ItItId);
-                    return View(item);
-                }
-
-                // Check if the Item Group exists
-                var itemGroupExists = await _context.Codescs.AnyAsync(c => c.CdId == item.ItCdIdItg);
-                if (!itemGroupExists)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Item Group with ID {item.ItCdIdItg} does not exist");
-                    ModelState.AddModelError("ItCdIdItg", "Selected Item Group does not exist");
-                    ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomCode", item.ItUomId);
-                    ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItg);
-                    ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItCode", item.ItItId);
-                    return View(item);
-                }
-
-                // Check if item code already exists
-                var existingItem = await _context.Items.FirstOrDefaultAsync(i => i.ItCode == item.ItCode);
-                if (existingItem != null)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Item with code {item.ItCode} already exists");
-                    ModelState.AddModelError("ItCode", "An item with this code already exists");
-                    ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomCode", item.ItUomId);
-                    ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItg);
-                    ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItCode", item.ItItId);
-                    return View(item);
-                }
-
-                if (ModelState.IsValid)
-                {
-                    System.Diagnostics.Debug.WriteLine("Model is valid, attempting to save to database");
-                    _context.Add(item);
-                    var result = await _context.SaveChangesAsync();
-                    System.Diagnostics.Debug.WriteLine($"Save result: {result} rows affected");
-                    
-                    if (result > 0)
-                    {
-                        TempData["SuccessMessage"] = "Item created successfully!";
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine("No rows were affected during save");
-                        ModelState.AddModelError("", "Failed to save the item. Please try again.");
-                    }
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Database Error: {ex.Message}");
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Inner Exception: {ex.InnerException.Message}");
-                }
-                
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"General Error: {ex.Message}");
-                ModelState.AddModelError("", "An unexpected error occurred. Please try again.");
-            }
-
-            // If we get here, something went wrong
-            ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomCode", item.ItUomId);
-            ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItg);
-            ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItCode", item.ItItId);
-            return View(item);
-        }
-
+      
         // GET: Item/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -288,105 +159,45 @@ namespace M_Suite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Item/CreateSimple
-        public IActionResult CreateSimple()
+         // GET: Item/Create
+    public IActionResult Create()
+    {
+        // Populate dropdowns for foreign keys (use LINQ to get the correct data for each dropdown)
+        ViewBag.Uoms = new SelectList(_context.Uoms, "UomId", "UomName");
+        ViewBag.CdIdItg = new SelectList(_context.Codescs.Where(c => c.CdId == 4), "CdId", "CdDescriptionLan1"); // Example for ItCdIdItg
+        ViewBag.CdIdIbd = new SelectList(_context.Codescs.Where(c => c.CdId == 5), "CdId", "CdDescriptionLan1");
+        ViewBag.CdIdIgp = new SelectList(_context.Codescs.Where(c => c.CdId == 6), "CdId", "CdDescriptionLan1");
+        ViewBag.CdIdIsg = new SelectList(_context.Codescs.Where(c => c.CdId == 7), "CdId", "CdDescriptionLan1");
+        ViewBag.CdIdItp = new SelectList(_context.Codescs.Where(c => c.CdId == 16), "CdId", "CdDescriptionLan1");
+
+        return View();
+    }
+
+    // POST: Item/Create
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Item item)
+    {
+        if (ModelState.IsValid)
         {
-            try
-            {
-                ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomCode");
-                ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId");
-                return View();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error in CreateSimple GET: {ex.Message}");
-                return View("Error");
-            }
+            // Insert the item into the database
+            _context.Items.Add(item);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index)); // Or another action like "Details"
         }
 
-        // POST: Item/CreateSimple
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateSimple([Bind("ItCode,ItDescriptionLan1,ItUomId,ItCdIdItg")] Item item)
-        {
-            try
-            {
-                // Log the incoming model state
-                foreach (var modelState in ModelState.Values)
-                {
-                    foreach (var error in modelState.Errors)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Validation Error: {error.ErrorMessage}");
-                    }
-                }
+        // If model is invalid, return to the create view with current data
+        ViewBag.Uoms = new SelectList(_context.Uoms, "UomId", "UomName", item.ItUomId);
+        ViewBag.CdIdItg = new SelectList(_context.Codescs.Where(c => c.CdId == 4), "CdId", "CdDescriptionLan1", item.ItCdIdItg);
+        ViewBag.CdIdIbd = new SelectList(_context.Codescs.Where(c => c.CdId == 5), "CdId", "CdDescriptionLan1", item.ItCdIdIbd);
+        ViewBag.CdIdIgp = new SelectList(_context.Codescs.Where(c => c.CdId == 6), "CdId", "CdDescriptionLan1", item.ItCdIdIgp);
+        ViewBag.CdIdIsg = new SelectList(_context.Codescs.Where(c => c.CdId == 7), "CdId", "CdDescriptionLan1", item.ItCdIdIsg);
+        ViewBag.CdIdItp = new SelectList(_context.Codescs.Where(c => c.CdId == 16), "CdId", "CdDescriptionLan1", item.ItCdIdItp);
 
-                // Set default values for required fields
-                item.ItActive = 1;
-                item.ItHasLot = 0;
-                item.ItHasProductionDate = 0;
-                item.ItHasExpiryDate = 0;
-                item.ItIsService = 0;
-                item.ItIsAsset = 0;
-                item.ItIsSaleable = 0;
-                item.ItHasSerial = 0;
-                item.ItHasMultipleUom = 0;
-                item.ItIsBadReturn = 0;
+        return View(item);
+    }
 
-                // Validate required fields
-                if (string.IsNullOrWhiteSpace(item.ItCode))
-                {
-                    ModelState.AddModelError("ItCode", "Item Code is required");
-                }
-                if (string.IsNullOrWhiteSpace(item.ItDescriptionLan1))
-                {
-                    ModelState.AddModelError("ItDescriptionLan1", "Description is required");
-                }
-                if (item.ItUomId == 0)
-                {
-                    ModelState.AddModelError("ItUomId", "Unit of Measure is required");
-                }
-                if (item.ItCdIdItg == 0)
-                {
-                    ModelState.AddModelError("ItCdIdItg", "Item Group is required");
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // Check if item code already exists
-                    var existingItem = await _context.Items.FirstOrDefaultAsync(i => i.ItCode == item.ItCode);
-                    if (existingItem != null)
-                    {
-                        ModelState.AddModelError("ItCode", "An item with this code already exists");
-                        ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomCode", item.ItUomId);
-                        ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItg);
-                        return View(item);
-                    }
-
-                    _context.Add(item);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Database Error: {ex.Message}");
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Inner Exception: {ex.InnerException.Message}");
-                }
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"General Error: {ex.Message}");
-                ModelState.AddModelError("", "An unexpected error occurred. Please try again.");
-            }
-
-            // If we got this far, something failed; redisplay form
-            ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomCode", item.ItUomId);
-            ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItg);
-            return View(item);
-        }
+       
 
         private bool ItemExists(int id)
         {

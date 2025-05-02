@@ -1,0 +1,95 @@
+﻿@model IEnumerable<M_Suite.Models.PhysicalLocation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PlLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlDescriptionLan1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlDescriptionLan2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlDescriptionLan3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlImpUid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlBu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlCdIdPltNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlMd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlPl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlDescriptionLan1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlDescriptionLan2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlDescriptionLan3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlImpUid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlBu.BuId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlCdIdPltNavigation.CdId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlMd.MdId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlPl.PlId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PlId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PlId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PlId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

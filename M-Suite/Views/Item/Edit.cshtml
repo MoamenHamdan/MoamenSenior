@@ -1,15 +1,13 @@
-@model M_Suite.Models.Item
+﻿@model M_Suite.Models.Item
 
 @{
     ViewData["Title"] = "Edit";
 }
-@section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
-}
-<div class="profile-content">
-        <div class="profile-header">
-            <h2>Item Edit</h2>
-        </div>
+
+<h1>Edit</h1>
+
+<h4>Item</h4>
+<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -27,27 +25,27 @@
             </div>
             <div class="form-group">
                 <label asp-for="ItCdIdItg" class="control-label"></label>
-                <input asp-for="ItCdIdItg" class="form-control" />
+                <select asp-for="ItCdIdItg" class="form-control" asp-items="ViewBag.ItCdIdItg"></select>
                 <span asp-validation-for="ItCdIdItg" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ItCdIdIbd" class="control-label"></label>
-                <input asp-for="ItCdIdIbd" class="form-control" />
+                <select asp-for="ItCdIdIbd" class="form-control" asp-items="ViewBag.ItCdIdIbd"></select>
                 <span asp-validation-for="ItCdIdIbd" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ItCdIdIgp" class="control-label"></label>
-                <input asp-for="ItCdIdIgp" class="form-control" />
+                <select asp-for="ItCdIdIgp" class="form-control" asp-items="ViewBag.ItCdIdIgp"></select>
                 <span asp-validation-for="ItCdIdIgp" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ItCdIdIsg" class="control-label"></label>
-                <input asp-for="ItCdIdIsg" class="form-control" />
+                <select asp-for="ItCdIdIsg" class="form-control" asp-items="ViewBag.ItCdIdIsg"></select>
                 <span asp-validation-for="ItCdIdIsg" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ItCdIdItp" class="control-label"></label>
-                <input asp-for="ItCdIdItp" class="form-control" />
+                <select asp-for="ItCdIdItp" class="form-control" asp-items="ViewBag.ItCdIdItp"></select>
                 <span asp-validation-for="ItCdIdItp" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -149,8 +147,6 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
-</div>
-</div>
 </div>
 
 @section Scripts {

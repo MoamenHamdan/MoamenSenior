@@ -1,100 +1,179 @@
-@model IEnumerable<M_Suite.Models.Item>
+﻿@model IEnumerable<M_Suite.Models.Item>
 
 @{
-    ViewData["Title"] = "Items";
+    ViewData["Title"] = "Index";
 }
 
-<div class="container-fluid">
-    <div class="row mb-3">
-        <div class="col">
-            <h1>Items</h1>
-        </div>
-        <div class="col text-end">
-            <a asp-action="Create" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Create New
-            </a>
-        </div>
-    </div>
+<h1>Index</h1>
 
-    @if (ViewBag.SuccessMessage != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @ViewBag.SuccessMessage
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead class="table-light">
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.ItCode)</th>
-                    <th>@Html.DisplayNameFor(model => model.ItDescriptionLan1)</th>
-                    <th>UOM</th>
-                    <th>Item Group</th>
-                    <th>Type</th>
-                    <th>Properties</th>
-                    <th>@Html.DisplayNameFor(model => model.ItActive)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.ItCode)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ItDescriptionLan1)</td>
-                        <td>@(item.ItUom?.UomCode ?? "N/A")</td>
-                        <td>@(item.ItCdIdItgNavigation?.CdId.ToString() ?? "N/A")</td>
-                        <td>
-                            @if (item.ItIsService == 1) { <span class="badge bg-info">Service</span> }
-                            @if (item.ItIsAsset == 1) { <span class="badge bg-warning">Asset</span> }
-                            @if (item.ItIsSaleable == 1) { <span class="badge bg-success">Saleable</span> }
-                        </td>
-                        <td>
-                            @if (item.ItHasLot == 1) { <span class="badge bg-secondary">Lot</span> }
-                            @if (item.ItHasSerial == 1) { <span class="badge bg-secondary">Serial</span> }
-                            @if (item.ItHasMultipleUom == 1) { <span class="badge bg-secondary">Multi-UOM</span> }
-                        </td>
-                        <td>
-                            @if (item.ItActive == 1)
-                            {
-                                <span class="badge bg-success">Active</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-danger">Inactive</span>
-                            }
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                <a asp-action="Edit" asp-route-id="@item.ItId" class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <a asp-action="Details" asp-route-id="@item.ItId" class="btn btn-sm btn-outline-info">
-                                    <i class="fas fa-info-circle"></i> Details
-                                </a>
-                                <a asp-action="Delete" asp-route-id="@item.ItId" class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash"></i> Delete
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
-    <script>
-        // Auto-dismiss success message after 5 seconds
-        $(document).ready(function() {
-            setTimeout(function() {
-                $('.alert-success').fadeOut('slow');
-            }, 5000);
-        });
-    </script>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ItCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItDescriptionLan1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItDescriptionLan2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItDescriptionLan3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItWeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItHasLot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItHasProductionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItHasExpiryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItHasMultipleUom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItHasSerial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItIsDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItIsSaleable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItIsService)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItIsAsset)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItImpUid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItOrder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItIsBadReturn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItCdIdIbdNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItCdIdIgpNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItCdIdIsgNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItCdIdItgNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItCdIdItpNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItIt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItUom)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItDescriptionLan1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItDescriptionLan2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItDescriptionLan3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItWeight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItHasLot)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItHasProductionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItHasExpiryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItHasMultipleUom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItHasSerial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItIsDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItIsSaleable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItIsService)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItIsAsset)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItImpUid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItOrder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItIsBadReturn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItCdIdIbdNavigation.CdId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItCdIdIgpNavigation.CdId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItCdIdIsgNavigation.CdId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItCdIdItgNavigation.CdId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItCdIdItpNavigation.CdId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItIt.ItId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItUom.UomId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ItId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ItId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ItId">Delete</a>
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

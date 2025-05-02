@@ -1,0 +1,75 @@
+@model M_Suite.Models.ListpriceItem
+
+@{
+    ViewData["Title"] = "Edit Item Price";
+}
+
+<div class="container">
+    <h1>Edit Item Price</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="EditItemPrice">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="LpiId" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Item Code</label>
+                            <input class="form-control" value="@Model.LpiIt?.ItCode" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Description</label>
+                            <input class="form-control" value="@Model.LpiIt?.ItDescriptionLan1" readonly />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">UOM</label>
+                            <input class="form-control" value="@Model.LpiUom?.UomCode" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LpiPrice" class="control-label">Price</label>
+                            <input asp-for="LpiPrice" class="form-control" type="number" step="0.01" min="0" />
+                            <span asp-validation-for="LpiPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LpiDiscount" class="control-label">Discount (%)</label>
+                            <input asp-for="LpiDiscount" class="form-control" type="number" step="0.01" min="0" max="100" />
+                            <span asp-validation-for="LpiDiscount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LpiMaxDiscount" class="control-label">Max Discount (%)</label>
+                            <input asp-for="LpiMaxDiscount" class="form-control" type="number" step="0.01" min="0" max="100" />
+                            <span asp-validation-for="LpiMaxDiscount" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a asp-action="Details" asp-route-id="@Model.LpiLpId" class="btn btn-secondary">Back to Details</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

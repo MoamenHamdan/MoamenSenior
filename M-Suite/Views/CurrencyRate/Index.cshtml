@@ -1,0 +1,89 @@
+﻿@model IEnumerable<M_Suite.Models.CurrencyRate>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CrDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrCdIdCurFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrCdIdCurTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrBuId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrRateBuy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrRateSell)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrMaxRateBuy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrMaxRateSell)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrMinRateBuy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrMinRateSell)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrCdIdCurFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrCdIdCurTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrBuId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrRateBuy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrRateSell)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrMaxRateBuy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrMaxRateSell)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrMinRateBuy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CrMinRateSell)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CrId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CrId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CrId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
