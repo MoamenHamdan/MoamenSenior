@@ -1,5 +1,5 @@
 ﻿@section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 }
 
 <!DOCTYPE html>
@@ -9,21 +9,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-    @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true">*@
 </head>
 <body>
-    <div class="container">
+    <div class="login-container">
         <!-- Left Panel (Image) -->
-        <div class="left-panel">
-            <div class="picture-placeholder">
-                <img src="/Images/malialogin.jpg" alt="Background Image" class="picture-placeholder">
-            </div>
+        <div class="login-image-container">
+            <img src="/Images/malialogin.jpg" alt="Background Image" class="login-image">
         </div>
 
         <!-- Right Panel (Login Form) -->
-        <div class="right-panel">
+        <div class="login-form-container">
             <div class="language-selector">
-                <select>
+                <select class="language-dropdown">
                     <option>English</option>
                     <option>Arabic</option>
                     <option>French</option>
@@ -31,40 +28,44 @@
             </div>
 
             <form class="login-form" method="post" asp-controller="User" asp-action="Login">
-                <h1>Welcome</h1>
+                <h1 class="login-title">Welcome</h1>
 
                 @if (ViewBag.Error != null)
                 {
                     <div class="alert alert-danger">@ViewBag.Error</div>
                 }
 
-                <div class="input-group">
-                    <input type="text" name="username" placeholder="Username" required>
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="Username" required class="form-input">
+                    <i class="fas fa-user input-icon"></i>
                 </div>
-                <div class="input-group">
-                    <input type="password" name="password" placeholder="Password" required>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password" required class="form-input">
+                    <i class="fas fa-lock input-icon"></i>
                 </div>
-                <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <span class="checkmark"></span>
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
                 </div>
-                <button type="submit" class="login-btn">LOG IN</button>
+                <button type="submit" class="login-button">LOG IN</button>
 
                 <div class="support-section">
-                    <div class="support-title">Support</div>
+                    <div class="support-title">Need help?</div>
                     <div class="support-links">
-                        <a href="#" onclick="showPhoneSupport()">
-                            <i class="fas fa-phone"></i>
+                        <a href="#" onclick="showPhoneSupport()" class="support-link">
+                            <i class="fas fa-phone"></i> +961 1 900 100
                         </a>
-                        <a href="#" onclick="showEmailSupport()">
-                            <i class="fas fa-envelope"></i>
+                        <a href="#" onclick="showEmailSupport()" class="support-link">
+                            <i class="fas fa-envelope"></i> support@maliatec.com
                         </a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
-
 </body>
 </html>
