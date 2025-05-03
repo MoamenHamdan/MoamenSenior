@@ -1,125 +1,87 @@
-﻿@model M_Suite.Models.Thirdparty
+﻿@model M_Suite.Models.PhysicalLocation
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Physical Location";
 }
 
-<h1>Create</h1>
+<h2>@ViewData["Title"]</h2>
 
-<h4>Thirdparty</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ThpOrgId" class="control-label"></label>
-                <input asp-for="ThpOrgId" class="form-control" />
-                <span asp-validation-for="ThpOrgId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpCdIdTpg" class="control-label"></label>
-                <select asp-for="ThpCdIdTpg" class ="form-control" asp-items="ViewBag.ThpCdIdTpg"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpCdIdTps" class="control-label"></label>
-                <select asp-for="ThpCdIdTps" class ="form-control" asp-items="ViewBag.ThpCdIdTps"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpCode" class="control-label"></label>
-                <input asp-for="ThpCode" class="form-control" />
-                <span asp-validation-for="ThpCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpNameLan1" class="control-label"></label>
-                <input asp-for="ThpNameLan1" class="form-control" />
-                <span asp-validation-for="ThpNameLan1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpNameLan2" class="control-label"></label>
-                <input asp-for="ThpNameLan2" class="form-control" />
-                <span asp-validation-for="ThpNameLan2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpNameLan3" class="control-label"></label>
-                <input asp-for="ThpNameLan3" class="form-control" />
-                <span asp-validation-for="ThpNameLan3" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpIsCustomer" class="control-label"></label>
-                <input asp-for="ThpIsCustomer" class="form-control" />
-                <span asp-validation-for="ThpIsCustomer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpIsSupplier" class="control-label"></label>
-                <input asp-for="ThpIsSupplier" class="form-control" />
-                <span asp-validation-for="ThpIsSupplier" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpIsCompany" class="control-label"></label>
-                <input asp-for="ThpIsCompany" class="form-control" />
-                <span asp-validation-for="ThpIsCompany" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpModifiedDate" class="control-label"></label>
-                <input asp-for="ThpModifiedDate" class="form-control" />
-                <span asp-validation-for="ThpModifiedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpImpUid" class="control-label"></label>
-                <input asp-for="ThpImpUid" class="form-control" />
-                <span asp-validation-for="ThpImpUid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpRemarks" class="control-label"></label>
-                <input asp-for="ThpRemarks" class="form-control" />
-                <span asp-validation-for="ThpRemarks" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpImported" class="control-label"></label>
-                <input asp-for="ThpImported" class="form-control" />
-                <span asp-validation-for="ThpImported" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpReadonly" class="control-label"></label>
-                <input asp-for="ThpReadonly" class="form-control" />
-                <span asp-validation-for="ThpReadonly" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpUsIdCreated" class="control-label"></label>
-                <input asp-for="ThpUsIdCreated" class="form-control" />
-                <span asp-validation-for="ThpUsIdCreated" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpNewcode" class="control-label"></label>
-                <input asp-for="ThpNewcode" class="form-control" />
-                <span asp-validation-for="ThpNewcode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpPrintLang" class="control-label"></label>
-                <input asp-for="ThpPrintLang" class="form-control" />
-                <span asp-validation-for="ThpPrintLang" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpPrintarabic" class="control-label"></label>
-                <input asp-for="ThpPrintarabic" class="form-control" />
-                <span asp-validation-for="ThpPrintarabic" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThpIsB2b" class="control-label"></label>
-                <input asp-for="ThpIsB2b" class="form-control" />
-                <span asp-validation-for="ThpIsB2b" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="PlCode" class="control-label"></label>
+        <input asp-for="PlCode" class="form-control" />
+        <span asp-validation-for="PlCode" class="text-danger"></span>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="form-group">
+        <label asp-for="PlLevel" class="control-label"></label>
+        <input asp-for="PlLevel" class="form-control" />
+        <span asp-validation-for="PlLevel" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PlDescriptionLan1" class="control-label"></label>
+        <input asp-for="PlDescriptionLan1" class="form-control" />
+        <span asp-validation-for="PlDescriptionLan1" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PlDescriptionLan2" class="control-label"></label>
+        <input asp-for="PlDescriptionLan2" class="form-control" />
+        <span asp-validation-for="PlDescriptionLan2" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PlDescriptionLan3" class="control-label"></label>
+        <input asp-for="PlDescriptionLan3" class="form-control" />
+        <span asp-validation-for="PlDescriptionLan3" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PlBuId" class="control-label"></label>
+      <select asp-for="PlBuId" class="form-control" asp-items="@(ViewData["PlBuId"] as SelectList)"></select>
+
+        <span asp-validation-for="PlBuId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PlCdIdPlt" class="control-label"></label>
+<select asp-for="PlCdIdPlt" class="form-control" asp-items="@(ViewData["PlCdIdPlt"] as SelectList)"></select>
+
+        <span asp-validation-for="PlCdIdPlt" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PlMdId" class="control-label"></label>
+     <select asp-for="PlMdId" class="form-control" asp-items="@(ViewData["PlMdId"] as SelectList)"></select>
+
+        <span asp-validation-for="PlMdId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PlPlId" class="control-label"></label>
+        <select asp-for="PlPlId" class="form-control" asp-items="@(ViewData["PlPlId"] as SelectList)"></select>
+        <span asp-validation-for="PlPlId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PlActive" class="control-label"></label>
+        <input asp-for="PlActive" type="checkbox" class="form-check-input" />
+        <span asp-validation-for="PlActive" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PlImpUid" class="control-label"></label>
+        <input asp-for="PlImpUid" class="form-control" />
+        <span asp-validation-for="PlImpUid" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
