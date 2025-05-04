@@ -69,16 +69,8 @@ namespace M_Suite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LpId,LpBuId,LpCdIdCur,LpCode,LpDescriptionLan1,LpDescriptionLan2,LpDescriptionLan3,LpFromDate,LpToDate,LpActive")] Listprice listprice)
         {
-            try
-            {
-                // Log the incoming model state
-                foreach (var modelState in ModelState.Values)
-                {
-                    foreach (var error in modelState.Errors)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Validation Error: {error.ErrorMessage}");
-                    }
-                }
+        
+        
 
                 if (ModelState.IsValid)
                 {
@@ -103,26 +95,8 @@ namespace M_Suite.Controllers
                     TempData["SuccessMessage"] = "Price List created successfully!";
                     return RedirectToAction(nameof(Index));
                 }
-                else
-                {
-                    // Log model state errors
-                    foreach (var key in ModelState.Keys)
-                    {
-                        var state = ModelState[key];
-                        foreach (var error in state.Errors)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Error in {key}: {error.ErrorMessage}");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Exception while creating Price List: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
-                ModelState.AddModelError("", "An error occurred while creating the Price List. Please try again.");
-            }
-
+       
+          
             // Repopulate dropdowns
             ViewData["LpCdIdCur"] = new SelectList(_context.VCodescCurs, "CdId", "CdDescriptionLan1", listprice.LpCdIdCur);
             ViewData["LpBuId"] = new SelectList(_context.BusinessUnits, "BuId", "BuDescriptionLan1", listprice.LpBuId);
