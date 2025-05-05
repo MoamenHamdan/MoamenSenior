@@ -1,0 +1,85 @@
+@model M_Suite.Models.Listprice
+
+@{
+    ViewData["Title"] = "Edit Price List";
+}
+
+<div class="container">
+    <h1>Edit Price List</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="LpId" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LpCode" class="control-label">Code</label>
+                            <input asp-for="LpCode" class="form-control" />
+                            <span asp-validation-for="LpCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LpDescriptionLan1" class="control-label">Description</label>
+                            <input asp-for="LpDescriptionLan1" class="form-control" />
+                            <span asp-validation-for="LpDescriptionLan1" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LpBuId" class="control-label">Business Unit</label>
+                            <select asp-for="LpBuId" class="form-control" asp-items="ViewBag.LpBuId"></select>
+                            <span asp-validation-for="LpBuId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LpCdIdCur" class="control-label">Currency</label>
+                            <select asp-for="LpCdIdCur" class="form-control" asp-items="ViewBag.LpCdIdCur"></select>
+                            <span asp-validation-for="LpCdIdCur" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LpFromDate" class="control-label">From Date</label>
+                            <input asp-for="LpFromDate" class="form-control" type="date" />
+                            <span asp-validation-for="LpFromDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="LpToDate" class="control-label">To Date</label>
+                            <input asp-for="LpToDate" class="form-control" type="date" />
+                            <span asp-validation-for="LpToDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="form-check">
+                        <input asp-for="LpActive" class="form-check-input" />
+                        <label asp-for="LpActive" class="form-check-label">Active</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 
