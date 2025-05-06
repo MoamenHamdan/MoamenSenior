@@ -8,6 +8,13 @@
     <h1>Add Items to Price List</h1>
     <h4>@listprice.LpCode - @listprice.LpDescriptionLan1</h4>
 
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
     <div class="card">
         <div class="card-body">
             <form asp-action="AddItems" asp-route-id="@listprice.LpId" method="post">
@@ -55,9 +62,9 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Enable/disable price input based on checkbox
-            $('.item-checkbox').change(function () {
+            $('.item-checkbox').change(function() {
                 var priceInput = $(this).closest('tr').find('.price-input');
                 priceInput.prop('disabled', !this.checked);
                 if (!this.checked) {
@@ -71,7 +78,7 @@
                 var hasSelectedItems = $('.item-checkbox:checked').length > 0;
                 var allPricesFilled = true;
 
-                $('.item-checkbox:checked').each(function () {
+                $('.item-checkbox:checked').each(function() {
                     var priceInput = $(this).closest('tr').find('.price-input');
                     if (!priceInput.val()) {
                         allPricesFilled = false;
@@ -83,7 +90,7 @@
             }
 
             // Listen for price input changes
-            $('.price-input').on('input', function () {
+            $('.price-input').on('input', function() {
                 updateSubmitButton();
             });
         });

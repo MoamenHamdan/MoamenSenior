@@ -22,32 +22,8 @@ namespace M_Suite.Controllers
         // GET: Item
         public async Task<IActionResult> Index()
         {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine("Loading items for Index view");
-                var items = await _context.Items
-                    .Include(i => i.ItIt)
-                    .Include(i => i.ItUom)
-                    .Include(i => i.ItCdIdItgNavigation)
-                    .OrderBy(i => i.ItCode)
-                    .ToListAsync();
-
-                System.Diagnostics.Debug.WriteLine($"Found {items.Count} items");
-                
-                // Check for success message
-                if (TempData["SuccessMessage"] != null)
-                {
-                    ViewBag.SuccessMessage = TempData["SuccessMessage"];
-                }
-
-                return View(items);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error loading items: {ex.Message}");
-                ModelState.AddModelError("", "Error loading items. Please try again.");
-                return View(new List<Item>());
-            }
+            var mSuiteContext = _context.Items.Include(i => i.ItCdIdIbdNavigation).Include(i => i.ItCdIdIgpNavigation).Include(i => i.ItCdIdIsgNavigation).Include(i => i.ItCdIdItgNavigation).Include(i => i.ItCdIdItpNavigation).Include(i => i.ItIt).Include(i => i.ItUom);
+            return View(await mSuiteContext.ToListAsync());
         }
 
         // GET: Item/Details/5
@@ -59,6 +35,11 @@ namespace M_Suite.Controllers
             }
 
             var item = await _context.Items
+                .Include(i => i.ItCdIdIbdNavigation)
+                .Include(i => i.ItCdIdIgpNavigation)
+                .Include(i => i.ItCdIdIsgNavigation)
+                .Include(i => i.ItCdIdItgNavigation)
+                .Include(i => i.ItCdIdItpNavigation)
                 .Include(i => i.ItIt)
                 .Include(i => i.ItUom)
                 .FirstOrDefaultAsync(m => m.ItId == id);
@@ -70,7 +51,41 @@ namespace M_Suite.Controllers
             return View(item);
         }
 
-      
+        // GET: Item/Create
+        public IActionResult Create()
+        {
+            ViewData["ItCdIdIbd"] = new SelectList(_context.Codescs, "CdId", "CdId");
+            ViewData["ItCdIdIgp"] = new SelectList(_context.Codescs, "CdId", "CdId");
+            ViewData["ItCdIdIsg"] = new SelectList(_context.Codescs, "CdId", "CdId");
+            ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId");
+            ViewData["ItCdIdItp"] = new SelectList(_context.Codescs, "CdId", "CdId");
+            ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItId");
+            ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomId");
+            return View();
+        }
+
+        // POST: Item/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ItId,ItItId,ItUomId,ItCdIdItg,ItCdIdIbd,ItCdIdIgp,ItCdIdIsg,ItCdIdItp,ItCode,ItDescriptionLan1,ItDescriptionLan2,ItDescriptionLan3,ItWeight,ItHasLot,ItHasProductionDate,ItHasExpiryDate,ItHasMultipleUom,ItHasSerial,ItIsDescription,ItIsSaleable,ItIsService,ItIsAsset,ItActive,ItImpUid,ItOrder,ItIsBadReturn")] Item item)
+        {
+          
+                _context.Add(item);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            
+            ViewData["ItCdIdIbd"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdIbd);
+            ViewData["ItCdIdIgp"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdIgp);
+            ViewData["ItCdIdIsg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdIsg);
+            ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItg);
+            ViewData["ItCdIdItp"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItp);
+            ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItId", item.ItItId);
+            ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomId", item.ItUomId);
+            return View(item);
+        }
+
         // GET: Item/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -84,12 +99,19 @@ namespace M_Suite.Controllers
             {
                 return NotFound();
             }
+            ViewData["ItCdIdIbd"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdIbd);
+            ViewData["ItCdIdIgp"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdIgp);
+            ViewData["ItCdIdIsg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdIsg);
+            ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItg);
+            ViewData["ItCdIdItp"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItp);
             ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItId", item.ItItId);
             ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomId", item.ItUomId);
             return View(item);
         }
 
         // POST: Item/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ItId,ItItId,ItUomId,ItCdIdItg,ItCdIdIbd,ItCdIdIgp,ItCdIdIsg,ItCdIdItp,ItCode,ItDescriptionLan1,ItDescriptionLan2,ItDescriptionLan3,ItWeight,ItHasLot,ItHasProductionDate,ItHasExpiryDate,ItHasMultipleUom,ItHasSerial,ItIsDescription,ItIsSaleable,ItIsService,ItIsAsset,ItActive,ItImpUid,ItOrder,ItIsBadReturn")] Item item)
@@ -119,6 +141,11 @@ namespace M_Suite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ItCdIdIbd"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdIbd);
+            ViewData["ItCdIdIgp"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdIgp);
+            ViewData["ItCdIdIsg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdIsg);
+            ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItg);
+            ViewData["ItCdIdItp"] = new SelectList(_context.Codescs, "CdId", "CdId", item.ItCdIdItp);
             ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItId", item.ItItId);
             ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomId", item.ItUomId);
             return View(item);
@@ -133,6 +160,11 @@ namespace M_Suite.Controllers
             }
 
             var item = await _context.Items
+                .Include(i => i.ItCdIdIbdNavigation)
+                .Include(i => i.ItCdIdIgpNavigation)
+                .Include(i => i.ItCdIdIsgNavigation)
+                .Include(i => i.ItCdIdItgNavigation)
+                .Include(i => i.ItCdIdItpNavigation)
                 .Include(i => i.ItIt)
                 .Include(i => i.ItUom)
                 .FirstOrDefaultAsync(m => m.ItId == id);
@@ -158,46 +190,6 @@ namespace M_Suite.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-         // GET: Item/Create
-    public IActionResult Create()
-    {
-        // Populate dropdowns for foreign keys (use LINQ to get the correct data for each dropdown)
-        ViewBag.Uoms = new SelectList(_context.Uoms, "UomId", "UomName");
-        ViewBag.CdIdItg = new SelectList(_context.Codescs.Where(c => c.CdId == 4), "CdId", "CdDescriptionLan1"); // Example for ItCdIdItg
-        ViewBag.CdIdIbd = new SelectList(_context.Codescs.Where(c => c.CdId == 5), "CdId", "CdDescriptionLan1");
-        ViewBag.CdIdIgp = new SelectList(_context.Codescs.Where(c => c.CdId == 6), "CdId", "CdDescriptionLan1");
-        ViewBag.CdIdIsg = new SelectList(_context.Codescs.Where(c => c.CdId == 7), "CdId", "CdDescriptionLan1");
-        ViewBag.CdIdItp = new SelectList(_context.Codescs.Where(c => c.CdId == 16), "CdId", "CdDescriptionLan1");
-
-        return View();
-    }
-
-    // POST: Item/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Create(Item item)
-    {
-        if (ModelState.IsValid)
-        {
-            // Insert the item into the database
-            _context.Items.Add(item);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index)); // Or another action like "Details"
-        }
-
-        // If model is invalid, return to the create view with current data
-        ViewBag.Uoms = new SelectList(_context.Uoms, "UomId", "UomName", item.ItUomId);
-        ViewBag.CdIdItg = new SelectList(_context.Codescs.Where(c => c.CdId == 4), "CdId", "CdDescriptionLan1", item.ItCdIdItg);
-        ViewBag.CdIdIbd = new SelectList(_context.Codescs.Where(c => c.CdId == 5), "CdId", "CdDescriptionLan1", item.ItCdIdIbd);
-        ViewBag.CdIdIgp = new SelectList(_context.Codescs.Where(c => c.CdId == 6), "CdId", "CdDescriptionLan1", item.ItCdIdIgp);
-        ViewBag.CdIdIsg = new SelectList(_context.Codescs.Where(c => c.CdId == 7), "CdId", "CdDescriptionLan1", item.ItCdIdIsg);
-        ViewBag.CdIdItp = new SelectList(_context.Codescs.Where(c => c.CdId == 16), "CdId", "CdDescriptionLan1", item.ItCdIdItp);
-
-        return View(item);
-    }
-
-       
 
         private bool ItemExists(int id)
         {

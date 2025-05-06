@@ -48,94 +48,92 @@ namespace M_Suite.Controllers
             return View(physicalLocation);
         }
 
-        // GET: PhysicalLocation/Create
-        public IActionResult Create()
-        {
-            ViewData["PlBuId"] = new SelectList(_context.BusinessUnits, "BuId", "BuId");
-            ViewData["PlCdIdPlt"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            ViewData["PlMdId"] = new SelectList(_context.Modules, "MdId", "MdId");
-            ViewData["PlPlId"] = new SelectList(_context.PhysicalLocations, "PlId", "PlId");
-            return View();
-        }
+     // GET: PhysicalLocation/Create
+public IActionResult Create()
+{
+    PopulateDropDowns();
+    return View();
+}
 
-        // POST: PhysicalLocation/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlId,PlPlId,PlCdIdPlt,PlMdId,PlLevel,PlCode,PlDescriptionLan1,PlDescriptionLan2,PlDescriptionLan3,PlBuId,PlActive,PlImpUid")] PhysicalLocation physicalLocation)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(physicalLocation);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["PlBuId"] = new SelectList(_context.BusinessUnits, "BuId", "BuId", physicalLocation.PlBuId);
-            ViewData["PlCdIdPlt"] = new SelectList(_context.Codescs, "CdId", "CdId", physicalLocation.PlCdIdPlt);
-            ViewData["PlMdId"] = new SelectList(_context.Modules, "MdId", "MdId", physicalLocation.PlMdId);
-            ViewData["PlPlId"] = new SelectList(_context.PhysicalLocations, "PlId", "PlId", physicalLocation.PlPlId);
-            return View(physicalLocation);
-        }
+// POST: PhysicalLocation/Create
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Create([Bind("PlId,PlPlId,PlCdIdPlt,PlMdId,PlLevel,PlCode,PlDescriptionLan1,PlDescriptionLan2,PlDescriptionLan3,PlBuId,PlActive,PlImpUid")] PhysicalLocation physicalLocation)
+{
+ 
+        _context.Add(physicalLocation);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    
 
-        // GET: PhysicalLocation/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+    // If we got this far, something failed; re-populate dropdowns
+    PopulateDropDowns(physicalLocation);
+    return View(physicalLocation);
+}
 
-            var physicalLocation = await _context.PhysicalLocations.FindAsync(id);
-            if (physicalLocation == null)
-            {
-                return NotFound();
-            }
-            ViewData["PlBuId"] = new SelectList(_context.BusinessUnits, "BuId", "BuId", physicalLocation.PlBuId);
-            ViewData["PlCdIdPlt"] = new SelectList(_context.Codescs, "CdId", "CdId", physicalLocation.PlCdIdPlt);
-            ViewData["PlMdId"] = new SelectList(_context.Modules, "MdId", "MdId", physicalLocation.PlMdId);
-            ViewData["PlPlId"] = new SelectList(_context.PhysicalLocations, "PlId", "PlId", physicalLocation.PlPlId);
-            return View(physicalLocation);
-        }
+// Helper method to populate dropdowns
+private void PopulateDropDowns(PhysicalLocation? physicalLocation = null)
+{
+    ViewData["PlBuId"] = new SelectList(_context.BusinessUnits, "BuId", "BuDescriptionLan1", physicalLocation?.PlBuId);
+    ViewData["PlCdIdPlt"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", physicalLocation?.PlCdIdPlt);
+    ViewData["PlMdId"] = new SelectList(_context.Modules, "MdId", "MdDescription", physicalLocation?.PlMdId);
+    ViewData["PlPlId"] = new SelectList(_context.PhysicalLocations, "PlId", "PlDescriptionLan1", physicalLocation?.PlPlId);
+}
+// GET: PhysicalLocation/Edit/5
+public async Task<IActionResult> Edit(int? id)
+{
+    if (id == null)
+    {
+        return NotFound();
+    }
 
-        // POST: PhysicalLocation/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlId,PlPlId,PlCdIdPlt,PlMdId,PlLevel,PlCode,PlDescriptionLan1,PlDescriptionLan2,PlDescriptionLan3,PlBuId,PlActive,PlImpUid")] PhysicalLocation physicalLocation)
-        {
-            if (id != physicalLocation.PlId)
-            {
-                return NotFound();
-            }
+    var physicalLocation = await _context.PhysicalLocations.FindAsync(id);
+    if (physicalLocation == null)
+    {
+        return NotFound();
+    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(physicalLocation);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PhysicalLocationExists(physicalLocation.PlId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["PlBuId"] = new SelectList(_context.BusinessUnits, "BuId", "BuId", physicalLocation.PlBuId);
-            ViewData["PlCdIdPlt"] = new SelectList(_context.Codescs, "CdId", "CdId", physicalLocation.PlCdIdPlt);
-            ViewData["PlMdId"] = new SelectList(_context.Modules, "MdId", "MdId", physicalLocation.PlMdId);
-            ViewData["PlPlId"] = new SelectList(_context.PhysicalLocations, "PlId", "PlId", physicalLocation.PlPlId);
-            return View(physicalLocation);
-        }
+    ViewData["PlBuId"] = new SelectList(_context.BusinessUnits, "BuId", "BuDescriptionLan1", physicalLocation.PlBuId);
+    ViewData["PlCdIdPlt"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", physicalLocation.PlCdIdPlt);
+    ViewData["PlMdId"] = new SelectList(_context.Modules, "MdId", "MdDescription", physicalLocation.PlMdId);
+    ViewData["PlPlId"] = new SelectList(_context.PhysicalLocations, "PlId", "PlDescriptionLan1", physicalLocation.PlPlId);
+
+    return View(physicalLocation);
+}
+
+
+   // POST: PhysicalLocation/Edit/5
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Edit(int id, [Bind("PlId,PlPlId,PlCdIdPlt,PlMdId,PlLevel,PlCode,PlDescriptionLan1,PlDescriptionLan2,PlDescriptionLan3,PlBuId,PlActive,PlImpUid")] PhysicalLocation physicalLocation)
+{
+    if (id != physicalLocation.PlId)
+    {
+        return NotFound();
+    }
+
+            _context.Update(physicalLocation);
+            await _context.SaveChangesAsync();
+        
+
+        return RedirectToAction(nameof(Index));
+    
+
+    // Rebuild dropdowns if ModelState is invalid
+    ViewData["PlBuId"] = new SelectList(_context.BusinessUnits, "BuId", "BuDescriptionLan1", physicalLocation.PlBuId);
+    ViewData["PlCdIdPlt"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", physicalLocation.PlCdIdPlt);
+    ViewData["PlMdId"] = new SelectList(_context.Modules, "MdId", "MdDescription", physicalLocation.PlMdId);
+    ViewData["PlPlId"] = new SelectList(_context.PhysicalLocations, "PlId", "PlDescriptionLan1", physicalLocation.PlPlId);
+
+    return View(physicalLocation);
+}
+
+// Helper method
+private bool PhysicalLocationExists(int id)
+{
+    return _context.PhysicalLocations.Any(e => e.PlId == id);
+}
+
 
         // GET: PhysicalLocation/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -174,9 +172,6 @@ namespace M_Suite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PhysicalLocationExists(int id)
-        {
-            return _context.PhysicalLocations.Any(e => e.PlId == id);
-        }
+     
     }
 }
