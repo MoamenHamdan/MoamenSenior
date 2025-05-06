@@ -1,65 +1,145 @@
-﻿@{
+@{
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
     ViewData["Title"] = "Login";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
+@section Styles { 
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 }
 
-<div class="container">
-    <!-- Left Panel (Image) -->
-    <div class="left-panel">
-        <div class="picture-placeholder">
-            <img src="/Images/malialogin.jpg" alt="Background Image" class="picture-placeholder">
-        </div>
-    </div>
-
-    <!-- Right Panel (Login Form) -->
-    <div class="right-panel">
+<div class="login-container">
+    <!-- Floating Glass Panel Design -->
+    <div class="login-glass-panel">
+        <!-- Language Selector -->
         <div class="language-selector">
-            <select>
-                <option>English</option>
-                <option>Arabic</option>
-                <option>French</option>
+            <select class="language-dropdown" aria-label="Select language">
+                <option value="en">English</option>
+                <option value="ar">Arabic</option>
+                <option value="fr">French</option>
             </select>
         </div>
 
+        <!-- Company Logo -->
+        <div class="floating-logo">
+            <img src="/Images/logo.png" alt="Company Logo">
+        </div>
+
+        <!-- Login Form -->
         <form class="login-form" method="post" asp-controller="User" asp-action="Login">
-            <h1>Welcome</h1>
+            <h1 class="login-title">Welcome Back</h1>
+            <p class="login-subtitle">Sign in to access your account</p>
 
             @if (ViewBag.Error != null)
             {
-                <div class="alert alert-danger">@ViewBag.Error</div>
+                <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
             }
 
-            <div class="input-group">
-                <input type="text" name="username" placeholder="Username" required>
+            <div class="form-group floating-input">
+                <input type="text" id="username" name="username" class="form-input" placeholder="Username" required>
+                <i class="fas fa-user input-icon"></i>
             </div>
-            <div class="input-group">
-                <input type="password" name="password" placeholder="Password" required>
+            
+            <div class="form-group floating-input">
+                <input type="password" id="password" name="password" class="form-input" placeholder="Password" required>
+                <i class="fas fa-lock input-icon"></i>
             </div>
-            <div class="remember-me">
-                <input type="checkbox" id="remember">
-                <label for="remember">Remember me</label>
+            
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <span class="checkmark"></span>
+                    Remember me
+                </label>
+                <a href="#" class="forgot-password">Forgot password?</a>
             </div>
-            <button type="submit" class="login-btn">LOG IN</button>
+            
+            <button type="submit" class="login-button">
+                <span>LOG IN</span>
+                <i class="fas fa-arrow-right button-icon"></i>
+            </button>
 
-            <div class="support-section">
-                <div class="support-title">Support</div>
-                <div class="support-links">
-                    <a href="#" onclick="showPhoneSupport()">
-                        <i class="fas fa-phone"></i>
-                    </a>
-                    <a href="#" onclick="showEmailSupport()">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                </div>
-            </div>
+           
         </form>
+
+        <!-- Support Section -->
+        <div class="support-section">
+            <h2 class="support-title">Need Help?</h2>
+            <div class="support-links">
+                <a href="#" onclick="showPhoneSupport()" class="support-link" aria-label="Phone support">
+                    <i class="fas fa-phone-alt"></i>
+                    <span class="support-text">+961 1 900 100</span>
+                </a>
+                <a href="#" onclick="showEmailSupport()" class="support-link" aria-label="Email support">
+                    <i class="fas fa-envelope"></i>
+                    <span class="support-text">support@molloitec.com</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="login-background">
+        <div class="background-overlay"></div>
+        <div class="particles-container">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <!-- More particles will be added via JavaScript -->
+        </div>
     </div>
 </div>
 
-@section Scripts {
+@section Scripts { 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+        // Add floating label functionality
+        document.querySelectorAll('.floating-input .form-input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.previousElementSibling.classList.add('active');
+            });
+            
+            input.addEventListener('blur', () => {
+                if (input.value === '') {
+                    input.previousElementSibling.classList.remove('active');
+                }
+            });
+            
+            // Initialize labels if input has value
+            if (input.value !== '') {
+                input.previousElementSibling.classList.add('active');
+            }
+        });
+
+        // Create animated particles
+        function createParticles() {
+            const container = document.querySelector('.particles-container');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 15 + 10;
+                const opacity = Math.random() * 0.4 + 0.1;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.opacity = opacity;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
 }
