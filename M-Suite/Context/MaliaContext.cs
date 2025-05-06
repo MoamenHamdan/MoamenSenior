@@ -14976,6 +14976,7 @@ public partial class MSuiteContext : DbContext
             entity.Property(e => e.QddColumnOrder).HasColumnName("qdd_column_order");
             entity.Property(e => e.QddColumnWidth)
                 .HasMaxLength(10)
+                
                 .IsUnicode(false)
                 .HasColumnName("qdd_column_width");
             entity.Property(e => e.QddIsPrimaryKey).HasColumnName("qdd_is_primary_key");
