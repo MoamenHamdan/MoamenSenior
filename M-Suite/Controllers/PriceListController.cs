@@ -38,7 +38,6 @@ namespace M_Suite.Controllers
             {
                 return NotFound();
             }
-
             var listprice = await _context.Listprices
                 .Include(lp => lp.LpCdIdCurNavigation)
                 .Include(lp => lp.LpBu)
@@ -112,8 +111,7 @@ namespace M_Suite.Controllers
 
             if (true)
             {
-                try
-                {
+              
                     // Ensure LpActive is set to 0 or 1
                     listprice.LpActive = (short)(listprice.LpActive == 1 ? 1 : 0);
                     
@@ -121,18 +119,8 @@ namespace M_Suite.Controllers
                     await _context.SaveChangesAsync();
                     TempData["SuccessMessage"] = "Price list updated successfully!";
                     return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ListpriceExists(listprice.LpId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                
+          
             }
 
             PopulateDropdowns(listprice);
