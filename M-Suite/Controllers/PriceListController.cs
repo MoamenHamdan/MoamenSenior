@@ -64,21 +64,21 @@ namespace M_Suite.Controllers
             return View();
         }
 
-        // POST: PriceList/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LpId,LpBuId,LpCdIdCur,LpCode,LpDescriptionLan1,LpDescriptionLan2,LpDescriptionLan3,LpFromDate,LpToDate,LpActive")] Listprice listprice)
         {
             if (true)
             {
+                // Ensure LpActive is set to 0 or 1
+                listprice.LpActive = (short)(listprice.LpActive == 1 ? 1 : 0);
+                
                 _context.Add(listprice);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Price List created successfully!";
-                return RedirectToAction(nameof(Details), new { id = listprice.LpId });
+                return RedirectToAction("AddItems", "PriceListItems", new { id = listprice.LpId });
             }
 
-            ViewData["LpCdIdCur"] = new SelectList(_context.VCodescCurs, "CdId", "CdDescriptionLan1", listprice.LpCdIdCur);
-            ViewData["LpBuId"] = new SelectList(_context.BusinessUnits, "BuId", "BuDescriptionLan1", listprice.LpBuId);
+            PopulateDropdowns(listprice);
             return View(listprice);
         }
 
@@ -110,10 +110,13 @@ namespace M_Suite.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (true)
             {
                 try
                 {
+                    // Ensure LpActive is set to 0 or 1
+                    listprice.LpActive = (short)(listprice.LpActive == 1 ? 1 : 0);
+                    
                     _context.Update(listprice);
                     await _context.SaveChangesAsync();
                     TempData["SuccessMessage"] = "Price list updated successfully!";

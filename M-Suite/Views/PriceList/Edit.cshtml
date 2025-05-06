@@ -64,12 +64,15 @@
                     </div>
                 </div>
 
-                <div class="form-group mb-3">
+              <div class="form-group mb-3">
                     <div class="form-check">
-                        <input asp-for="LpActive" class="form-check-input" />
-                        <label asp-for="LpActive" class="form-check-label">Active</label>
+                        <input type="hidden" name="LpActive" value="0" />
+                        <input type="checkbox" name="LpActive" value="1" class="form-check-input" id="LpActiveToggle"
+                               @(Model.LpActive == 1 ? "checked" : "") />
+                        <label class="form-check-label" for="LpActiveToggle">Active</label>
                     </div>
                 </div>
+
 
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />

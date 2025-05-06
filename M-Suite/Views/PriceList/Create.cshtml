@@ -62,8 +62,8 @@
 
                 <div class="form-group mb-3">
                     <div class="form-check">
-                        <input type="hidden" asp-for="LpActive" value="0" />
-                        <input type="checkbox" class="form-check-input" id="LpActiveCheckbox" checked />
+                        <input type="hidden" name="LpActive" value="0" />
+                        <input type="checkbox" name="LpActive" value="1" class="form-check-input" id="LpActiveCheckbox" checked />
                         <label class="form-check-label" for="LpActiveCheckbox">Active</label>
                     </div>
                 </div>
@@ -79,48 +79,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        $(document).ready(function() {
-            // Set up the active checkbox
-            $('#LpActiveCheckbox').change(function() {
-                $('#LpActive').val(this.checked ? '1' : '0');
-            });
-
-            // Set default dates
-            var today = new Date();
-            var tomorrow = new Date(today);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            
-            $('#LpFromDate').val(today.toISOString().split('T')[0]);
-            $('#LpToDate').val(tomorrow.toISOString().split('T')[0]);
-
-            // Form submission handler
-            $('#createForm').on('submit', function(e) {
-                e.preventDefault();
-                
-                // Validate form
-                if (!this.checkValidity()) {
-                    e.stopPropagation();
-                    $(this).addClass('was-validated');
-                    return false;
-                }
-
-                // Submit the form
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function(response) {
-                        if (response.redirect) {
-                            window.location.href = response.redirect;
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', error);
-                        alert('An error occurred while creating the Price List. Please try again.');
-                    }
-                });
-            });
-        });
-    </script>
-} 
+}
