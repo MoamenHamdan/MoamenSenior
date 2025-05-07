@@ -6,150 +6,187 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .profile-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .profile-header {
+            background: rgb(60, 131, 245);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .profile-header h2 {
+            margin: 0;
+            font-size: 1.875rem;
+            font-weight: 600;
+        }
+
+        .profile-content {
+            display: grid;
+            /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
+            gap: 1.5rem;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        }
+
+        .card-title {
+            color: rgb(60, 131, 245);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .info-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #111827;
+            font-size: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+      .btn {
+            padding: 6px 10px;
+            text-align: center;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+            cursor: pointer;
+            border: none;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: #b91c1c;
+            color: white;
+        }
+
+
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+    </style>
 }
-<div class="profile-content">
-        <div class="profile-header">
-            <h2>User Delete</h2>
+
+<div class="profile-container">
+    <div class="profile-header">
+        <h2>Delete User</h2>
+    </div>
+
+    <div class="profile-content">
+        <div class="profile-card">
+            <h3 class="card-title">Personal Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">User Code</span>
+                    <span class="info-value">@Html.DisplayFor(model => model.UsCode)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">First Name</span>
+                    <span class="info-value">@Html.DisplayFor(model => model.UsFirstName)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Last Name</span>
+                    <span class="info-value">@Html.DisplayFor(model => model.UsLastName)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Short Name</span>
+                    <span class="info-value">@Html.DisplayFor(model => model.UsShortName)</span>
+                </div>
+            </div>
         </div>
-    <dl class="row">
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsThpId) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsThpId) *@
-        @* </dd> *@
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsCdIdGen) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsCdIdGen) *@
-        @* </dd> *@
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsCdIdTtl) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsCdIdTtl) *@
-        @* </dd> *@
-        <dt class = "col-sm-2">
-           User Code
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsCode)
-        </dd>
-        <dt class = "col-sm-2">
-           First Name 
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsFirstName)
-        </dd>
-        <dt class = "col-sm-2">
-        Last Name 
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsLastName)
-        </dd>
-        <dt class = "col-sm-2">
-          Short Name 
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsShortName)
-        </dd>
-        <dt class = "col-sm-2">
-          Username
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsLogin)
-        </dd>
-        <dt class = "col-sm-2">
-         Password
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsPassword)
-        </dd>
-        <dt class = "col-sm-2">
-         Email
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsEmail)
-        </dd>
-        <dt class = "col-sm-2">
-            Receive Notification
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsReceiveNotification)
-        </dd>
-        <dt class = "col-sm-2">
-            Expiry Date
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsExpiryDate)
-        </dd>
-        <dt class = "col-sm-2">
-           Active
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsActive)
-        </dd>
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsDeleted) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsDeleted) *@
-        @* </dd> *@
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsDbUser) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsDbUser) *@
-        @* </dd> *@
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsImported) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsImported) *@
-        @* </dd> *@
-        <dt class = "col-sm-2">
-           Read Only
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsReadonly)
-        </dd>
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsToken) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsToken) *@
-        @* </dd> *@
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsRoute) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsRoute) *@
-        @* </dd> *@
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsPrefix) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsPrefix) *@
-        @* </dd> *@
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsType) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsType) *@
-        @* </dd> *@
-        @* <dt class = "col-sm-2"> *@
-        @*     @Html.DisplayNameFor(model => model.UsUs) *@
-        @* </dt> *@
-        @* <dd class = "col-sm-10"> *@
-        @*     @Html.DisplayFor(model => model.UsUs.UsId) *@
-        @* </dd> *@
-    </dl>
-    
+
+        <div class="profile-card">
+            <h3 class="card-title">Account Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Username</span>
+                    <span class="info-value">@Html.DisplayFor(model => model.UsLogin)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email</span>
+                    <span class="info-value">@Html.DisplayFor(model => model.UsEmail)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Account Status</span>
+                    <span class="info-value">@(Model.UsActive == 1 ? "Active" : "Inactive")</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Readonly Access</span>
+                    <span class="info-value">@(Model.UsReadonly == 1 ? "Yes" : "No")</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <h3 class="card-title">Additional Settings</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Receive Notifications</span>
+                    <span class="info-value">@(Model.UsReceiveNotification == 1 ? "Yes" : "No")</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Expiry Date</span>
+                    <span class="info-value">@(Model.UsExpiryDate?.ToString("MMM dd, yyyy") ?? "No expiry date")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="UsId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <div class="action-buttons">
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-danger">Delete User</button>
+        </div>
     </form>
-</div>
 </div>
