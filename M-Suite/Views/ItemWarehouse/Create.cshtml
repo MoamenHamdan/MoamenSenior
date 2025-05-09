@@ -1,0 +1,133 @@
+﻿@model M_Suite.Models.ItemWarehouse
+
+@{
+    ViewData["Title"] = "Create Item-Warehouse Entry";
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+@if (TempData["DropdownWarning"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["DropdownWarning"]
+        <a asp-controller="Items" asp-action="Create" class="alert-link">Create Items</a> |
+        <a asp-controller="PhysicalLocations" asp-action="Create" class="alert-link">Create Warehouses</a> |
+        <a asp-controller="Uoms" asp-action="Create" class="alert-link">Create UOMs</a>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Create Item-Warehouse Record</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ItwItId" class="control-label">Item</label>
+                            <select asp-for="ItwItId" class="form-control" required>
+                                <option value="">-- Select Item --</option>
+                                @if (ViewBag.ItwItId != null)
+                                {
+                                    @foreach (var item in ViewBag.ItwItId as SelectList)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="ItwItId" class="text-danger"></span>
+                        </div>
+                        <div class="alert alert-info">
+                            <strong>Debug Info:</strong><br />
+                            ItwItId: @(ViewBag.ItwItId?.Count ?? 0) items<br />
+                            ItwPlIdWhs: @(ViewBag.ItwPlIdWhs?.Count ?? 0) locations<br />
+                            ItwUomId: @(ViewBag.ItwUomId?.Count ?? 0) uoms
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItwPlIdWhs" class="control-label">Warehouse</label>
+                            <select asp-for="ItwPlIdWhs" class="form-control" asp-items="ViewBag.ItwPlIdWhs" required>
+                                <option value="">-- Select Warehouse --</option>
+                            </select>
+                            <span asp-validation-for="ItwPlIdWhs" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItwUomId" class="control-label">Unit of Measure</label>
+                            <select asp-for="ItwUomId" class="form-control" asp-items="ViewBag.ItwUomId" required>
+                                <option value="">-- Select UOM --</option>
+                            </select>
+                            <span asp-validation-for="ItwUomId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ItwQuantity" class="control-label"></label>
+                            <input asp-for="ItwQuantity" class="form-control" type="number" step="0.01" min="0" required />
+                            <span asp-validation-for="ItwQuantity" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItwQuantityDamage" class="control-label">Damaged Quantity</label>
+                            <input asp-for="ItwQuantityDamage" class="form-control" type="number" step="0.01" min="0" />
+                            <span asp-validation-for="ItwQuantityDamage" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItwQuantityReserved" class="control-label">Reserved Quantity</label>
+                            <input asp-for="ItwQuantityReserved" class="form-control" type="number" step="0.01" min="0" />
+                            <span asp-validation-for="ItwQuantityReserved" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ItwRemarks" class="control-label">Remarks</label>
+                    <textarea asp-for="ItwRemarks" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="ItwRemarks" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Client-side validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+}

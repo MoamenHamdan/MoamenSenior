@@ -1,0 +1,69 @@
+﻿@model IEnumerable<M_Suite.Models.ItemWarehouse>
+
+@{
+    ViewData["Title"] = "Item Warehouse Management";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-4">Item Warehouse Management</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Create New
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Item</th>
+                    <th>Warehouse</th>
+                    <th>UOM</th>
+                    <th>Quantity</th>
+                    <th>Damaged</th>
+                    <th>Reserved</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ItwIt?.ItDescriptionLan1</td>
+                        <td>@item.ItwPlIdWhsNavigation?.PlDescriptionLan1</td>
+                        <td>@item.ItwUom?.UomNameLan1</td>
+                        <td>@item.ItwQuantity.ToString("N2")</td>
+                        <td>@item.ItwQuantityDamage.ToString("N2")</td>
+                        <td>@item.ItwQuantityReserved.ToString("N2")</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-route-id="@item.ItwId" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.ItwId" class="btn btn-sm btn-info">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.ItwId" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .btn-group .btn {
+            margin-right: 5px;
+        }
+    </style>
+}
