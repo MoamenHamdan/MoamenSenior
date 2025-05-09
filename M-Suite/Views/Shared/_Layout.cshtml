@@ -109,6 +109,90 @@
             color: #64748b;
         }
 
+        .time-display {
+            font-size: 18px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-right: 20px;
+        }
+
+        /* Enhanced profile dropdown */
+        .profile-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-menu {
+            position: absolute;
+            right: 0;
+            top: 45px;
+            background: var(--primary-color);
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+            min-width: 240px;
+            display: none;
+            z-index: 1000;
+        }
+
+            .profile-menu.show {
+                display: block;
+                animation: slideDown 0.2s ease-out;
+            }
+
+        .profile-header {
+            background: var(--primary-color);
+            padding: 16px;
+            border-bottom: 3px solid var(--secondary-color);
+            border-radius : 50px;
+        }
+
+        .profile-item {
+            background: var(--primary-color);
+            padding: 12px 16px;
+            color: #1f2937;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.2s;
+        }
+
+            .profile-item:hover {
+                background-color: #f3f4f6;
+            }
+
+            .profile-item svg {
+                width: 18px;
+                height: 18px;
+            }
+
+        @@keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile adjustments */
+        @@media (max-width: 768px) {
+            .time-display {
+                display: none;
+            }
+
+            .user-info span:not(.user-avatar) {
+                display: none;
+            }
+        }
+
         .menu li,
         .option {
             padding: 0;
@@ -275,9 +359,38 @@
 <body>
     <div class="top-bar">
         <div class="logo-placeholder">M_Suite</div>
-        <div class="user-info">
-            <span>Welcome, Admin</span>
-            <div class="user-avatar">A</div>
+        <div class="d-flex align-items-center">
+            <div class="time-display" id="current-time">updateTime</div>
+            <div class="profile-dropdown" onclick="toggleProfileMenu()">
+                <div class="user-info">
+                    <span>Welcome, @User.Identity?.Name</span>
+                    <div class="user-avatar">@User.Identity?.Name?[0]</div>
+                </div>
+                <div class="profile-menu" id="profile-menu">
+                    <div class="profile-header">
+                        <div class="user-avatar">@User.Identity?.Name?[0]</div>
+                        <div class="mt-2">
+                            <div class="fw-500">@User.Identity?.Name</div>
+                            
+                        </div>
+                    </div>
+                    <a href="#" class="profile-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        My Profile
+                    </a>
+                    <a asp-controller="User" asp-action="Logout" class="profile-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Logout
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="content-wrapper">
@@ -365,6 +478,53 @@
     </div>
     
     <script>
+
+              // Enhanced real-time clock with full date and time
+        function updateTime() {
+            const now = new Date();
+            const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                           'July', 'August', 'September', 'October', 'November', 'December'];
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+                        'Thursday', 'Friday', 'Saturday'];
+
+            const year = now.getFullYear();
+            const month = months[now.getMonth()];
+                 const dateWithSuffix = date => {
+            const j = date % 10, k = date % 100;
+            if (j === 1 && k !== 11) return date + "st";
+            if (j === 2 && k !== 12) return date + "nd";
+            if (j === 3 && k !== 13) return date + "rd";
+            return date + "th";
+        };
+        const date = dateWithSuffix(now.getDate());
+            const day = days[now.getDay()];
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+                  const hours12 = (hours % 12 || 12).toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const timeString = `${year}-${(now.getMonth()+1).toString().padStart(2, '0')}-${date} ${day} ${hours12}:${minutes}:${seconds} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+
+        // Update every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call
+
+        // Profile menu toggle
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profile-menu');
+            menu.classList.toggle('show');
+        }
+
+        // Close profile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const profileDropdown = document.querySelector('.profile-dropdown');
+            if (!profileDropdown.contains(event.target)) {
+                document.getElementById('profile-menu').classList.remove('show');
+            }
+        });
         function toggleDropdown(dropdownId) {
             const dropdown = document.getElementById(dropdownId);
             const isVisible = dropdown.classList.contains('show');
