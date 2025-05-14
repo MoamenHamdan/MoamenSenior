@@ -1,84 +1,102 @@
 ﻿@model M_Suite.Models.PhysicalLocation
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Physical Location Details";
 }
 
-<h1>Details</h1>
+<div class="container-fluid pl-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Physical Location Details</h3>
+                <a asp-action="Index" class="btn btn-light btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
 
-<div>
-    <h4>PhysicalLocation</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlLevel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlLevel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlDescriptionLan1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlDescriptionLan1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlDescriptionLan2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlDescriptionLan2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlDescriptionLan3)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlDescriptionLan3)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlImpUid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlImpUid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlBu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlBu.BuId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlCdIdPltNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlCdIdPltNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlMd)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlMd.MdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlPl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlPl.PlId)
-        </dd>
-    </dl>
+        <div class="card-body">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Code:</dt>
+                        <dd class="col-sm-8">@Model.PlCode</dd>
+
+                        <dt class="col-sm-4">Description (AR):</dt>
+                        <dd class="col-sm-8">@Model.PlDescriptionLan1</dd>
+
+                        <dt class="col-sm-4">Description (EN):</dt>
+                        <dd class="col-sm-8">@Model.PlDescriptionLan2</dd>
+
+                        <dt class="col-sm-4">Description (FR):</dt>
+                        <dd class="col-sm-8">@Model.PlDescriptionLan3</dd>
+
+                        <dt class="col-sm-4">Level:</dt>
+                        <dd class="col-sm-8">@Model.PlLevel</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-sitemap me-2"></i>Hierarchy Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Location Type:</dt>
+                        <dd class="col-sm-8">@(Model.PlCdIdPltNavigation?.CdDescriptionLan1 ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Parent Location:</dt>
+                        <dd class="col-sm-8">@(Model.PlPl?.PlCode ?? "None")</dd>
+
+                        <dt class="col-sm-4">Module:</dt>
+                        <dd class="col-sm-8">@(Model.PlMd?.MdDescription ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Business Unit:</dt>
+                        <dd class="col-sm-8">@(Model.PlBu?.BuCode ?? "None")</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-toggle-on me-2"></i>Status Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.PlActive == 1)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactive</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4">Import UID:</dt>
+                        <dd class="col-sm-8">@Model.PlImpUid</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a asp-action="Edit" asp-route-id="@Model.PlId" class="btn btn-primary me-md-2">
+                    <i class="fas fa-edit me-2"></i>Edit
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-list me-2"></i>Back to List
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.PlId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}
