@@ -1,46 +1,69 @@
 ﻿@model M_Suite.Models.BusinessUnit
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Business Unit";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/business-units.css" />
-}
-
-<div class="profile-content">
-    <div class="profile-header">
-        <h2>Delete BU</h2>
-    </div>
-    <div class="profile-details">
-        <div class="profile-section">
-            <dl class="row">
-                <dt class="col-sm-2">Code</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuCode)</dd>
-
-                <dt class="col-sm-2">Description AR</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuDescriptionLan1)</dd>
-
-                <dt class="col-sm-2">Description EN</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuDescriptionLan2)</dd>
-
-                <dt class="col-sm-2">Description FR</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuDescriptionLan3)</dd>
-
-                <dt class="col-sm-2">Path</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuPath)</dd>
-
-                <dt class="col-sm-2">Parent BU</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuBu.BuId)</dd>
-
-                <dt class="col-sm-2">Company</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuCp.CpId)</dd>
-            </dl>
+<div class="container-fluid bu-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-danger text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-trash-alt me-2"></i>Delete Business Unit</h3>
+                <a asp-action="Index" class="btn btn-light btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
         </div>
-        <form asp-action="Delete" class="actions">
-            <input type="hidden" asp-for="BuId" />
-            <a asp-action="Index" class="btn btn-cancel">Cancel</a>
-            <input type="submit" value="Delete" class="btn btn-delete" />
-        </form>
+
+        <div class="card-body">
+            <div class="alert alert-warning">
+                <h5><i class="fas fa-exclamation-triangle me-2"></i>Warning!</h5>
+                <p>You are about to permanently delete this business unit. This action cannot be undone.</p>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Business Unit Details</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Code:</dt>
+                        <dd class="col-sm-8">@Model.BuCode</dd>
+
+                        <dt class="col-sm-4">Description (AR):</dt>
+                        <dd class="col-sm-8">@Model.BuDescriptionLan1</dd>
+
+                        <dt class="col-sm-4">Description (EN):</dt>
+                        <dd class="col-sm-8">@Model.BuDescriptionLan2</dd>
+
+                        <dt class="col-sm-4">Description (FR):</dt>
+                        <dd class="col-sm-8">@Model.BuDescriptionLan3</dd>
+
+                        <dt class="col-sm-4">BU Path:</dt>
+                        <dd class="col-sm-8">@Model.BuPath</dd>
+
+                        <dt class="col-sm-4">Parent BU:</dt>
+                        <dd class="col-sm-8">@(Model.BuBu?.BuCode ?? "None")</dd>
+
+                        <dt class="col-sm-4">Company:</dt>
+                        <dd class="col-sm-8">@(Model.BuCp?.CpNameLan1 ?? "None")</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <form asp-action="Delete" class="text-end">
+                <input type="hidden" asp-for="BuId" />
+                <button type="submit" class="btn btn-danger me-2">
+                    <i class="fas fa-trash-alt me-2"></i>Confirm Delete
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </a>
+            </form>
+        </div>
     </div>
 </div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}

@@ -29,11 +29,6 @@
                 </a>
             </div>
         </div>
-        <div class="header-tabs">
-            <div class="tab active">All Units</div>
-            <div class="tab">Active</div>
-            <div class="tab">Archived</div>
-        </div>
     </div>
 
     <div class="bu-table-container">
@@ -41,20 +36,10 @@
             <table class="bu-table">
                 <thead>
                     <tr>
-                        <th class="sortable">
-                            <span>Code</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 15l-6-6-6 6" />
-                            </svg>
-                        </th>
-                        <th class="sortable">
-                            <span>Company</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 15l-6-6-6 6" />
-                            </svg>
-                        </th>
-                        <th>Description</th>
-                        <th>Parent Unit</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                      
+                        <th>Location</th>
                         <th class="actions-header">Actions</th>
                     </tr>
                 </thead>
@@ -64,24 +49,21 @@
                         <tr>
                             <td data-label="Code">
                                 <div class="cell-content">
-                                    <span class="bu-code">@Html.DisplayFor(modelItem => item.BuCode)</span>
-                                </div>
-                            </td>
-                            <td data-label="Company">
-                                <div class="cell-content">
-                                    @Html.DisplayFor(modelItem => item.BuDescriptionLan1)
+                                    <span class="bu-code">@item.BuCode</span>
                                 </div>
                             </td>
                             <td data-label="Description">
                                 <div class="cell-content">
-                                    @Html.DisplayFor(modelItem => item.BuCp.CpId)
+                                    @item.BuDescriptionLan1
                                 </div>
                             </td>
-                            <td data-label="Parent Unit">
+                           
+                        
+                            <td data-label="Parent Path">
                                 <div class="cell-content">
                                     @if (!string.IsNullOrEmpty(item.BuPath))
                                     {
-                                        <span class="parent-path">@Html.DisplayFor(modelItem => item.BuPath)</span>
+                                        <span class="parent-path">@item.BuPath</span>
                                     }
                                     else
                                     {
@@ -119,24 +101,3 @@
         </div>
     </div>
 
-    <div class="table-footer">
-        <div class="footer-info">
-            Showing <strong>1-@Model.Count()</strong> of <strong>@Model.Count()</strong> business units
-        </div>
-        <div class="pagination">
-            <button class="page-btn disabled">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <button class="page-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
-        </div>
-    </div>
-</div>

@@ -1,92 +1,147 @@
 ﻿@model M_Suite.Models.BusinessUnit
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Business Unit";
 }
-@section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
-}
-<div class="profile-content">
-    <div class="profile-header">
-        <h2>Edit BU</h2>
-    </div>
-    <div class="profile-details">
-        <div class="form-row">
-            <div class="form-field">
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="BuId" />
-                    
-                    <div class="form-group">
-                        <label asp-for="BuCode" class="control-label">
-                            <span class="color-indicator color-red"></span>Code
-                        </label>
-                        <input asp-for="BuCode" class="form-control" required />
-                        <span asp-validation-for="BuCode" class="text-danger"></span>
-                    </div>
 
-                    <div class="form-group">
-                        <label asp-for="BuCpId" class="control-label">
-                            <span class="color-indicator color-red"></span>Company
-                        </label>
-                        <select asp-for="BuCpId" class="form-control" asp-items="ViewBag.BuCpId" required>
-                            <option value="">-- Select Company --</option>
-                        </select>
-                        <span asp-validation-for="BuCpId" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="BuDescriptionLan1" class="control-label">
-                            <span class="color-indicator color-red"></span>Description AR
-                        </label>
-                        <input asp-for="BuDescriptionLan1" class="form-control" required />
-                        <span asp-validation-for="BuDescriptionLan1" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="BuDescriptionLan2" class="control-label">
-                            <span class="color-indicator color-red"></span>Description EN
-                        </label>
-                        <input asp-for="BuDescriptionLan2" class="form-control" />
-                        <span asp-validation-for="BuDescriptionLan2" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="BuDescriptionLan3" class="control-label">
-                            <span class="color-indicator color-red"></span>Description FR
-                        </label>
-                        <input asp-for="BuDescriptionLan3" class="form-control" />
-                        <span asp-validation-for="BuDescriptionLan3" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="BuPath" class="control-label">
-                            <span class="color-indicator color-blue"></span>BU Path
-                        </label>
-                        <input asp-for="BuPath" class="form-control" required />
-                        <span asp-validation-for="BuPath" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="BuBuId" class="control-label">
-                            <span class="color-indicator color-red"></span>Parent BU
-                        </label>
-                        <select asp-for="BuBuId" class="form-control" asp-items="ViewBag.BuBuId">
-                            <option value="">-- Select Parent BU --</option>
-                        </select>
-                        <span asp-validation-for="BuBuId" class="text-danger"></span>
-                    </div>
-
-                    <div class="actions">
-                        <a asp-action="Index" class="btn btn-cancel">Cancel</a>
-                        <button type="submit" class="btn btn-save">Save</button>
-                    </div>
-                </form>
+<div class="container-fluid bu-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Business Unit</h3>
+                <a asp-action="Index" class="btn btn-light btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
             </div>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="Edit" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <input type="hidden" asp-for="BuId" />
+
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="BuCode" class="form-control" placeholder=" " required />
+                                    <label asp-for="BuCode"></label>
+                                    <span asp-validation-for="BuCode" class="text-danger small"></span>
+                                </div>
+
+                                <div class="form-floating mb-3 required">
+                                    <select asp-for="BuCpId" class="form-select" asp-items="ViewBag.BuCpId" required>
+                                        <option value="">-- Select Company --</option>
+                                    </select>
+                                    <label asp-for="BuCpId"></label>
+                                    <span asp-validation-for="BuCpId" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="BuDescriptionLan1" class="form-control" placeholder=" " required />
+                                    <label asp-for="BuDescriptionLan1">Description (AR)</label>
+                                    <span asp-validation-for="BuDescriptionLan1" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-globe me-2"></i>Multilingual Descriptions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="BuDescriptionLan2" class="form-control" placeholder=" " />
+                                    <label asp-for="BuDescriptionLan2">Description (EN)</label>
+                                    <span asp-validation-for="BuDescriptionLan2" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="BuDescriptionLan3" class="form-control" placeholder=" " />
+                                    <label asp-for="BuDescriptionLan3">Description (FR)</label>
+                                    <span asp-validation-for="BuDescriptionLan3" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-sitemap me-2"></i>Hierarchy Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="BuPath" class="form-control" placeholder=" " required />
+                                    <label asp-for="BuPath">BU Path</label>
+                                    <span asp-validation-for="BuPath" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="BuBuId" class="form-select" asp-items="ViewBag.BuBuId">
+                                        <option value="">-- Select Parent BU --</option>
+                                    </select>
+                                    <label asp-for="BuBuId">Parent Business Unit</label>
+                                    <span asp-validation-for="BuBuId" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="reset" class="btn btn-outline-secondary me-md-2">
+                        <i class="fas fa-undo me-2"></i>Reset
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Enable Bootstrap 5 validation
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
 }
