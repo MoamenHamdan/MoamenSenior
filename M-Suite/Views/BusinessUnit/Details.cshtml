@@ -3,66 +3,43 @@
 @{
     ViewData["Title"] = "Details";
 }
+
 @section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/business-units.css" />
 }
+
 <div class="profile-content">
     <div class="profile-header">
         <h2>BU Details</h2>
-            </div>
-
+    </div>
     <div class="profile-details">
         <div class="profile-section">
-    <dl class="row">
-        <dt class = "col-sm-2">
-            Code
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BuCode)
-        </dd>
-        <dt class = "col-sm-2">
-            Description AR
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BuDescriptionLan1)
-        </dd>
-        <dt class = "col-sm-2">
-            Description EN
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BuDescriptionLan2)
-        </dd>
-        <dt class = "col-sm-2">
-            Description FR
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BuDescriptionLan3)
-        </dd>
-        <dt class = "col-sm-2">
-            Path
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BuPath)
-        </dd>
-        
-        <dt class = "col-sm-2">
-            Parent BU
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BuBu.BuId)
-        </dd>
-        <dt class = "col-sm-2">
-            Company
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BuCp.CpId)
-        </dd>
-    </dl>
-</div>
+            <dl class="row">
+                <dt class="col-sm-2">Code</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuCode)</dd>
+
+                <dt class="col-sm-2">Description AR</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuDescriptionLan1)</dd>
+
+                <dt class="col-sm-2">Description EN</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuDescriptionLan2)</dd>
+
+                <dt class="col-sm-2">Description FR</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuDescriptionLan3)</dd>
+
+                <dt class="col-sm-2">Path</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuPath)</dd>
+
+                <dt class="col-sm-2">Parent BU</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuBu.BuId)</dd>
+
+                <dt class="col-sm-2">Company</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.BuCp.CpId)</dd>
+            </dl>
+        </div>
     </div>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.BuId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="actions">
+        <a asp-action="Edit" asp-route-id="@Model?.BuId" class="btn btn-save">Edit</a>
+        <a asp-action="Index" class="btn btn-cancel">Back to List</a>
+    </div>
 </div>
