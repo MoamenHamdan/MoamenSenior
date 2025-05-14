@@ -1,7 +1,7 @@
 ﻿@model M_Suite.Models.GeoLocation
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Geo Location";
     var geoTypes = new List<SelectListItem>
     {
         new SelectListItem { Value = "1", Text = "AREA" },
@@ -11,83 +11,105 @@
     };
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
-}
-<div class="profile-content">
-    <div class="profile-header">
-        <h2>Edit GeoLocation</h2>
-    </div>
-
-    <div class="profile-details">
-        <div class="form-row">
-            <div class="form-field">
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="GlId" />
-
-                    <div class="form-group">
-                        <label asp-for="GlCode" class="control-label">
-                            <span class="color-indicator color-red"></span>Code
-                        </label>
-                        <input asp-for="GlCode" class="form-control" />
-                        <span asp-validation-for="GlCode" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="GlCdIdGeo" class="control-label">
-                            <span class="color-indicator color-red"></span>Type
-                        </label>
-                        <select asp-for="GlCdIdGeo" asp-items="geoTypes" class="form-control">
-                            <option value="">-- Select Type --</option>
-                        </select>
-                        <span asp-validation-for="GlCdIdGeo" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="GlGlId" class="control-label">
-                            <span class="color-indicator color-green"></span>Parent Location
-                        </label>
-                        <select asp-for="GlGlId" class="form-control" asp-items="ViewBag.ParentLocations">
-                            <option value="">-- Select Parent --</option>
-                        </select>
-                        <span asp-validation-for="GlGlId" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="GlDescriptionLan1" class="control-label">
-                            <span class="color-indicator color-red"></span>Description AR
-                        </label>
-                        <input asp-for="GlDescriptionLan1" class="form-control" />
-                        <span asp-validation-for="GlDescriptionLan1" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="GlDescriptionLan2" class="control-label">
-                            <span class="color-indicator color-red"></span>Description EN
-                        </label>
-                        <input asp-for="GlDescriptionLan2" class="form-control" />
-                        <span asp-validation-for="GlDescriptionLan2" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="GlDescriptionLan3" class="control-label">
-                            <span class="color-indicator color-red"></span>Description FR
-                        </label>
-                        <input asp-for="GlDescriptionLan3" class="form-control" />
-                        <span asp-validation-for="GlDescriptionLan3" class="text-danger"></span>
-                    </div>
-
-                    <div class="actions">
-                        <a asp-action="Index" class="btn btn-cancel">Cancel</a>
-                        <button type="submit" class="btn btn-save">Save</button>
-                    </div>
-                </form>
+<div class="container-fluid geo-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Geo Location</h3>
+                <a asp-action="Index" class="btn btn-light">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
             </div>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="Edit" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <input type="hidden" asp-for="GlId" />
+
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="GlCode" class="form-control" placeholder=" " required />
+                                    <label asp-for="GlCode"></label>
+                                    <span asp-validation-for="GlCode" class="text-danger small"></span>
+                                </div>
+
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="GlDescriptionLan1" class="form-control" placeholder=" " required />
+                                    <label asp-for="GlDescriptionLan1">Description (AR)</label>
+                                    <span asp-validation-for="GlDescriptionLan1" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <select asp-for="GlCdIdGeo" class="form-select" asp-items="geoTypes" required>
+                                        <option value="">-- Select Type --</option>
+                                    </select>
+                                    <label asp-for="GlCdIdGeo"></label>
+                                    <span asp-validation-for="GlCdIdGeo" class="text-danger small"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select asp-for="GlGlId" class="form-select" asp-items="ViewBag.ParentLocations">
+                                        <option value="">-- Select Parent --</option>
+                                    </select>
+                                    <label asp-for="GlGlId"></label>
+                                    <span asp-validation-for="GlGlId" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-globe me-2"></i>Multilingual Descriptions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="GlDescriptionLan2" class="form-control" placeholder=" " />
+                                    <label asp-for="GlDescriptionLan2">Description (EN)</label>
+                                    <span asp-validation-for="GlDescriptionLan2" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="GlDescriptionLan3" class="form-control" placeholder=" " />
+                                    <label asp-for="GlDescriptionLan3">Description (FR)</label>
+                                    <span asp-validation-for="GlDescriptionLan3" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="reset" class="btn btn-outline-secondary me-md-2">
+                        <i class="fas fa-undo me-2"></i>Reset
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

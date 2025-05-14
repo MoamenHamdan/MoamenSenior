@@ -1,7 +1,7 @@
 ﻿@model M_Suite.Models.GeoLocation
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Geo Location Details";
     var geoTypes = new Dictionary<short, string>
     {
         { 1, "AREA" },
@@ -11,85 +11,92 @@
     };
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/site.css" />
-}
-<div class="profile-content">
-    <div class="profile-header">
-        <h2>GeoLocation Details</h2>
-    </div>
+<div class="container-fluid geo-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-info-circle me-2"></i>Geo Location Details</h3>
+                <a asp-action="Index" class="btn btn-light">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
 
-    <div class="profile-details">
-        <div class="profile-section">
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.GlCode)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.GlCode)
-                </dd>
+        <div class="card-body">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Code:</dt>
+                        <dd class="col-sm-8">@Model.GlCode</dd>
 
-                <dt class="col-sm-2">
-                    Type
-                </dt>
-                <dd class="col-sm-10">
-                    @if (Model.GlCdIdGeo.HasValue && geoTypes.ContainsKey((short)Model.GlCdIdGeo.Value))
-                    {
-                        <span class="badge bg-info">@geoTypes[(short)Model.GlCdIdGeo.Value]</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">Not Set</span>
-                    }
-                </dd>
+                        <dt class="col-sm-4">Type:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.GlCdIdGeo.HasValue && geoTypes.ContainsKey((short)Model.GlCdIdGeo.Value))
+                            {
+                                <span class="badge bg-primary">@geoTypes[(short)Model.GlCdIdGeo.Value]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Not Set</span>
+                            }
+                        </dd>
 
-                <dt class="col-sm-2">
-                    Parent Location
-                </dt>
-                <dd class="col-sm-10">
-                    @if (Model.GlGlId.HasValue)
-                    {
-                        var parent = ViewBag.ParentLocation as M_Suite.Models.GeoLocation;
-                        if (parent != null)
-                        {
-                            <span>@parent.GlCode - @parent.GlDescriptionLan1</span>
-                        }
-                        else
-                        {
-                            <span class="text-muted">Parent not found</span>
-                        }
-                    }
-                    else
-                    {
-                        <span class="text-muted">Root</span>
-                    }
-                </dd>
+                        <dt class="col-sm-4">Parent Location:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.GlGlId.HasValue)
+                            {
+                                var parent = ViewBag.ParentLocation as M_Suite.Models.GeoLocation;
+                                if (parent != null)
+                                {
+                                    <span>@parent.GlCode - @parent.GlDescriptionLan1</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Parent not found</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">Root</span>
+                            }
+                        </dd>
 
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.GlDescriptionLan1)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.GlDescriptionLan1)
-                </dd>
+                        <dt class="col-sm-4">Description (AR):</dt>
+                        <dd class="col-sm-8">@Model.GlDescriptionLan1</dd>
+                    </dl>
+                </div>
+            </div>
 
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.GlDescriptionLan2)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.GlDescriptionLan2)
-                </dd>
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-globe me-2"></i>Multilingual Descriptions</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Description (EN):</dt>
+                        <dd class="col-sm-8">@Model.GlDescriptionLan2</dd>
 
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.GlDescriptionLan3)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.GlDescriptionLan3)
-                </dd>
-            </dl>
+                        <dt class="col-sm-4">Description (FR):</dt>
+                        <dd class="col-sm-8">@Model.GlDescriptionLan3</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a asp-action="Edit" asp-route-id="@Model.GlId" class="btn btn-primary me-md-2">
+                    <i class="fas fa-edit me-2"></i>Edit
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-list me-2"></i>Back to List
+                </a>
+            </div>
         </div>
     </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.GlId" class="btn btn-primary">Edit</a>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}

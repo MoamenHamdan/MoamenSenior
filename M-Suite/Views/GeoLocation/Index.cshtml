@@ -11,76 +11,95 @@
     };
 }
 
-<div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col">
-            <h2 class="text-primary">Geographic Locations</h2>
-            <p class="text-muted">Manage your geographic locations and their hierarchy</p>
+<div class="container-fluid geo-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-globe me-2"></i>Geographic Locations</h3>
+                <a asp-action="Create" class="btn btn-light">
+                    <i class="fas fa-plus me-1"></i> New Location
+                </a>
+            </div>
         </div>
-        <div class="col-auto">
-            <a asp-action="Create" class="btn btn-primary">
-                <i class="fas fa-plus"></i> New Location
-            </a>
-        </div>
-    </div>
 
-    <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
+                <table class="table geo-table">
+                    <thead>
                         <tr>
-                            <th>@Html.DisplayNameFor(model => model.GlCode)</th>
-                            <th>@Html.DisplayNameFor(model => model.GlDescriptionLan1)</th>
+                            <th>Code</th>
+                            <th>Description</th>
                             <th>Type</th>
                             <th>Parent Location</th>
-                            <th class="text-end">Actions</th>
+                            <th class="actions-header">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(modelItem => item.GlCode)</td>
-                                <td>@Html.DisplayFor(modelItem => item.GlDescriptionLan1)</td>
-                                <td>
-                                    @if (item.GlCdIdGeo.HasValue && geoTypes.ContainsKey((short)item.GlCdIdGeo.Value))
-                                    {
-                                        <span class="badge bg-info">@geoTypes[(short)item.GlCdIdGeo.Value]</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-secondary">Not Set</span>
-                                    }
+                                <td data-label="Code">
+                                    <div class="cell-content">
+                                        @item.GlCode
+                                    </div>
                                 </td>
-                                <td>
-                                    @if (item.GlGlId.HasValue)
-                                    {
-                                        var parent = Model.FirstOrDefault(p => p.GlId == item.GlGlId);
-                                        if (parent != null)
+                                <td data-label="Description">
+                                    <div class="cell-content">
+                                        @item.GlDescriptionLan1
+                                    </div>
+                                </td>
+                                <td data-label="Type">
+                                    <div class="cell-content">
+                                        @if (item.GlCdIdGeo.HasValue && geoTypes.ContainsKey((short)item.GlCdIdGeo.Value))
                                         {
-                                            <span>@parent.GlCode - @parent.GlDescriptionLan1</span>
+                                            <span class="badge bg-primary">@geoTypes[(short)item.GlCdIdGeo.Value]</span>
                                         }
                                         else
                                         {
-                                            <span class="text-muted">Parent not found</span>
+                                            <span class="badge bg-secondary">Not Set</span>
                                         }
-                                    }
-                                    else
-                                    {
-                                        <span class="text-muted">Root</span>
-                                    }
+                                    </div>
                                 </td>
-                                <td class="text-end">
-                                    <div class="btn-group" role="group">
-                                        <a asp-action="Edit" asp-route-id="@item.GlId" class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-edit"></i>
+                                <td data-label="Parent">
+                                    <div class="cell-content">
+                                        @if (item.GlGlId.HasValue)
+                                        {
+                                            var parent = Model.FirstOrDefault(p => p.GlId == item.GlGlId);
+                                            if (parent != null)
+                                            {
+                                                <span>@parent.GlCode - @parent.GlDescriptionLan1</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Parent not found</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Root</span>
+                                        }
+                                    </div>
+                                </td>
+                                <td class="actions-cell">
+                                    <div class="action-buttons">
+                                        <a asp-action="Edit" asp-route-id="@item.GlId" class="btn-action edit" title="Edit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                            </svg>
                                         </a>
-                                        <a asp-action="Details" asp-route-id="@item.GlId" class="btn btn-sm btn-outline-info">
-                                            <i class="fas fa-info-circle"></i>
+                                        <a asp-action="Details" asp-route-id="@item.GlId" class="btn-action details" title="Details">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                            </svg>
                                         </a>
-                                        <a asp-action="Delete" asp-route-id="@item.GlId" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
+                                        <a asp-action="Delete" asp-route-id="@item.GlId" class="btn-action delete" title="Delete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="3 6 5 6 21 6"></polyline>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                            </svg>
                                         </a>
                                     </div>
                                 </td>
@@ -96,19 +115,79 @@
 @section Styles {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
-        .table th {
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
+        .geo-container {
+            max-width: 100%;
+            margin-top: 1rem;
         }
+
         .badge {
+            font-size: 0.75rem;
             font-weight: 500;
             padding: 0.35em 0.65em;
         }
-        .btn-group .btn {
-            padding: 0.25rem 0.5rem;
+
+        .geo-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
         }
+
+            .geo-table th {
+                background-color: #f8f9fa;
+                padding: 1rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                font-size: 0.75rem;
+                letter-spacing: 0.5px;
+            }
+
+            .geo-table td {
+                padding: 1rem;
+                vertical-align: middle;
+                border-top: 1px solid #e9ecef;
+            }
+
+        .actions-cell {
+            white-space: nowrap;
+            width: 1%;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border-radius: 50%;
+            color: #6c757d;
+            background-color: transparent;
+            border: 1px solid #dee2e6;
+            transition: all 0.2s;
+        }
+
+            .btn-action:hover {
+                background-color: #f8f9fa;
+            }
+
+            .btn-action.edit:hover {
+                color: #0d6efd;
+                border-color: #0d6efd;
+            }
+
+            .btn-action.details:hover {
+                color: #0dcaf0;
+                border-color: #0dcaf0;
+            }
+
+            .btn-action.delete:hover {
+                color: #dc3545;
+                border-color: #dc3545;
+            }
     </style>
 }
-
