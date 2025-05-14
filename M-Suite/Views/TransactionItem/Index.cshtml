@@ -1,0 +1,191 @@
+﻿@model IEnumerable<M_Suite.Models.TransactionItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiOrgId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTsOrgId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiLineSequence)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiQuantity2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiDiscountPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiDiscountAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiRemarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiPriceChanged)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTotalDiscount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTotalTax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTotalAmountBc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTotalDiscountBc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTotalTaxBc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiCdIdRett)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiFreeComment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiCdIdFrc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiThpsDiscount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiIt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiLpi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiPlIdWhsNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTsi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiTsto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsiUom)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiOrgId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTsOrgId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiLineSequence)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiQuantity2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiDiscountPercentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiDiscountAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiRemarks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiPriceChanged)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTotalDiscount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTotalTax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTotalAmountBc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTotalDiscountBc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTotalTaxBc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiCdIdRett)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiFreeComment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiCdIdFrc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiThpsDiscount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiIt.ItId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiLpi.LpId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiPlIdWhsNavigation.PlId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTs.TsId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTsi.TsiId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiTsto.TstoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TsiUom.UomId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TsiId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TsiId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TsiId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

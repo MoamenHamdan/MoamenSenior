@@ -1,0 +1,156 @@
+﻿@model M_Suite.Models.TransactionItem
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>TransactionItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TsiId" />
+            <div class="form-group">
+                <label asp-for="TsiOrgId" class="control-label"></label>
+                <input asp-for="TsiOrgId" class="form-control" />
+                <span asp-validation-for="TsiOrgId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiTsOrgId" class="control-label"></label>
+                <input asp-for="TsiTsOrgId" class="form-control" />
+                <span asp-validation-for="TsiTsOrgId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiTsId" class="control-label"></label>
+                <select asp-for="TsiTsId" class="form-control" asp-items="ViewBag.TsiTsId"></select>
+                <span asp-validation-for="TsiTsId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiItId" class="control-label"></label>
+                <select asp-for="TsiItId" class="form-control" asp-items="ViewBag.TsiItId"></select>
+                <span asp-validation-for="TsiItId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiUomId" class="control-label"></label>
+                <select asp-for="TsiUomId" class="form-control" asp-items="ViewBag.TsiUomId"></select>
+                <span asp-validation-for="TsiUomId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiTstoId" class="control-label"></label>
+                <select asp-for="TsiTstoId" class="form-control" asp-items="ViewBag.TsiTstoId"></select>
+                <span asp-validation-for="TsiTstoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiLpiId" class="control-label"></label>
+                <select asp-for="TsiLpiId" class="form-control" asp-items="ViewBag.TsiLpiId"></select>
+                <span asp-validation-for="TsiLpiId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiTsiId" class="control-label"></label>
+                <select asp-for="TsiTsiId" class="form-control" asp-items="ViewBag.TsiTsiId"></select>
+                <span asp-validation-for="TsiTsiId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiPlIdWhs" class="control-label"></label>
+                <select asp-for="TsiPlIdWhs" class="form-control" asp-items="ViewBag.TsiPlIdWhs"></select>
+                <span asp-validation-for="TsiPlIdWhs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiLineSequence" class="control-label"></label>
+                <input asp-for="TsiLineSequence" class="form-control" />
+                <span asp-validation-for="TsiLineSequence" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiQuantity" class="control-label"></label>
+                <input asp-for="TsiQuantity" class="form-control" />
+                <span asp-validation-for="TsiQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiQuantity2" class="control-label"></label>
+                <input asp-for="TsiQuantity2" class="form-control" />
+                <span asp-validation-for="TsiQuantity2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiPrice" class="control-label"></label>
+                <input asp-for="TsiPrice" class="form-control" />
+                <span asp-validation-for="TsiPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiDiscountPercentage" class="control-label"></label>
+                <input asp-for="TsiDiscountPercentage" class="form-control" />
+                <span asp-validation-for="TsiDiscountPercentage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiDiscountAmount" class="control-label"></label>
+                <input asp-for="TsiDiscountAmount" class="form-control" />
+                <span asp-validation-for="TsiDiscountAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiRemarks" class="control-label"></label>
+                <input asp-for="TsiRemarks" class="form-control" />
+                <span asp-validation-for="TsiRemarks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiPriceChanged" class="control-label"></label>
+                <input asp-for="TsiPriceChanged" class="form-control" />
+                <span asp-validation-for="TsiPriceChanged" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiTotalDiscount" class="control-label"></label>
+                <input asp-for="TsiTotalDiscount" class="form-control" />
+                <span asp-validation-for="TsiTotalDiscount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiTotalTax" class="control-label"></label>
+                <input asp-for="TsiTotalTax" class="form-control" />
+                <span asp-validation-for="TsiTotalTax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiTotalAmountBc" class="control-label"></label>
+                <input asp-for="TsiTotalAmountBc" class="form-control" />
+                <span asp-validation-for="TsiTotalAmountBc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiTotalDiscountBc" class="control-label"></label>
+                <input asp-for="TsiTotalDiscountBc" class="form-control" />
+                <span asp-validation-for="TsiTotalDiscountBc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiTotalTaxBc" class="control-label"></label>
+                <input asp-for="TsiTotalTaxBc" class="form-control" />
+                <span asp-validation-for="TsiTotalTaxBc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiCdIdRett" class="control-label"></label>
+                <input asp-for="TsiCdIdRett" class="form-control" />
+                <span asp-validation-for="TsiCdIdRett" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiFreeComment" class="control-label"></label>
+                <input asp-for="TsiFreeComment" class="form-control" />
+                <span asp-validation-for="TsiFreeComment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiCdIdFrc" class="control-label"></label>
+                <input asp-for="TsiCdIdFrc" class="form-control" />
+                <span asp-validation-for="TsiCdIdFrc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TsiThpsDiscount" class="control-label"></label>
+                <input asp-for="TsiThpsDiscount" class="form-control" />
+                <span asp-validation-for="TsiThpsDiscount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

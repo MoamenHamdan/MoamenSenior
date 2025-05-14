@@ -1,0 +1,180 @@
+﻿@model M_Suite.Models.TransactionItem
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>TransactionItem</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiOrgId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiOrgId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTsOrgId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTsOrgId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiLineSequence)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiLineSequence)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiQuantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiQuantity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiQuantity2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiQuantity2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiPrice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiPrice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiDiscountPercentage)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiDiscountPercentage)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiDiscountAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiDiscountAmount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiRemarks)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiRemarks)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiPriceChanged)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiPriceChanged)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTotalDiscount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTotalDiscount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTotalTax)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTotalTax)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTotalAmountBc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTotalAmountBc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTotalDiscountBc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTotalDiscountBc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTotalTaxBc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTotalTaxBc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiCdIdRett)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiCdIdRett)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiFreeComment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiFreeComment)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiCdIdFrc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiCdIdFrc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiThpsDiscount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiThpsDiscount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTotalAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTotalAmount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiIt)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiIt.ItId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiLpi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiLpi.LpId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiPlIdWhsNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiPlIdWhsNavigation.PlId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTs)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTs.TsId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTsi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTsi.TsiId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiTsto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiTsto.TstoId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TsiUom)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TsiUom.UomId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.TsiId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
