@@ -49,8 +49,8 @@ namespace M_Suite.Controllers
         // GET: Thirdparty/Create
         public IActionResult Create()
         {
-            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdId");
+            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1");
+            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1");
             return View();
         }
 
@@ -61,15 +61,14 @@ namespace M_Suite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ThpId,ThpOrgId,ThpCdIdTpg,ThpCdIdTps,ThpCode,ThpNameLan1,ThpNameLan2,ThpNameLan3,ThpIsCustomer,ThpIsSupplier,ThpIsCompany,ThpCreateDate,ThpModifiedDate,ThpActive,ThpImpUid,ThpRemarks,ThpImported,ThpReadonly,ThpUsIdCreated,ThpNewcode,ThpPrintLang,ThpPrintarabic,ThpIsB2b")] Thirdparty thirdparty)
         {
-            if (ModelState.IsValid)
-            {
+          
                 _context.Add(thirdparty);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
 
-            }
-            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdId", thirdparty.ThpCdIdTpg);
-            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdId", thirdparty.ThpCdIdTps);
+            
+            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", thirdparty.ThpCdIdTpg);
+            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", thirdparty.ThpCdIdTps);
             return View(thirdparty);
         }
 
@@ -86,8 +85,8 @@ namespace M_Suite.Controllers
             {
                 return NotFound();
             }
-            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdId", thirdparty.ThpCdIdTpg);
-            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdId", thirdparty.ThpCdIdTps);
+            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", thirdparty.ThpCdIdTpg);
+            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", thirdparty.ThpCdIdTps);
             return View(thirdparty);
         }
 
@@ -123,8 +122,8 @@ namespace M_Suite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdId", thirdparty.ThpCdIdTpg);
-            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdId", thirdparty.ThpCdIdTps);
+            ViewData["ThpCdIdTpg"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", thirdparty.ThpCdIdTpg);
+            ViewData["ThpCdIdTps"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", thirdparty.ThpCdIdTps);
             return View(thirdparty);
         }
 

@@ -19,60 +19,57 @@
             <form asp-action="Create" class="needs-validation" novalidate>
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
+                <!-- Hidden fields for system-managed values -->
+                <input type="hidden" asp-for="ThpCreateDate" value="@DateTime.Now" />
+                <input type="hidden" asp-for="ThpImpUid" value="@Guid.NewGuid().ToString()" />
+                <input type="hidden" asp-for="ThpImported" value="0" />
+                <input type="hidden" asp-for="ThpReadonly" value="0" />
+
                 <div class="card mb-4">
                     <div class="card-header bg-light">
                         <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input asp-for="ThpCode" class="form-control" placeholder=" " required />
                                     <label asp-for="ThpCode"></label>
                                     <span asp-validation-for="ThpCode" class="text-danger small"></span>
                                 </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ThpOrgId" class="form-control" placeholder=" " type="number" />
+                                    <label asp-for="ThpOrgId">Organization ID</label>
+                                    <span asp-validation-for="ThpOrgId" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ThpUsIdCreated" class="form-control" placeholder=" " type="number" />
+                                    <label asp-for="ThpUsIdCreated">Created By User ID</label>
+                                    <span asp-validation-for="ThpUsIdCreated" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input asp-for="ThpNameLan1" class="form-control" placeholder=" " required />
                                     <label asp-for="ThpNameLan1">Name (AR)</label>
                                     <span asp-validation-for="ThpNameLan1" class="text-danger small"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <select asp-for="ThpCdIdTpg" class="form-select" asp-items="ViewBag.ThpCdIdTpg">
-                                        <option value="">-- Select Type Group --</option>
-                                    </select>
-                                    <label asp-for="ThpCdIdTpg"></label>
-                                    <span asp-validation-for="ThpCdIdTpg" class="text-danger small"></span>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <select asp-for="ThpCdIdTps" class="form-select" asp-items="ViewBag.ThpCdIdTps">
-                                        <option value="">-- Select Type Subgroup --</option>
-                                    </select>
-                                    <label asp-for="ThpCdIdTps"></label>
-                                    <span asp-validation-for="ThpCdIdTps" class="text-danger small"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0"><i class="fas fa-globe me-2"></i>Multilingual Names</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input asp-for="ThpNameLan2" class="form-control" placeholder=" " />
                                     <label asp-for="ThpNameLan2">Name (EN)</label>
                                     <span asp-validation-for="ThpNameLan2" class="text-danger small"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <input asp-for="ThpNameLan3" class="form-control" placeholder=" " />
                                     <label asp-for="ThpNameLan3">Name (FR)</label>
@@ -88,6 +85,38 @@
                         <h5 class="mb-0"><i class="fas fa-tags me-2"></i>Type Settings</h5>
                     </div>
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="ThpCdIdTpg" class="form-select" asp-items="ViewBag.ThpCdIdTpg">
+                                        <option value="">-- Select Type Group --</option>
+                                    </select>
+                                    <label asp-for="ThpCdIdTpg">Type Group</label>
+                                    <span asp-validation-for="ThpCdIdTpg" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="ThpCdIdTps" class="form-select" asp-items="ViewBag.ThpCdIdTps">
+                                        <option value="">-- Select Type Subgroup --</option>
+                                    </select>
+                                    <label asp-for="ThpCdIdTps">Type Subgroup</label>
+                                    <span asp-validation-for="ThpCdIdTps" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="ThpIsB2b" class="form-select">
+                                        <option value="">-- Select B2B Status --</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                    <label asp-for="ThpIsB2b">Is B2B</label>
+                                    <span asp-validation-for="ThpIsB2b" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group mb-3">
@@ -128,24 +157,28 @@
 
                 <div class="card mb-4">
                     <div class="card-header bg-light">
-                        <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Additional Settings</h5>
+                        <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Status & Settings</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="ThpRemarks" class="form-control" placeholder=" " />
-                                    <label asp-for="ThpRemarks">Remarks</label>
-                                    <span asp-validation-for="ThpRemarks" class="text-danger small"></span>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input asp-for="ThpNewcode" class="form-control" placeholder=" " />
-                                    <label asp-for="ThpNewcode">New Code</label>
-                                    <span asp-validation-for="ThpNewcode" class="text-danger small"></span>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label class="form-check-label" asp-for="ThpActive">Active</label>
+                                    <select asp-for="ThpActive" class="form-select">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                    <span asp-validation-for="ThpActive" class="text-danger small"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ThpModifiedDate" class="form-control" type="datetime-local" />
+                                    <label asp-for="ThpModifiedDate">Modified Date</label>
+                                    <span asp-validation-for="ThpModifiedDate" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
                                     <select asp-for="ThpPrintLang" class="form-select">
                                         <option value="">-- Select Print Language --</option>
@@ -156,15 +189,36 @@
                                     <label asp-for="ThpPrintLang">Print Language</label>
                                     <span asp-validation-for="ThpPrintLang" class="text-danger small"></span>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ThpRemarks" class="form-control" placeholder=" " />
+                                    <label asp-for="ThpRemarks">Remarks</label>
+                                    <span asp-validation-for="ThpRemarks" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ThpNewcode" class="form-control" placeholder=" " />
+                                    <label asp-for="ThpNewcode">New Code</label>
+                                    <span asp-validation-for="ThpNewcode" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label class="form-check-label" asp-for="ThpActive">Active</label>
-                                    <select asp-for="ThpActive" class="form-select">
+                                    <label class="form-check-label" asp-for="ThpPrintarabic">Print Arabic</label>
+                                    <select asp-for="ThpPrintarabic" class="form-select">
                                         <option value="">-- Select --</option>
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-                                    <span asp-validation-for="ThpActive" class="text-danger small"></span>
+                                    <span asp-validation-for="ThpPrintarabic" class="text-danger small"></span>
                                 </div>
                             </div>
                         </div>
