@@ -1,89 +1,137 @@
 ﻿@model IEnumerable<M_Suite.Models.CurrencyRate>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Currency Exchange Rates";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CrDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CrCdIdCurFrom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CrCdIdCurTo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CrBuId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CrRateBuy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CrRateSell)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CrMaxRateBuy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CrMaxRateSell)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CrMinRateBuy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CrMinRateSell)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrCdIdCurFrom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrCdIdCurTo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrBuId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrRateBuy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrRateSell)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrMaxRateBuy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrMaxRateSell)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrMinRateBuy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CrMinRateSell)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CrId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CrId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CrId">Delete</a>
-            </td>
-        </tr>
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="~/css/currency-rates.css" />
 }
-    </tbody>
-</table>
+
+<div class="currency-container">
+    <div class="currency-header">
+        <div class="header-content">
+            <h1>
+                <i class="fas fa-exchange-alt me-2"></i>
+                Currency Exchange Rates
+            </h1>
+            <div class="header-actions">
+                <a asp-action="Create" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>New Rate
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="currency-summary-cards">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="summary-card buy">
+                    <div class="card-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Buy Rates</h3>
+                        <p>@Model.Count() active rates</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="summary-card sell">
+                    <div class="card-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Sell Rates</h3>
+                        <p>@Model.Count() active rates</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="summary-card range">
+                    <div class="card-icon">
+                        <i class="fas fa-arrows-alt-h"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Rate Ranges</h3>
+                        <p>@Model.Count() configured</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="currency-table-container">
+        <div class="table-responsive">
+            <table id="currencyRatesTable" class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>From Currency</th>
+                        <th>To Currency</th>
+                        <th>Buy Rate</th>
+                        <th>Sell Rate</th>
+                        <th>Buy Range</th>
+                        <th>Sell Range</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.CrDate.ToString("dd MMM yyyy")</td>
+                            <td>@item.CrCdIdCurFrom</td>
+                            <td>@item.CrCdIdCurTo</td>
+                            <td class="text-success fw-bold">@item.CrRateBuy?.ToString("N4")</td>
+                            <td class="text-danger fw-bold">@item.CrRateSell?.ToString("N4")</td>
+                            <td>
+                                @if (item.CrMinRateBuy.HasValue && item.CrMaxRateBuy.HasValue)
+                                {
+                                    <span class="badge bg-light text-dark">@item.CrMinRateBuy?.ToString("N4") - @item.CrMaxRateBuy?.ToString("N4")</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.CrMinRateSell.HasValue && item.CrMaxRateSell.HasValue)
+                                {
+                                    <span class="badge bg-light text-dark">@item.CrMinRateSell?.ToString("N4") - @item.CrMaxRateSell?.ToString("N4")</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <div class="action-buttons">
+                                    <a asp-action="Edit" asp-route-id="@item.CrId" class="btn btn-sm btn-outline-primary" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.CrId" class="btn btn-sm btn-outline-info" title="Details">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.CrId" class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#currencyRatesTable').DataTable({
+                responsive: true,
+                order: [[0, 'desc']],
+                columnDefs: [
+                    { orderable: false, targets: -1 }
+                ]
+            });
+        });
+    </script>
+}

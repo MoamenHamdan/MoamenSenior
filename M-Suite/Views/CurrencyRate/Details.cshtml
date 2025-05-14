@@ -1,78 +1,149 @@
 ﻿@model M_Suite.Models.CurrencyRate
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Currency Rate Details";
 }
 
-<h1>Details</h1>
+<div class="container-fluid currency-details-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-financial text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-info-circle me-2"></i>Currency Rate Details</h3>
+                <a asp-action="Index" class="btn btn-light btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
 
-<div>
-    <h4>CurrencyRate</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrCdIdCurFrom)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrCdIdCurFrom)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrCdIdCurTo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrCdIdCurTo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrBuId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrBuId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrRateBuy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrRateBuy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrRateSell)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrRateSell)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrMaxRateBuy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrMaxRateBuy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrMaxRateSell)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrMaxRateSell)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrMinRateBuy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrMinRateBuy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CrMinRateSell)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CrMinRateSell)
-        </dd>
-    </dl>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-calendar-day me-2"></i>Transaction Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-4">Date:</dt>
+                                <dd class="col-sm-8">@Model.CrDate.ToString("dd MMM yyyy")</dd>
+
+                                <dt class="col-sm-4">From Currency:</dt>
+                                <dd class="col-sm-8">
+                                    <span class="badge bg-primary">@Model.CrCdIdCurFrom</span>
+                                </dd>
+
+                                <dt class="col-sm-4">To Currency:</dt>
+                                <dd class="col-sm-8">
+                                    <span class="badge bg-primary">@Model.CrCdIdCurTo</span>
+                                </dd>
+
+                                <dt class="col-sm-4">Business Unit:</dt>
+                                <dd class="col-sm-8">
+                                    <span class="badge bg-secondary">@Model.CrBuId</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Rate Values</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="rate-card">
+                                <div class="rate-header mb-3">
+                                    <span class="from-currency fs-4 fw-bold">@Model.CrCdIdCurFrom</span>
+                                    <i class="fas fa-exchange-alt mx-3 fs-4"></i>
+                                    <span class="to-currency fs-4 fw-bold">@Model.CrCdIdCurTo</span>
+                                </div>
+
+                                <div class="rate-values">
+                                    <div class="rate-row buy-rate">
+                                        <div class="rate-label">Buy Rate:</div>
+                                        <div class="rate-value text-success fw-bold">@Model.CrRateBuy?.ToString("N4")</div>
+                                    </div>
+                                    <div class="rate-row sell-rate">
+                                        <div class="rate-label">Sell Rate:</div>
+                                        <div class="rate-value text-danger fw-bold">@Model.CrRateSell?.ToString("N4")</div>
+                                    </div>
+                                </div>
+
+                                <div class="rate-ranges mt-4 pt-3 border-top">
+                                    <div class="range-row">
+                                        <div class="range-label">Buy Range:</div>
+                                        <div class="range-value">
+                                            @if (Model.CrMinRateBuy.HasValue && Model.CrMaxRateBuy.HasValue)
+                                            {
+                                                <span class="badge bg-light text-dark">@Model.CrMinRateBuy?.ToString("N4") - @Model.CrMaxRateBuy?.ToString("N4")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Not specified</span>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="range-row">
+                                        <div class="range-label">Sell Range:</div>
+                                        <div class="range-value">
+                                            @if (Model.CrMinRateSell.HasValue && Model.CrMaxRateSell.HasValue)
+                                            {
+                                                <span class="badge bg-light text-dark">@Model.CrMinRateSell?.ToString("N4") - @Model.CrMaxRateSell?.ToString("N4")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Not specified</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                <a asp-action="Edit" asp-route-id="@Model.CrId" class="btn btn-financial me-md-2">
+                    <i class="fas fa-edit me-2"></i>Edit Rate
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-list me-2"></i>View All Rates
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.CrId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        .rate-card {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+        }
+
+        .rate-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rate-row, .range-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+        }
+
+        .rate-label, .range-label {
+            font-weight: 500;
+            color: #6c757d;
+        }
+
+        .rate-value {
+            font-weight: 600;
+        }
+    </style>
+}
