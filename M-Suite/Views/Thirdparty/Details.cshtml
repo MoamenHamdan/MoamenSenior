@@ -1,150 +1,130 @@
 ﻿@model M_Suite.Models.Thirdparty
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Third Party Details";
 }
 
-<h1>Details</h1>
+<div class="container-fluid thirdparty-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-user-tie me-2"></i>Third Party Details</h3>
+                <a asp-action="Index" class="btn btn-light">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
 
-<div>
-    <h4>Thirdparty</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpOrgId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpOrgId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpNameLan1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpNameLan1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpNameLan2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpNameLan2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpNameLan3)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpNameLan3)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpIsCustomer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpIsCustomer)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpIsSupplier)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpIsSupplier)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpIsCompany)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpIsCompany)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpCreateDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpCreateDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpModifiedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpModifiedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpImpUid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpImpUid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpRemarks)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpRemarks)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpImported)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpImported)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpReadonly)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpReadonly)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpUsIdCreated)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpUsIdCreated)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpNewcode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpNewcode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpPrintLang)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpPrintLang)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpPrintarabic)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpPrintarabic)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpIsB2b)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpIsB2b)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpCdIdTpgNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpCdIdTpgNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThpCdIdTpsNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThpCdIdTpsNavigation.CdId)
-        </dd>
-    </dl>
+        <div class="card-body">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Code:</dt>
+                        <dd class="col-sm-8">@Model.ThpCode</dd>
+
+                        <dt class="col-sm-4">Name (AR):</dt>
+                        <dd class="col-sm-8">@Model.ThpNameLan1</dd>
+
+                        <dt class="col-sm-4">Type Group:</dt>
+                        <dd class="col-sm-8">@(Model.ThpCdIdTpgNavigation?.CdDescriptionLan1 ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Type Subgroup:</dt>
+                        <dd class="col-sm-8">@(Model.ThpCdIdTpsNavigation?.CdDescriptionLan1 ?? "N/A")</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-globe me-2"></i>Multilingual Names</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Name (EN):</dt>
+                        <dd class="col-sm-8">@Model.ThpNameLan2</dd>
+
+                        <dt class="col-sm-4">Name (FR):</dt>
+                        <dd class="col-sm-8">@Model.ThpNameLan3</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-tags me-2"></i>Type Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Types:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.ThpIsCustomer == 1)
+                            {
+                                <span class="badge bg-primary me-1">Customer</span>
+                            }
+                            @if (Model.ThpIsSupplier == 1)
+                            {
+                                <span class="badge bg-success me-1">Supplier</span>
+                            }
+                            @if (Model.ThpIsCompany == 1)
+                            {
+                                <span class="badge bg-info">Company</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.ThpActive == 1)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Inactive</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4">Created Date:</dt>
+                        <dd class="col-sm-8">@Model.ThpCreateDate.ToString("dd/MM/yyyy")</dd>
+
+                        <dt class="col-sm-4">Modified Date:</dt>
+                        <dd class="col-sm-8">@(Model.ThpModifiedDate?.ToString("dd/MM/yyyy") ?? "N/A")</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Additional Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Remarks:</dt>
+                        <dd class="col-sm-8">@Model.ThpRemarks</dd>
+
+                        <dt class="col-sm-4">Print Language:</dt>
+                        <dd class="col-sm-8">@Model.ThpPrintLang</dd>
+
+                        <dt class="col-sm-4">New Code:</dt>
+                        <dd class="col-sm-8">@Model.ThpNewcode</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a asp-action="Edit" asp-route-id="@Model.ThpId" class="btn btn-primary me-md-2">
+                    <i class="fas fa-edit me-2"></i>Edit
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-list me-2"></i>Back to List
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ThpId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}
