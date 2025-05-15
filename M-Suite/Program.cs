@@ -1,4 +1,5 @@
 using M_Suite.Data;
+using M_Suite.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LogoutPath = "/User/Logout";
     });
 
+// Register services
+builder.Services.AddScoped<TransactionService>();
 
 builder.Services.AddSession();
 

@@ -1,6 +1,9 @@
 ﻿// TransactionItemViewModel.cs
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace M_Suite.Models.ViewModels
 {
@@ -68,6 +71,18 @@ namespace M_Suite.Models.ViewModels
         [Display(Name = "Total Amount")]
         public decimal? TsiTotalAmount { get; set; }
 
+        // Transaction header properties
+        public string? TransactionNumber { get; set; }
+        public DateTime TransactionDate { get; set; } = DateTime.Now;
+        public int? BillToCustomerId { get; set; }
+        public int? ShipToCustomerId { get; set; }
+        public decimal? TransactionDiscount { get; set; }
+        public decimal? TransactionSubTotal => LineItems.Sum(i => i.LineTotal);
+        public decimal? TransactionTotalDiscount => 
+            LineItems.Sum(i => i.DiscountAmount) + 
+            (TransactionSubTotal * (TransactionDiscount ?? 0) / 100);
+        public decimal? TransactionFinalTotal => TransactionSubTotal - TransactionTotalDiscount;
+
         // Navigation properties for dropdowns
         public SelectList? Transactions { get; set; }
         public SelectList? Items { get; set; }
@@ -76,20 +91,77 @@ namespace M_Suite.Models.ViewModels
         public SelectList? TransactionTypeOptions { get; set; }
         public SelectList? ListPrices { get; set; }
         public SelectList? ParentTransactionItems { get; set; }
+        public SelectList? Customers { get; set; }
+        public SelectList? TransactionTypes { get; set; }
+        public SelectList? BusinessUnits { get; set; }
 
         // For line items
         public List<TransactionItemLineViewModel> LineItems { get; set; } = new List<TransactionItemLineViewModel>();
+
+        // Convert view model to domain models
+        public Transaction ToTransactionModel()
+        {
+            return new Transaction
+            {
+                TsId = TsiTsId,
+                TsNumber = TransactionNumber ?? "",
+                TsDate = TransactionDate,
+                TsThpsIdBill = BillToCustomerId,
+                TsThpsIdShip = ShipToCustomerId,
+                TsDiscount = TransactionDiscount,
+                TsTotalDiscount = TransactionTotalDiscount ?? 0,
+                TsTotal = TransactionSubTotal ?? 0,
+                TsTotalFinal = TransactionFinalTotal ?? 0
+            };
+        }
+
+        public List<TransactionItem> ToTransactionItemModels()
+        {
+            List<TransactionItem> items = new List<TransactionItem>();
+            
+            foreach (var lineItem in LineItems)
+            {
+                items.Add(new TransactionItem
+                {
+                    TsiTsId = TsiTsId,
+                    TsiItId = lineItem.TsiItId,
+                    TsiUomId = lineItem.TsiUomId,
+                    TsiPlIdWhs = lineItem.TsiPlIdWhs,
+                    TsiLineSequence = (short)items.Count,
+                    TsiQuantity = lineItem.TsiQuantity,
+                    TsiQuantity2 = lineItem.TsiQuantity,
+                    TsiPrice = lineItem.TsiPrice,
+                    TsiDiscountPercentage = lineItem.TsiDiscountPercentage,
+                    TsiDiscountAmount = lineItem.TsiDiscountAmount,
+                    TsiTotalAmount = lineItem.LineTotal
+                });
+            }
+            
+            return items;
+        }
     }
 
     public class TransactionItemLineViewModel
     {
         public int? TsiItId { get; set; }
+        public string? ItemName { get; set; }
         public int? TsiUomId { get; set; }
+        public string? UomName { get; set; }
         public int? TsiPlIdWhs { get; set; }
-        public decimal TsiQuantity { get; set; }
+        public string? WarehouseName { get; set; }
+        public decimal TsiQuantity { get; set; } = 1;
         public decimal? TsiPrice { get; set; }
         public decimal? TsiDiscountPercentage { get; set; }
         public decimal? TsiDiscountAmount { get; set; }
-        public decimal LineTotal { get; set; }
+        public string? Remarks { get; set; }
+
+        // Calculated properties
+        public decimal SubTotal => TsiPrice.GetValueOrDefault() * TsiQuantity;
+        
+        public decimal DiscountAmount => 
+            TsiDiscountAmount.GetValueOrDefault() + 
+            (SubTotal * TsiDiscountPercentage.GetValueOrDefault() / 100);
+        
+        public decimal LineTotal => Math.Max(0, SubTotal - DiscountAmount);
     }
 }

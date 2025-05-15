@@ -1,0 +1,220 @@
+@model IEnumerable<M_Suite.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Invoices";
+}
+
+<div class="container-fluid">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-file-invoice-dollar me-2"></i>Invoices</h3>
+                <div>
+                    <a asp-action="SalesOrders" class="btn btn-outline-light btn-sm me-2">
+                        <i class="fas fa-shopping-cart me-1"></i> Sales Orders
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <!-- Filter and Search -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="btn-group" role="group">
+                        <a href="@Url.Action("Invoices", new { status = "" })" class="btn @(ViewBag.CurrentStatus == null ? "btn-primary" : "btn-outline-primary")">All</a>
+                        <a href="@Url.Action("Invoices", new { status = 1003 })" class="btn @(ViewBag.CurrentStatus == 1003 ? "btn-primary" : "btn-outline-primary")">Open</a>
+                        <a href="@Url.Action("Invoices", new { status = 1004 })" class="btn @(ViewBag.CurrentStatus == 1004 ? "btn-primary" : "btn-outline-primary")">Paid</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <form method="get" class="d-flex">
+                        <input type="text" name="search" class="form-control me-2" placeholder="Search by number, customer, or reference..." value="@ViewBag.CurrentSearch">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Invoices Table -->
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Invoice #</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                            <th>Order #</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var invoice in Model)
+                            {
+                                var statusClass = invoice.TsTssId == 1003 ? "bg-info text-white" : 
+                                                 invoice.TsTssId == 1004 ? "bg-success text-white" : 
+                                                 "bg-secondary text-white";
+                                
+                                var statusText = invoice.TsTssId == 1003 ? "Open" :
+                                               invoice.TsTssId == 1004 ? "Paid" :
+                                               invoice.TsTss?.TssDescriptionLan1 ?? "Unknown";
+                                
+                                <tr>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@invoice.TsId" class="text-primary fw-bold">
+                                            @invoice.TsNumber
+                                        </a>
+                                    </td>
+                                    <td>@invoice.TsDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@(invoice.TsThpsIdBillNavigation?.ThpsNameLan1 ?? "N/A")</td>
+                                    <td>
+                                        @if (invoice.TsAttribute01 != null)
+                                        {
+                                            <a asp-action="Details" asp-route-id="@invoice.TsAttribute01" class="text-secondary">
+                                                @(ViewBag.OrderNumbers?[invoice.TsAttribute01] ?? "#" + invoice.TsAttribute01)
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">N/A</span>
+                                        }
+                                    </td>
+                                    <td>@string.Format("{0:C}", invoice.TsTotalFinal)</td>
+                                    <td>
+                                        <span class="badge @statusClass">@statusText</span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="Details" asp-route-id="@invoice.TsId" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            
+                                            <a asp-action="PrintInvoice" asp-route-id="@invoice.TsId" target="_blank" class="btn btn-sm btn-outline-dark" data-bs-toggle="tooltip" title="Print Invoice">
+                                                <i class="fas fa-print"></i>
+                                            </a>
+                                            
+                                            @if (invoice.TsTssId == 1003)
+                                            {
+                                                <form asp-action="MarkAsPaid" asp-route-id="@invoice.TsId" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-outline-success" onclick="return confirm('Mark this invoice as paid?');" data-bs-toggle="tooltip" title="Mark as Paid">
+                                                        <i class="fas fa-check-circle"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">
+                                    <i class="fas fa-file-invoice fa-3x mb-3 d-block"></i>
+                                    No invoices found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            @if (ViewBag.TotalPages > 1)
+            {
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Invoices", new { page = ViewBag.CurrentPage - 1, status = ViewBag.CurrentStatus, search = ViewBag.CurrentSearch })">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                        }
+                        
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Invoices", new { page = i, status = ViewBag.CurrentStatus, search = ViewBag.CurrentSearch })">@i</a>
+                            </li>
+                        }
+                        
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Invoices", new { page = ViewBag.CurrentPage + 1, status = ViewBag.CurrentStatus, search = ViewBag.CurrentSearch })">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+            
+            <!-- Summary Stats -->
+            @if (Model != null && Model.Any())
+            {
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <h6 class="text-muted">TOTAL INVOICES</h6>
+                                <h3>@Model.Count()</h3>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="text-muted">PENDING AMOUNT</h6>
+                                <h3 class="text-danger">@string.Format("{0:C}", Model.Where(i => i.TsTssId == 1003).Sum(i => i.TsTotalFinal))</h3>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="text-muted">PAID AMOUNT</h6>
+                                <h3 class="text-success">@string.Format("{0:C}", Model.Where(i => i.TsTssId == 1004).Sum(i => i.TsTotalFinal))</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        .badge {
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .table th {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .table td {
+            vertical-align: middle;
+        }
+        
+        .btn-group .btn {
+            margin-right: 2px;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+        });
+    </script>
+} 

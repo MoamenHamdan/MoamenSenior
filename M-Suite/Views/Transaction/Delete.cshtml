@@ -1,249 +1,125 @@
 ﻿@model M_Suite.Models.Transaction
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Transaction";
 }
 
-<h1>Delete</h1>
+<div class="container-fluid transaction-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-danger text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-trash-alt me-2"></i>Delete Transaction #@Model.TsNumber</h3>
+                <a asp-action="Index" class="btn btn-light btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Transaction</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsOrgId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsOrgId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsOurReference)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsOurReference)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTheirReference)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTheirReference)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsDueDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsDueDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsDiscount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsDiscount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTotalDiscount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTotalDiscount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTotalDiscountBc)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTotalDiscountBc)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTotalTax)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTotalTax)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTotalTaxBc)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTotalTaxBc)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTotal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTotal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTotalBc)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTotalBc)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsRemarks)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsRemarks)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsCreateDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsCreateDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsModifiedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsModifiedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsCurRate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsCurRate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsInvCurRate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsInvCurRate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsUsIdCreatedby)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsUsIdCreatedby)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsPtId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsPtId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsAttribute01)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsAttribute01)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsAttribute02)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsAttribute02)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsAttribute03)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsAttribute03)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsDiscountAmount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsDiscountAmount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsUid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsUid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTotalFinal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTotalFinal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsExportedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsExportedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsBu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsBu.BuId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsCdIdCmsNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsCdIdCmsNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsCdIdCurNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsCdIdCurNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsCdIdSrcNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsCdIdSrcNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsSgd)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsSgd.SgdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsThpsIdBillNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsThpsIdBillNavigation.ThpsId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsThpsIdShipNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsThpsIdShipNavigation.ThpsId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTss)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTss.TssId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsTst)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsTst.TstId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsUs)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsUs.UsId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TsVt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TsVt.VtId)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="TsId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+        <div class="card-body">
+            <div class="alert alert-warning">
+                <h5><i class="fas fa-exclamation-triangle me-2"></i>Warning!</h5>
+                <p>You are about to permanently delete this transaction. This action cannot be undone.</p>
+            </div>
+
+            <!-- Basic Information Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Transaction Details</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Transaction Number:</dt>
+                        <dd class="col-sm-8">@Model.TsNumber</dd>
+
+                        <dt class="col-sm-4">Transaction Date:</dt>
+                        <dd class="col-sm-8">@Model.TsDate.ToShortDateString()</dd>
+
+                        <dt class="col-sm-4">Due Date:</dt>
+                        <dd class="col-sm-8">@(Model.TsDueDate?.ToShortDateString() ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Business Unit:</dt>
+                        <dd class="col-sm-8">@(Model.TsBu?.BuCode ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Transaction Type:</dt>
+                        <dd class="col-sm-8">@(Model.TsTst?.TstDescriptionLan1 ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">@(Model.TsTss?.TssDescriptionLan1 ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Total Amount:</dt>
+                        <dd class="col-sm-8">@Model.TsTotal.ToString("C")</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Financial Summary -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-calculator me-2"></i>Financial Summary</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Total Discount:</dt>
+                        <dd class="col-sm-8">@Model.TsTotalDiscount.ToString("C")</dd>
+
+                        <dt class="col-sm-4">Total Tax:</dt>
+                        <dd class="col-sm-8">@(Model.TsTotalTax?.ToString("C") ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Final Amount:</dt>
+                        <dd class="col-sm-8">@(Model.TsTotalFinal?.ToString("C") ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Currency:</dt>
+                        <dd class="col-sm-8">@(Model.TsCdIdCurNavigation?.CdDescriptionLan1 ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Currency Rate:</dt>
+                        <dd class="col-sm-8">@Model.TsCurRate</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <form asp-action="Delete" class="text-end">
+                <input type="hidden" asp-for="TsId" />
+                <button type="submit" class="btn btn-danger me-2">
+                    <i class="fas fa-trash-alt me-2"></i>Confirm Delete
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </a>
+            </form>
+        </div>
+    </div>
 </div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        .transaction-container {
+            max-width: 1200px;
+            margin-top: 2rem;
+        }
+
+        .card {
+            border-radius: 0.5rem;
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .card-header {
+            border-radius: 0.5rem 0.5rem 0 0 !important;
+        }
+
+        .btn {
+            border-radius: 0.375rem;
+            padding: 0.5rem 1.25rem;
+        }
+
+        dl.row dt {
+            font-weight: 500;
+            color: #6c757d;
+        }
+
+        dl.row dd {
+            font-weight: 400;
+        }
+    </style>
+}

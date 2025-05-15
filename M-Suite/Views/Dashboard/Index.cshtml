@@ -1,0 +1,464 @@
+@model M_Suite.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- Dashboard CSS -->
+<style>
+    .dashboard-container {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 20px;
+    }
+
+    .card {
+        border-radius: var(--border-radius);
+        border: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .stat-card {
+        grid-column: span 3;
+        background: linear-gradient(135deg, var(--primary-light), #fff);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .medium-card {
+        grid-column: span 6;
+        background: white;
+        padding: 20px;
+        min-height: 300px;
+    }
+
+    .large-card {
+        grid-column: span 12;
+        background: white;
+        padding: 20px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-top: 10px;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        color: #64748b;
+        font-weight: 500;
+    }
+
+    .stat-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--primary-light);
+        color: var(--primary-color);
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--dark-color);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .card-title i {
+        color: var(--primary-color);
+    }
+
+    .table-container {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table th {
+        background-color: var(--primary-light);
+        color: var(--primary-color);
+        font-weight: 600;
+        text-align: left;
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+
+    table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 14px;
+    }
+
+    table tr:hover {
+        background-color: #f8fafc;
+    }
+
+    .chart-container {
+        height: 300px;
+        width: 100%;
+        position: relative;
+    }
+
+    .status-pill {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .progress-container {
+        height: 10px;
+        background-color: #e2e8f0;
+        border-radius: 5px;
+        margin-top: 5px;
+    }
+
+    .progress-bar {
+        height: 100%;
+        border-radius: 5px;
+        background-color: var(--primary-color);
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Dashboard</h1>
+</div>
+
+<div class="dashboard-container">
+    <!-- Sales Stats -->
+    <div class="card stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-dollar-sign"></i>
+        </div>
+        <div class="stat-label">Total Sales</div>
+        <div class="stat-value">@Model.TotalSales.ToString("C0")</div>
+    </div>
+
+    <div class="card stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-calendar-day"></i>
+        </div>
+        <div class="stat-label">Today's Sales</div>
+        <div class="stat-value">@Model.SalesToday.ToString("C0")</div>
+    </div>
+
+    <div class="card stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="stat-label">This Month's Sales</div>
+        <div class="stat-value">@Model.SalesThisMonth.ToString("C0")</div>
+    </div>
+
+    <div class="card stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-receipt"></i>
+        </div>
+        <div class="stat-label">Total Transactions</div>
+        <div class="stat-value">@Model.TotalTransactions</div>
+    </div>
+
+    <!-- Sales Trend Chart -->
+    <div class="card medium-card">
+        <div class="card-title">
+            <i class="fas fa-chart-line"></i>
+            Monthly Sales Trend
+        </div>
+        <div class="chart-container">
+            <canvas id="salesTrendChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Transaction Status Distribution -->
+    <div class="card medium-card">
+        <div class="card-title">
+            <i class="fas fa-tasks"></i>
+            Transaction Status Distribution
+        </div>
+        <div class="chart-container">
+            <canvas id="transactionStatusChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="card large-card">
+        <div class="card-title">
+            <i class="fas fa-history"></i>
+            Recent Transactions
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction #</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var transaction in Model.RecentTransactions)
+                    {
+                        <tr>
+                            <td>@transaction.TsNumber</td>
+                            <td>@transaction.TsDate.ToString("MMM dd, yyyy")</td>
+                            <td>@(transaction.TsThpsIdBillNavigation?.ThpsThp?.ThpNameLan1 ?? "-")</td>
+                            <td>@(transaction.TsTst?.TstDescriptionLan1 ?? "-")</td>
+                            <td>
+                                <span class="status-pill" style="background-color: @GetStatusColor(transaction.TsTss?.TssDescriptionLan1); color: white;">
+                                    @(transaction.TsTss?.TssDescriptionLan1 ?? "Unknown")
+                                </span>
+                            </td>
+                            <td>@(transaction.TsTotalFinal?.ToString("C2") ?? "-")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Top Selling Items -->
+    <div class="card medium-card">
+        <div class="card-title">
+            <i class="fas fa-trophy"></i>
+            Top Selling Items
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity Sold</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.TopSellingItems)
+                    {
+                        <tr>
+                            <td>@item.ItemName</td>
+                            <td>@item.QuantitySold.ToString("N0")</td>
+                            <td>@item.Revenue.ToString("C2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Top Customers -->
+    <div class="card medium-card">
+        <div class="card-title">
+            <i class="fas fa-users"></i>
+            Top Customers
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Transactions</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model.TopCustomers)
+                    {
+                        <tr>
+                            <td>@customer.CustomerName</td>
+                            <td>@customer.TransactionCount</td>
+                            <td>@customer.PurchaseAmount.ToString("C2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Item Stats -->
+    <div class="card stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-box"></i>
+        </div>
+        <div class="stat-label">Total Items</div>
+        <div class="stat-value">@Model.TotalItems</div>
+    </div>
+
+    <div class="card stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="stat-label">Active Items</div>
+        <div class="stat-value">@Model.ActiveItems</div>
+    </div>
+
+    <div class="card stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-user-friends"></i>
+        </div>
+        <div class="stat-label">Total Customers</div>
+        <div class="stat-value">@Model.TotalCustomers</div>
+    </div>
+
+    <div class="card stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-user-check"></i>
+        </div>
+        <div class="stat-label">Active Customers</div>
+        <div class="stat-value">@Model.ActiveCustomers</div>
+    </div>
+
+    <!-- Warehouse Inventory -->
+    <div class="card large-card">
+        <div class="card-title">
+            <i class="fas fa-warehouse"></i>
+            Warehouse Inventory
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Warehouse</th>
+                        <th>Item Count</th>
+                        <th>Total Quantity</th>
+                        <th>Inventory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var warehouse in Model.InventorySummary)
+                    {
+                        <tr>
+                            <td>@warehouse.WarehouseName</td>
+                            <td>@warehouse.ItemCount</td>
+                            <td>@warehouse.TotalQuantity.ToString("N0")</td>
+                            <td>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: @GetPercentage(warehouse.TotalQuantity, Model.InventorySummary.Sum(w => w.TotalQuantity))%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public string GetStatusColor(string status)
+    {
+        return status?.ToLower() switch
+        {
+            "completed" => "#10b981",
+            "pending" => "#f59e0b",
+            "cancelled" => "#ef4444",
+            "draft" => "#6b7280",
+            "processing" => "#3b82f6",
+            "delivered" => "#0ea5e9",
+            _ => "#64748b"
+        };
+    }
+
+    public int GetPercentage(decimal value, decimal total)
+    {
+        if (total == 0) return 0;
+        return (int)Math.Round((value / total) * 100);
+    }
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sales Trend Chart
+        const salesTrendCtx = document.getElementById('salesTrendChart').getContext('2d');
+        const salesTrendChart = new Chart(salesTrendCtx, {
+            type: 'line',
+            data: {
+                labels: [@Html.Raw(string.Join(",", Model.MonthlySalesTrend.Select(m => $"'{m.MonthName} {m.Year}'")))],
+                datasets: [{
+                    label: 'Sales',
+                    data: [@string.Join(",", Model.MonthlySalesTrend.Select(m => m.TotalSales))],
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Transaction Status Chart
+        const statusCtx = document.getElementById('transactionStatusChart').getContext('2d');
+        const statusColors = [
+            '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6',
+            '#ec4899', '#0ea5e9', '#14b8a6', '#f97316', '#6366f1'
+        ];
+        
+        const statusChart = new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [@Html.Raw(string.Join(",", Model.TransactionStatusDistribution.Select(s => $"'{s.StatusName}'")))],
+                datasets: [{
+                    data: [@string.Join(",", Model.TransactionStatusDistribution.Select(s => s.Count))],
+                    backgroundColor: statusColors.slice(0, @Model.TransactionStatusDistribution.Count),
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+    </script>
+} 

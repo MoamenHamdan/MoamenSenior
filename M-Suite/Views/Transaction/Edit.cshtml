@@ -1,4 +1,4 @@
-﻿@model M_Suite.Models.Transaction
+﻿@model M_Suite.Models.ViewModels.TransactionEditViewModel
 
 @{
     ViewData["Title"] = "Edit Transaction";
@@ -8,7 +8,7 @@
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white">
             <div class="d-flex justify-content-between align-items-center">
-                <h3 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Transaction #@Model.TsNumber</h3>
+                <h3 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Transaction #@Model.Transaction.TsNumber</h3>
                 <a asp-action="Index" class="btn btn-light btn-sm">
                     <i class="fas fa-arrow-left me-1"></i> Back to List
                 </a>
@@ -17,216 +17,249 @@
 
         <div class="card-body">
             <form asp-action="Edit" class="needs-validation" novalidate>
-                <input type="hidden" asp-for="TsId" />
+                <input type="hidden" asp-for="Transaction.TsId" />
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-                <!-- Main Transaction Section -->
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <div class="form-floating mb-3">
-                            <input asp-for="TsNumber" class="form-control" placeholder=" " />
-                            <label asp-for="TsNumber"></label>
-                            <span asp-validation-for="TsNumber" class="text-danger small"></span>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <select asp-for="TsUsId" class="form-select" asp-items="ViewBag.TsUsId">
-                                <option value="">-- Select User --</option>
-                            </select>
-                            <label asp-for="TsUsId"></label>
-                            <span asp-validation-for="TsUsId" class="text-danger small"></span>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <select asp-for="TsBuId" class="form-select" asp-items="ViewBag.TsBuId">
-                                <option value="">-- Select Business Unit --</option>
-                            </select>
-                            <label asp-for="TsBuId"></label>
-                            <span asp-validation-for="TsBuId" class="text-danger small"></span>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <select asp-for="TsVtId" class="form-select" asp-items="ViewBag.TsVtId">
-                                <option value="">-- Select Transaction Type --</option>
-                            </select>
-                            <label asp-for="TsVtId"></label>
-                            <span asp-validation-for="TsVtId" class="text-danger small"></span>
-                        </div>
+                <!-- Basic Information Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
                     </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="Transaction.TsNumber" class="form-control" placeholder=" " required />
+                                    <label asp-for="Transaction.TsNumber">Transaction Number</label>
+                                    <span asp-validation-for="Transaction.TsNumber" class="text-danger small"></span>
+                                </div>
+                            </div>
 
-                    <div class="col-md-6">
-                        <div class="form-floating mb-3">
-                            <input asp-for="TsOurReference" class="form-control" placeholder=" " />
-                            <label asp-for="TsOurReference"></label>
-                            <span asp-validation-for="TsOurReference" class="text-danger small"></span>
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="Transaction.TsDate" class="form-control" type="date" placeholder=" " required />
+                                    <label asp-for="Transaction.TsDate">Transaction Date</label>
+                                    <span asp-validation-for="Transaction.TsDate" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Transaction.TsDueDate" class="form-control" type="date" placeholder=" " />
+                                    <label asp-for="Transaction.TsDueDate">Due Date</label>
+                                    <span asp-validation-for="Transaction.TsDueDate" class="text-danger small"></span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input asp-for="TsTheirReference" class="form-control" placeholder=" " />
-                            <label asp-for="TsTheirReference"></label>
-                            <span asp-validation-for="TsTheirReference" class="text-danger small"></span>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Transaction.TsOurReference" class="form-control" placeholder=" " />
+                                    <label asp-for="Transaction.TsOurReference">Our Reference</label>
+                                    <span asp-validation-for="Transaction.TsOurReference" class="text-danger small"></span>
+                                </div>
+                            </div>
 
-                        <div class="form-floating mb-3">
-                            <input asp-for="TsDate" class="form-control" type="date" placeholder=" " />
-                            <label asp-for="TsDate"></label>
-                            <span asp-validation-for="TsDate" class="text-danger small"></span>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input asp-for="TsDueDate" class="form-control" type="date" placeholder=" " />
-                            <label asp-for="TsDueDate"></label>
-                            <span asp-validation-for="TsDueDate" class="text-danger small"></span>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Transaction.TsTheirReference" class="form-control" placeholder=" " />
+                                    <label asp-for="Transaction.TsTheirReference">Their Reference</label>
+                                    <span asp-validation-for="Transaction.TsTheirReference" class="text-danger small"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Financial Section -->
+                <!-- Customer Information Section -->
                 <div class="card mb-4">
                     <div class="card-header bg-light">
-                        <h5 class="mb-0"><i class="fas fa-calculator me-2"></i>Financial Details</h5>
+                        <h5 class="mb-0"><i class="fas fa-user me-2"></i>Customer Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="Transaction.TsThpsIdBill" class="form-select" asp-items="Model.Customers">
+                                        <option value="">-- Select Billing Site --</option>
+                                    </select>
+                                    <label asp-for="Transaction.TsThpsIdBill">Billing Site</label>
+                                    <span asp-validation-for="Transaction.TsThpsIdBill" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="Transaction.TsThpsIdShip" class="form-select" asp-items="Model.Customers">
+                                        <option value="">-- Select Shipping Site --</option>
+                                    </select>
+                                    <label asp-for="Transaction.TsThpsIdShip">Shipping Site</label>
+                                    <span asp-validation-for="Transaction.TsThpsIdShip" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transaction Type Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-tags me-2"></i>Transaction Type</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3 required">
+                                    <select asp-for="Transaction.TsTstId" class="form-select" asp-items="Model.TransactionTypes" required>
+                                        <option value="">-- Select Transaction Type --</option>
+                                    </select>
+                                    <label asp-for="Transaction.TsTstId">Transaction Type</label>
+                                    <span asp-validation-for="Transaction.TsTstId" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="Transaction.TsTssId" class="form-select" asp-items="Model.TransactionStatuses">
+                                        <option value="">-- Select Transaction Status --</option>
+                                    </select>
+                                    <label asp-for="Transaction.TsTssId">Transaction Status</label>
+                                    <span asp-validation-for="Transaction.TsTssId" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="Transaction.TsBuId" class="form-select" asp-items="Model.BusinessUnits">
+                                        <option value="">-- Select Business Unit --</option>
+                                    </select>
+                                    <label asp-for="Transaction.TsBuId">Business Unit</label>
+                                    <span asp-validation-for="Transaction.TsBuId" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transaction Items Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-list-ul me-2"></i>Transaction Items</h5>
+                        <a href="@Url.Action("AddItem", "Transaction", new { id = Model.Transaction.TsId })" class="btn btn-sm btn-primary">
+                            <i class="fas fa-plus me-1"></i> Add Item
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Item Code</th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Transaction.TransactionItems != null && Model.Transaction.TransactionItems.Any())
+                                    {
+                                        @foreach (var item in Model.Transaction.TransactionItems)
+                                        {
+                                            <tr>
+                                                <td>@(item.TsiIt?.ItCode ?? "-")</td>
+                                                <td>@(item.TsiIt?.ItDescriptionLan1 ?? "Unknown Item")</td>
+                                                <td>@item.TsiQuantity</td>
+                                                <td>@(item.TsiPrice.HasValue ? string.Format("{0:C}", item.TsiPrice.Value) : "$0.00")</td>
+                                                <td>@(item.TsiDiscountPercentage.HasValue ? string.Format("{0:P0}", item.TsiDiscountPercentage.Value / 100) : "0%")</td>
+                                                <td>@(item.TsiTotalAmount.HasValue ? string.Format("{0:C}", item.TsiTotalAmount.Value) : "$0.00")</td>
+                                                <td>
+                                                    <form asp-action="RemoveItem" asp-route-transactionId="@Model.Transaction.TsId" asp-route-itemId="@item.TsiId" method="post" style="display: inline">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to remove this item?');">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="7" class="text-center text-muted">No items added yet</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-active">
+                                        <th colspan="5" class="text-end">Subtotal:</th>
+                                        <th>@string.Format("{0:C}", Model.Transaction.TsTotal)</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr class="table-active">
+                                        <th colspan="5" class="text-end">Discount:</th>
+                                        <th>@string.Format("{0:C}", Model.Transaction.TsTotalDiscount)</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr class="table-active fw-bold">
+                                        <th colspan="5" class="text-end">Final Total:</th>
+                                        <th>@string.Format("{0:C}", Model.Transaction.TsTotalFinal)</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Information Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Financial Information</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="TsCdIdCur" class="form-select" asp-items="ViewBag.TsCdIdCur">
+                                    <select asp-for="Transaction.TsCdIdCur" class="form-select" asp-items="Model.CurrencyCodes">
                                         <option value="">-- Select Currency --</option>
                                     </select>
-                                    <label asp-for="TsCdIdCur"></label>
-                                    <span asp-validation-for="TsCdIdCur" class="text-danger small"></span>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsCurRate" class="form-control" type="number" step="0.0001" placeholder=" " />
-                                    <label asp-for="TsCurRate"></label>
-                                    <span asp-validation-for="TsCurRate" class="text-danger small"></span>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsTotal" class="form-control" type="number" step="0.01" placeholder=" " />
-                                    <label asp-for="TsTotal"></label>
-                                    <span asp-validation-for="TsTotal" class="text-danger small"></span>
+                                    <label asp-for="Transaction.TsCdIdCur">Currency</label>
+                                    <span asp-validation-for="Transaction.TsCdIdCur" class="text-danger small"></span>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="TsTotalTax" class="form-control" type="number" step="0.01" placeholder=" " />
-                                    <label asp-for="TsTotalTax"></label>
-                                    <span asp-validation-for="TsTotalTax" class="text-danger small"></span>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsTotalTaxBc" class="form-control" type="number" step="0.01" placeholder=" " />
-                                    <label asp-for="TsTotalTaxBc"></label>
-                                    <span asp-validation-for="TsTotalTaxBc" class="text-danger small"></span>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsTotalDiscount" class="form-control" type="number" step="0.01" placeholder=" " />
-                                    <label asp-for="TsTotalDiscount"></label>
-                                    <span asp-validation-for="TsTotalDiscount" class="text-danger small"></span>
+                                    <input asp-for="Transaction.TsDiscount" class="form-control" type="number" step="0.01" min="0" max="100" placeholder=" " />
+                                    <label asp-for="Transaction.TsDiscount">Discount (%)</label>
+                                    <span asp-validation-for="Transaction.TsDiscount" class="text-danger small"></span>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="TsDiscount" class="form-control" type="number" step="0.01" placeholder=" " />
-                                    <label asp-for="TsDiscount"></label>
-                                    <span asp-validation-for="TsDiscount" class="text-danger small"></span>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsDiscountAmount" class="form-control" type="number" step="0.01" placeholder=" " />
-                                    <label asp-for="TsDiscountAmount"></label>
-                                    <span asp-validation-for="TsDiscountAmount" class="text-danger small"></span>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsTotalFinal" class="form-control" type="number" step="0.01" placeholder=" " />
-                                    <label asp-for="TsTotalFinal"></label>
-                                    <span asp-validation-for="TsTotalFinal" class="text-danger small"></span>
+                                    <select asp-for="Transaction.TsCdIdSrc" class="form-select" asp-items="Model.SourceCodes">
+                                        <option value="">-- Select Source --</option>
+                                    </select>
+                                    <label asp-for="Transaction.TsCdIdSrc">Source</label>
+                                    <span asp-validation-for="Transaction.TsCdIdSrc" class="text-danger small"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Additional Information -->
-                <div class="card mb-4">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Additional Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-floating mb-3">
-                            <textarea asp-for="TsRemarks" class="form-control" placeholder=" " style="height: 100px"></textarea>
-                            <label asp-for="TsRemarks"></label>
-                            <span asp-validation-for="TsRemarks" class="text-danger small"></span>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsAttribute01" class="form-control" placeholder=" " />
-                                    <label asp-for="TsAttribute01"></label>
-                                    <span asp-validation-for="TsAttribute01" class="text-danger small"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsAttribute02" class="form-control" placeholder=" " />
-                                    <label asp-for="TsAttribute02"></label>
-                                    <span asp-validation-for="TsAttribute02" class="text-danger small"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsAttribute03" class="form-control" placeholder=" " />
-                                    <label asp-for="TsAttribute03"></label>
-                                    <span asp-validation-for="TsAttribute03" class="text-danger small"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- System Information (Readonly) -->
-                <div class="card mb-4">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0"><i class="fas fa-cog me-2"></i>System Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsCreateDate" class="form-control" readonly placeholder=" " />
-                                    <label asp-for="TsCreateDate"></label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsModifiedDate" class="form-control" readonly placeholder=" " />
-                                    <label asp-for="TsModifiedDate"></label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="TsExportedDate" class="form-control" readonly placeholder=" " />
-                                    <label asp-for="TsExportedDate"></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="submit" class="btn btn-primary px-4">
-                        <i class="fas fa-save me-2"></i>Save Changes
-                    </button>
-                    <a asp-action="Index" class="btn btn-outline-secondary">
-                        <i class="fas fa-times me-2"></i>Cancel
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-times me-1"></i> Cancel
                     </a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-1"></i> Save Changes
+                    </button>
                 </div>
             </form>
         </div>
@@ -237,7 +270,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
         .transaction-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin-top: 2rem;
         }
 
@@ -260,51 +293,34 @@
             padding: 0.5rem 1rem;
         }
 
-            .form-control:read-only {
-                background-color: #f8f9fa;
-            }
-
         .btn {
             border-radius: 0.375rem;
             padding: 0.5rem 1.25rem;
-            font-weight: 500;
         }
 
-        .text-danger.small {
-            font-size: 0.85rem;
+        .required label::after {
+            content: " *";
+            color: #dc3545;
         }
     </style>
 }
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
     <script>
-        // Enable Bootstrap 5 validation
-        (function () {
-            'use strict'
-
-            var forms = document.querySelectorAll('.needs-validation')
-
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
-
-        // Initialize date inputs
-        document.addEventListener('DOMContentLoaded', function() {
-            flatpickr("[type='date']", {
-                dateFormat: "Y-m-d",
-                allowInput: true
+        $(document).ready(function() {
+            // Initialize any select2 dropdowns
+            $('.form-select').select2({
+                theme: 'bootstrap4',
+                width: '100%'
+            });
+            
+            // Date picker formatting
+            $('input[type="date"]').each(function() {
+                if (!$(this).val()) {
+                    $(this).val(new Date().toISOString().split('T')[0]);
+                }
             });
         });
     </script>

@@ -1,0 +1,201 @@
+@model IEnumerable<M_Suite.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Sales Orders";
+}
+
+<div class="container-fluid">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Sales Orders</h3>
+                <a asp-action="Create" asp-route-type="2" asp-route-status="1000" class="btn btn-light btn-sm">
+                    <i class="fas fa-plus me-1"></i> Create New Order
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <!-- Status Filter -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="btn-group" role="group">
+                        <a href="@Url.Action("SalesOrders", new { status = "" })" class="btn @(ViewBag.CurrentStatus == null ? "btn-primary" : "btn-outline-primary")">All</a>
+                        <a href="@Url.Action("SalesOrders", new { status = 1000 })" class="btn @(ViewBag.CurrentStatus == 1000 ? "btn-primary" : "btn-outline-primary")">New</a>
+                        <a href="@Url.Action("SalesOrders", new { status = 1001 })" class="btn @(ViewBag.CurrentStatus == 1001 ? "btn-primary" : "btn-outline-primary")">Approved</a>
+                        <a href="@Url.Action("SalesOrders", new { status = 1002 })" class="btn @(ViewBag.CurrentStatus == 1002 ? "btn-primary" : "btn-outline-primary")">Rejected</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <form method="get" class="d-flex">
+                        <input type="text" name="search" class="form-control me-2" placeholder="Search by number, customer, or reference..." value="@ViewBag.CurrentSearch">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Order #</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var order in Model)
+                            {
+                                var statusClass = order.TsTssId == 1000 ? "bg-warning text-dark" :
+                                                order.TsTssId == 1001 ? "bg-success text-white" :
+                                                order.TsTssId == 1002 ? "bg-danger text-white" : "bg-secondary text-white";
+                                
+                                var statusText = order.TsTssId == 1000 ? "New" :
+                                               order.TsTssId == 1001 ? "Approved" :
+                                               order.TsTssId == 1002 ? "Rejected" : order.TsTss?.TssDescriptionLan1 ?? "Unknown";
+                                
+                                <tr>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@order.TsId" class="text-primary fw-bold">
+                                            @order.TsNumber
+                                        </a>
+                                    </td>
+                                    <td>@order.TsDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@(order.TsThpsIdBillNavigation?.ThpsNameLan1 ?? "N/A")</td>
+                                    <td>@string.Format("{0:C}", order.TsTotalFinal)</td>
+                                    <td>
+                                        <span class="badge @statusClass">@statusText</span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="Details" asp-route-id="@order.TsId" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            
+                                            @if (order.TsTssId == 1000)
+                                            {
+                                                <form asp-action="ApproveOrder" asp-route-id="@order.TsId" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-outline-success" onclick="return confirm('Are you sure you want to approve this order?');" data-bs-toggle="tooltip" title="Approve">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
+                                                
+                                                <form asp-action="RejectOrder" asp-route-id="@order.TsId" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to reject this order?');" data-bs-toggle="tooltip" title="Reject">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                            
+                                            @if (order.TsTssId == 1001)
+                                            {
+                                                <form asp-action="CreateInvoice" asp-route-orderId="@order.TsId" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-outline-info" onclick="return confirm('Create invoice from this order?');" data-bs-toggle="tooltip" title="Create Invoice">
+                                                        <i class="fas fa-file-invoice-dollar"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                            
+                                            @if (order.TsTssId == 1000)
+                                            {
+                                                <a asp-action="Edit" asp-route-id="@order.TsId" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                                    No sales orders found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            @if (ViewBag.TotalPages > 1)
+            {
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("SalesOrders", new { page = ViewBag.CurrentPage - 1, status = ViewBag.CurrentStatus, search = ViewBag.CurrentSearch })">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                        }
+                        
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("SalesOrders", new { page = i, status = ViewBag.CurrentStatus, search = ViewBag.CurrentSearch })">@i</a>
+                            </li>
+                        }
+                        
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("SalesOrders", new { page = ViewBag.CurrentPage + 1, status = ViewBag.CurrentStatus, search = ViewBag.CurrentSearch })">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        .badge {
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .table th {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .table td {
+            vertical-align: middle;
+        }
+        
+        .btn-group .btn {
+            margin-right: 2px;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+        });
+    </script>
+} 

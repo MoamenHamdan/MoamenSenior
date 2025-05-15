@@ -90,7 +90,7 @@ namespace M_Suite.Controllers
                     LpiLpId = id,
                     LpiItId = itemId,
                     LpiPrice = prices[i],
-                    LpiUomId = item?.ItUomId ?? 0
+                    LpiUomId = item?.ItUomId ?? 1
                 };
 
                 _context.ListpriceItems.Add(priceItem);

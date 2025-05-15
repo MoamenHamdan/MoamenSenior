@@ -1,0 +1,249 @@
+@model M_Suite.Models.Transaction
+
+@{
+    ViewData["Title"] = "Print Invoice";
+    Layout = "_PrintLayout";
+}
+
+<div class="container-fluid print-container">
+    <div class="card">
+        <div class="card-body">
+            <!-- Invoice Header -->
+            <div class="row mb-4">
+                <div class="col-6">
+                    <h2 class="mb-0">INVOICE</h2>
+                    <div class="mb-1"><strong>Invoice No:</strong> @Model.TsNumber</div>
+                    <div class="mb-1"><strong>Date:</strong> @Model.TsDate.ToString("yyyy-MM-dd")</div>
+                    <div class="mb-1"><strong>Due Date:</strong> @(Model.TsDueDate?.ToString("yyyy-MM-dd") ?? "N/A")</div>
+                    @if (!string.IsNullOrEmpty(Model.TsAttribute01))
+                    {
+                        <div class="mb-1"><strong>Order Ref:</strong> @Model.TsOurReference</div>
+                    }
+                </div>
+                <div class="col-6 text-end">
+                    <h3>@Model.TsBu.BuDescriptionLan1</h3>
+                    <div>@(Model.TsBu.BuAddress1 ?? "Address not available")</div>
+                    <div>@(Model.TsBu.BuPhone ?? "Phone not available")</div>
+                    <div>@(Model.TsBu.BuEmail ?? "Email not available")</div>
+                </div>
+            </div>
+
+            <!-- Customer Information -->
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="border p-3">
+                        <h5 class="border-bottom pb-2">Bill To:</h5>
+                        @if (Model.TsThpsIdBillNavigation != null)
+                        {
+                            <div class="mb-1"><strong>@Model.TsThpsIdBillNavigation.ThpsNameLan1</strong></div>
+                            <div class="mb-1">@(Model.TsThpsIdBillNavigation.ThpsAddress1 ?? "Address not available")</div>
+                            <div class="mb-1">@(Model.TsThpsIdBillNavigation.ThpsAddress2 ?? "")</div>
+                            <div class="mb-1">Phone: @(Model.TsThpsIdBillNavigation.ThpsPhone ?? "N/A")</div>
+                        }
+                        else
+                        {
+                            <div>No billing information available</div>
+                        }
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="border p-3">
+                        <h5 class="border-bottom pb-2">Ship To:</h5>
+                        @if (Model.TsThpsIdShipNavigation != null)
+                        {
+                            <div class="mb-1"><strong>@Model.TsThpsIdShipNavigation.ThpsNameLan1</strong></div>
+                            <div class="mb-1">@(Model.TsThpsIdShipNavigation.ThpsAddress1 ?? "Address not available")</div>
+                            <div class="mb-1">@(Model.TsThpsIdShipNavigation.ThpsAddress2 ?? "")</div>
+                            <div class="mb-1">Phone: @(Model.TsThpsIdShipNavigation.ThpsPhone ?? "N/A")</div>
+                        }
+                        else
+                        {
+                            <div>Same as billing address</div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invoice Items -->
+            <div class="table-responsive mb-4">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.TransactionItems != null && Model.TransactionItems.Any())
+                        {
+                            @foreach (var item in Model.TransactionItems)
+                            {
+                                <tr>
+                                    <td>@(item.TsiIt?.ItCode ?? "N/A")</td>
+                                    <td>
+                                        @(item.TsiIt?.ItDescriptionLan1 ?? "Unknown Item")
+                                        @if (!string.IsNullOrEmpty(item.TsiFreeComment))
+                                        {
+                                            <div class="small text-muted">@item.TsiFreeComment</div>
+                                        }
+                                    </td>
+                                    <td class="text-end">@item.TsiQuantity.ToString("N2")</td>
+                                    <td>@(item.TsiUom?.UomNameLan1 ?? "Unit")</td>
+                                    <td class="text-end">@(item.TsiPrice?.ToString("C") ?? "$0.00")</td>
+                                    <td class="text-end">
+                                        @if (item.TsiDiscountPercentage.HasValue && item.TsiDiscountPercentage.Value > 0)
+                                        {
+                                            @string.Format("{0:P0}", item.TsiDiscountPercentage.Value / 100)
+                                        }
+                                        else if (item.TsiDiscountAmount.HasValue && item.TsiDiscountAmount.Value > 0)
+                                        {
+                                            @string.Format("{0:C}", item.TsiDiscountAmount.Value)
+                                        }
+                                        else
+                                        {
+                                            @:0%
+                                        }
+                                    </td>
+                                    <td class="text-end">@(item.TsiTotalAmount?.ToString("C") ?? "$0.00")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center">No items found</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6" class="text-end"><strong>Subtotal:</strong></td>
+                            <td class="text-end">@Model.TsTotal.ToString("C")</td>
+                        </tr>
+                        @if (Model.TsTotalDiscount > 0)
+                        {
+                            <tr>
+                                <td colspan="6" class="text-end"><strong>Discount:</strong></td>
+                                <td class="text-end">@Model.TsTotalDiscount.ToString("C")</td>
+                            </tr>
+                        }
+                        @if (Model.TsTotalTax.HasValue && Model.TsTotalTax.Value > 0)
+                        {
+                            <tr>
+                                <td colspan="6" class="text-end"><strong>Tax:</strong></td>
+                                <td class="text-end">@Model.TsTotalTax.Value.ToString("C")</td>
+                            </tr>
+                        }
+                        <tr class="table-active">
+                            <td colspan="6" class="text-end"><strong>Total:</strong></td>
+                            <td class="text-end"><strong>@(Model.TsTotalFinal?.ToString("C") ?? Model.TsTotal.ToString("C"))</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Notes and Terms -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="border p-3 mb-4">
+                        <h5 class="border-bottom pb-2">Notes:</h5>
+                        <p>@(string.IsNullOrEmpty(Model.TsRemarks) ? "Thank you for your business." : Model.TsRemarks)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Information -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="border p-3">
+                        <h5 class="border-bottom pb-2">Payment Information:</h5>
+                        <p>Please make payment to the bank account details below:</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div><strong>Bank Name:</strong> Sample Bank</div>
+                                <div><strong>Account Name:</strong> @Model.TsBu.BuDescriptionLan1</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div><strong>Account Number:</strong> XXXX-XXXX-XXXX</div>
+                                <div><strong>Reference:</strong> @Model.TsNumber</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <p class="mb-0">Invoice generated on @DateTime.Now.ToString("yyyy-MM-dd HH:mm")</p>
+                    <p>This is a computer-generated invoice and does not require a signature.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        @@media print {
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: 12pt;
+            }
+            
+            .print-container {
+                margin: 0;
+                padding: 15px;
+                width: 100%;
+            }
+            
+            .card {
+                border: none;
+                box-shadow: none;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            a {
+                text-decoration: none !important;
+                color: #000 !important;
+            }
+            
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            
+            .table td, .table th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+        }
+        
+        .print-container {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        
+        .table th {
+            white-space: nowrap;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Auto print when the page loads
+            window.print();
+        });
+    </script>
+} 

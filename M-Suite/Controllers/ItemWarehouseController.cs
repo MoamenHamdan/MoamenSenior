@@ -195,7 +195,7 @@ namespace M_Suite.Controllers
         {
             return _context.ItemWarehouses.Any(e => e.ItwId == id);
         }
-        private void PopulateDropdowns(ItemWarehouse itemWarehouse = null)
+        private void PopulateDropdowns(ItemWarehouse? itemWarehouse = null)
         {
             // Safely get lists or empty lists if null
             var items = _context?.Items?.ToList() ?? new List<Item>();
