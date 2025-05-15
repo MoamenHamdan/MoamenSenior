@@ -4,85 +4,180 @@
     ViewData["Title"] = "Edit Price List";
 }
 
-<div class="container">
-    <h1>Edit Price List</h1>
+<div class="container-fluid pl-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Price List</h3>
+                <a asp-action="Index" class="btn btn-light btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
 
-    <div class="card">
         <div class="card-body">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form asp-action="Edit" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                 <input type="hidden" asp-for="LpId" />
 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="LpCode" class="control-label">Code</label>
-                            <input asp-for="LpCode" class="form-control" />
-                            <span asp-validation-for="LpCode" class="text-danger"></span>
-                        </div>
+                <!-- Basic Information Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="LpDescriptionLan1" class="control-label">Description</label>
-                            <input asp-for="LpDescriptionLan1" class="form-control" />
-                            <span asp-validation-for="LpDescriptionLan1" class="text-danger"></span>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="LpCode" class="form-control" placeholder=" " required />
+                                    <label asp-for="LpCode"></label>
+                                    <span asp-validation-for="LpCode" class="text-danger small"></span>
+                                </div>
+
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="LpDescriptionLan1" class="form-control" placeholder=" " required />
+                                    <label asp-for="LpDescriptionLan1">Description (Primary)</label>
+                                    <span asp-validation-for="LpDescriptionLan1" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="LpDescriptionLan2" class="form-control" placeholder=" " />
+                                    <label asp-for="LpDescriptionLan2">Description (Secondary)</label>
+                                    <span asp-validation-for="LpDescriptionLan2" class="text-danger small"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input asp-for="LpDescriptionLan3" class="form-control" placeholder=" " />
+                                    <label asp-for="LpDescriptionLan3">Description (Tertiary)</label>
+                                    <span asp-validation-for="LpDescriptionLan3" class="text-danger small"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="LpBuId" class="control-label">Business Unit</label>
-                            <select asp-for="LpBuId" class="form-control" asp-items="ViewBag.LpBuId"></select>
-                            <span asp-validation-for="LpBuId" class="text-danger"></span>
-                        </div>
+                <!-- Settings Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Price List Settings</h5>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="LpCdIdCur" class="control-label">Currency</label>
-                            <select asp-for="LpCdIdCur" class="form-control" asp-items="ViewBag.LpCdIdCur"></select>
-                            <span asp-validation-for="LpCdIdCur" class="text-danger"></span>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="LpBuId" class="form-select" asp-items="ViewBag.LpBuId">
+                                        <option value="">-- Select Business Unit --</option>
+                                    </select>
+                                    <label asp-for="LpBuId">Business Unit</label>
+                                    <span asp-validation-for="LpBuId" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3 required">
+                                    <select asp-for="LpCdIdCur" class="form-select" asp-items="ViewBag.LpCdIdCur" required>
+                                        <option value="">-- Select Currency --</option>
+                                    </select>
+                                    <label asp-for="LpCdIdCur">Currency</label>
+                                    <span asp-validation-for="LpCdIdCur" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="LpLevel" class="form-control" placeholder=" " type="number" />
+                                    <label asp-for="LpLevel">Priority Level</label>
+                                    <span asp-validation-for="LpLevel" class="text-danger small"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="LpFromDate" class="control-label">From Date</label>
-                            <input asp-for="LpFromDate" class="form-control" type="date" />
-                            <span asp-validation-for="LpFromDate" class="text-danger"></span>
-                        </div>
+                <!-- Date Range Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Date Range</h5>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="LpToDate" class="control-label">To Date</label>
-                            <input asp-for="LpToDate" class="form-control" type="date" />
-                            <span asp-validation-for="LpToDate" class="text-danger"></span>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="LpFromDate" class="form-control" placeholder=" " type="date" required />
+                                    <label asp-for="LpFromDate">From Date</label>
+                                    <span asp-validation-for="LpFromDate" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="LpToDate" class="form-control" placeholder=" " type="date" required />
+                                    <label asp-for="LpToDate">To Date</label>
+                                    <span asp-validation-for="LpToDate" class="text-danger small"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-              <div class="form-group mb-3">
-                    <div class="form-check">
-                        <input type="hidden" name="LpActive" value="0" />
-                        <input type="checkbox" name="LpActive" value="1" class="form-check-input" id="LpActiveToggle"
-                               @(Model.LpActive == 1 ? "checked" : "") />
-                        <label class="form-check-label" for="LpActiveToggle">Active</label>
+                <!-- Status Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-toggle-on me-2"></i>Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check form-switch">
+                            <input type="hidden" asp-for="LpActive" value="0" />
+                            <input class="form-check-input" type="checkbox" id="LpActiveToggle"
+                            @(Model.LpActive == 1 ? "checked" : "") />
+                            <label class="form-check-label" for="LpActiveToggle">Active Price List</label>
+                        </div>
                     </div>
                 </div>
 
-
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a asp-action="Details" asp-route-id="@Model.LpId" class="btn btn-outline-secondary me-md-2">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Save Changes
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-} 
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Enable Bootstrap 5 validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        // Handle the active toggle
+        document.getElementById('LpActiveToggle').addEventListener('change', function() {
+            document.querySelector('input[name="LpActive"]').value = this.checked ? '1' : '0';
+        });
+    </script>
+}

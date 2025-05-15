@@ -1,15 +1,15 @@
-﻿@model M_Suite.Models.Thirdparty
+﻿@model M_Suite.Models.Listprice
 
 @{
-    ViewData["Title"] = "Create Third Party";
+    ViewData["Title"] = "Create Price List";
 }
 
-<div class="container-fluid thirdparty-container">
+<div class="container-fluid pl-container">
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white">
             <div class="d-flex justify-content-between align-items-center">
-                <h3 class="mb-0"><i class="fas fa-user-plus me-2"></i>Create Third Party</h3>
-                <a asp-action="Index" class="btn btn-light">
+                <h3 class="mb-0"><i class="fas fa-tags me-2"></i>Create New Price List</h3>
+                <a asp-action="Index" class="btn btn-light btn-sm">
                     <i class="fas fa-arrow-left me-1"></i> Back to List
                 </a>
             </div>
@@ -19,208 +19,119 @@
             <form asp-action="Create" class="needs-validation" novalidate>
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-                <!-- Hidden fields for system-managed values -->
-                <input type="hidden" asp-for="ThpCreateDate" value="@DateTime.Now" />
-                <input type="hidden" asp-for="ThpImpUid" value="@Guid.NewGuid().ToString()" />
-                <input type="hidden" asp-for="ThpImported" value="0" />
-                <input type="hidden" asp-for="ThpReadonly" value="0" />
-
+                <!-- Basic Information Section -->
                 <div class="card mb-4">
                     <div class="card-header bg-light">
                         <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="ThpCode" class="form-control" placeholder=" " required />
-                                    <label asp-for="ThpCode"></label>
-                                    <span asp-validation-for="ThpCode" class="text-danger small"></span>
+                                    <input asp-for="LpCode" class="form-control" placeholder=" " required />
+                                    <label asp-for="LpCode"></label>
+                                    <span asp-validation-for="LpCode" class="text-danger small"></span>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="ThpOrgId" class="form-control" placeholder=" " type="number" />
-                                    <label asp-for="ThpOrgId">Organization ID</label>
-                                    <span asp-validation-for="ThpOrgId" class="text-danger small"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="ThpUsIdCreated" class="form-control" placeholder=" " type="number" />
-                                    <label asp-for="ThpUsIdCreated">Created By User ID</label>
-                                    <span asp-validation-for="ThpUsIdCreated" class="text-danger small"></span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="ThpNameLan1" class="form-control" placeholder=" " required />
-                                    <label asp-for="ThpNameLan1">Name (AR)</label>
-                                    <span asp-validation-for="ThpNameLan1" class="text-danger small"></span>
+                                    <input asp-for="LpDescriptionLan1" class="form-control" placeholder=" " required />
+                                    <label asp-for="LpDescriptionLan1">Description (Primary)</label>
+                                    <span asp-validation-for="LpDescriptionLan1" class="text-danger small"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+
+                            <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="ThpNameLan2" class="form-control" placeholder=" " />
-                                    <label asp-for="ThpNameLan2">Name (EN)</label>
-                                    <span asp-validation-for="ThpNameLan2" class="text-danger small"></span>
+                                    <input asp-for="LpDescriptionLan2" class="form-control" placeholder=" " />
+                                    <label asp-for="LpDescriptionLan2">Description (Secondary)</label>
+                                    <span asp-validation-for="LpDescriptionLan2" class="text-danger small"></span>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
+
                                 <div class="form-floating mb-3">
-                                    <input asp-for="ThpNameLan3" class="form-control" placeholder=" " />
-                                    <label asp-for="ThpNameLan3">Name (FR)</label>
-                                    <span asp-validation-for="ThpNameLan3" class="text-danger small"></span>
+                                    <input asp-for="LpDescriptionLan3" class="form-control" placeholder=" " />
+                                    <label asp-for="LpDescriptionLan3">Description (Tertiary)</label>
+                                    <span asp-validation-for="LpDescriptionLan3" class="text-danger small"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Settings Section -->
                 <div class="card mb-4">
                     <div class="card-header bg-light">
-                        <h5 class="mb-0"><i class="fas fa-tags me-2"></i>Type Settings</h5>
+                        <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Price List Settings</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="ThpCdIdTpg" class="form-select" asp-items="ViewBag.ThpCdIdTpg">
-                                        <option value="">-- Select Type Group --</option>
+                                    <select asp-for="LpBuId" class="form-select" asp-items="ViewBag.LpBuId">
+                                        <option value="">-- Select Business Unit --</option>
                                     </select>
-                                    <label asp-for="ThpCdIdTpg">Type Group</label>
-                                    <span asp-validation-for="ThpCdIdTpg" class="text-danger small"></span>
+                                    <label asp-for="LpBuId">Business Unit</label>
+                                    <span asp-validation-for="LpBuId" class="text-danger small"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <select asp-for="ThpCdIdTps" class="form-select" asp-items="ViewBag.ThpCdIdTps">
-                                        <option value="">-- Select Type Subgroup --</option>
-                                    </select>
-                                    <label asp-for="ThpCdIdTps">Type Subgroup</label>
-                                    <span asp-validation-for="ThpCdIdTps" class="text-danger small"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <select asp-for="ThpIsB2b" class="form-select">
-                                        <option value="">-- Select B2B Status --</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <label asp-for="ThpIsB2b">Is B2B</label>
-                                    <span asp-validation-for="ThpIsB2b" class="text-danger small"></span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
                             <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <label class="form-check-label" asp-for="ThpIsCustomer">Is Customer</label>
-                                    <select asp-for="ThpIsCustomer" class="form-select">
-                                        <option value="">-- Select --</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                <div class="form-floating mb-3 required">
+                                    <select asp-for="LpCdIdCur" class="form-select" asp-items="ViewBag.LpCdIdCur" required>
+                                        <option value="">-- Select Currency --</option>
                                     </select>
-                                    <span asp-validation-for="ThpIsCustomer" class="text-danger small"></span>
+                                    <label asp-for="LpCdIdCur">Currency</label>
+                                    <span asp-validation-for="LpCdIdCur" class="text-danger small"></span>
                                 </div>
                             </div>
+
                             <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <label class="form-check-label" asp-for="ThpIsSupplier">Is Supplier</label>
-                                    <select asp-for="ThpIsSupplier" class="form-select">
-                                        <option value="">-- Select --</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <span asp-validation-for="ThpIsSupplier" class="text-danger small"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <label class="form-check-label" asp-for="ThpIsCompany">Is Company</label>
-                                    <select asp-for="ThpIsCompany" class="form-select">
-                                        <option value="">-- Select --</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <span asp-validation-for="ThpIsCompany" class="text-danger small"></span>
+                                <div class="form-floating mb-3">
+                                    <input asp-for="LpLevel" class="form-control" placeholder=" " type="number" />
+                                    <label asp-for="LpLevel">Priority Level</label>
+                                    <span asp-validation-for="LpLevel" class="text-danger small"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Date Range Section -->
                 <div class="card mb-4">
                     <div class="card-header bg-light">
-                        <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Status & Settings</h5>
+                        <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Date Range</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <label class="form-check-label" asp-for="ThpActive">Active</label>
-                                    <select asp-for="ThpActive" class="form-select">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <span asp-validation-for="ThpActive" class="text-danger small"></span>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="LpFromDate" class="form-control" placeholder=" " type="date" required />
+                                    <label asp-for="LpFromDate">From Date</label>
+                                    <span asp-validation-for="LpFromDate" class="text-danger small"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="ThpModifiedDate" class="form-control" type="datetime-local" />
-                                    <label asp-for="ThpModifiedDate">Modified Date</label>
-                                    <span asp-validation-for="ThpModifiedDate" class="text-danger small"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <select asp-for="ThpPrintLang" class="form-select">
-                                        <option value="">-- Select Print Language --</option>
-                                        <option value="AR">Arabic</option>
-                                        <option value="EN">English</option>
-                                        <option value="FR">French</option>
-                                    </select>
-                                    <label asp-for="ThpPrintLang">Print Language</label>
-                                    <span asp-validation-for="ThpPrintLang" class="text-danger small"></span>
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 required">
+                                    <input asp-for="LpToDate" class="form-control" placeholder=" " type="date" required />
+                                    <label asp-for="LpToDate">To Date</label>
+                                    <span asp-validation-for="LpToDate" class="text-danger small"></span>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="ThpRemarks" class="form-control" placeholder=" " />
-                                    <label asp-for="ThpRemarks">Remarks</label>
-                                    <span asp-validation-for="ThpRemarks" class="text-danger small"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="ThpNewcode" class="form-control" placeholder=" " />
-                                    <label asp-for="ThpNewcode">New Code</label>
-                                    <span asp-validation-for="ThpNewcode" class="text-danger small"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-check-label" asp-for="ThpPrintarabic">Print Arabic</label>
-                                    <select asp-for="ThpPrintarabic" class="form-select">
-                                        <option value="">-- Select --</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                    <span asp-validation-for="ThpPrintarabic" class="text-danger small"></span>
-                                </div>
-                            </div>
+                <!-- Status Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-toggle-on me-2"></i>Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check form-switch">
+                            <input type="hidden" asp-for="LpActive" value="0" />
+                            <input class="form-check-input" type="checkbox" id="LpActiveToggle"
+                            @(Model.LpActive == 1 ? "checked" : "") />
+                            <label class="form-check-label" for="LpActiveToggle">Active Price List</label>
                         </div>
                     </div>
                 </div>
@@ -230,7 +141,7 @@
                         <i class="fas fa-undo me-2"></i>Reset
                     </button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-2"></i>Create
+                        <i class="fas fa-save me-2"></i>Create Price List
                     </button>
                 </div>
             </form>
@@ -240,10 +151,62 @@
 
 @section Styles {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        .pl-container {
+            max-width: 1200px;
+            margin-top: 2rem;
+        }
+
+        .form-floating > label {
+            color: #6c757d;
+        }
+
+        .card {
+            border-radius: 0.5rem;
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .card-header {
+            border-radius: 0.5rem 0.5rem 0 0 !important;
+        }
+
+        .form-control, .form-select {
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .form-check-input {
+            width: 3em;
+            height: 1.5em;
+        }
+    </style>
 }
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        // Enable Bootstrap 5 validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        // Handle the active toggle
+        document.getElementById('LpActiveToggle').addEventListener('change', function() {
+            document.querySelector('input[name="LpActive"]').value = this.checked ? '1' : '0';
+        });
+    </script>
 }
