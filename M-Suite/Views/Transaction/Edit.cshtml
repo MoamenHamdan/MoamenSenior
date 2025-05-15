@@ -73,7 +73,7 @@
                 </div>
 
                 <!-- Customer Information Section -->
-                <div class="card mb-4">
+                <!-- <div class="card mb-4">
                     <div class="card-header bg-light">
                         <h5 class="mb-0"><i class="fas fa-user me-2"></i>Customer Information</h5>
                     </div>
@@ -84,7 +84,7 @@
                                     <select asp-for="Transaction.TsThpsIdBill" class="form-select" asp-items="Model.Customers">
                                         <option value="">-- Select Billing Site --</option>
                                     </select>
-                                    <label asp-for="Transaction.TsThpsIdBill">Billing Site</label>
+                                    <label asp-for="Transaction.TsThpsIdBill"></label>
                                     <span asp-validation-for="Transaction.TsThpsIdBill" class="text-danger small"></span>
                                 </div>
                             </div>
@@ -92,15 +92,15 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select asp-for="Transaction.TsThpsIdShip" class="form-select" asp-items="Model.Customers">
-                                        <option value="">-- Select Shipping Site --</option>
+                                        <option value=""></option>
                                     </select>
-                                    <label asp-for="Transaction.TsThpsIdShip">Shipping Site</label>
+                                    <label asp-for="Transaction.TsThpsIdShip"></label>
                                     <span asp-validation-for="Transaction.TsThpsIdShip" class="text-danger small"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Transaction Type Section -->
                 <div class="card mb-4">
@@ -114,7 +114,7 @@
                                     <select asp-for="Transaction.TsTstId" class="form-select" asp-items="Model.TransactionTypes" required>
                                         <option value="">-- Select Transaction Type --</option>
                                     </select>
-                                    <label asp-for="Transaction.TsTstId">Transaction Type</label>
+                                    <!-- <label asp-for="Transaction.TsTstId">Transaction Type</label> -->
                                     <span asp-validation-for="Transaction.TsTstId" class="text-danger small"></span>
                                 </div>
                             </div>

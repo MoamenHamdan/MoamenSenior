@@ -1,0 +1,242 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<div id="chatbot-container" class="chatbot-container">
+    <div id="chatbot-toggle" class="chatbot-toggle">
+        <i class="fas fa-comment"></i>
+    </div>
+    <div id="chatbot-window" class="chatbot-window" style="display: none;">
+        <div class="chatbot-header">
+            <span>M-Suite Assistant</span>
+            <button id="chatbot-minimize" class="chatbot-minimize">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+        <div id="chatbot-messages" class="chatbot-messages">
+            <div class="chatbot-message bot">
+                <div class="message-content">Hello! How can I help you with M-Suite today?</div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbot-text" placeholder="Type your message..." />
+            <button id="chatbot-send">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .chatbot-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .chatbot-toggle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #007bff;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .chatbot-toggle i {
+        font-size: 24px;
+    }
+
+    .chatbot-window {
+        position: absolute;
+        bottom: 70px;
+        right: 0;
+        width: 350px;
+        height: 500px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .chatbot-header {
+        padding: 15px;
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .chatbot-minimize {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    .chatbot-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chatbot-message {
+        margin-bottom: 10px;
+        max-width: 80%;
+    }
+
+    .chatbot-message.user {
+        align-self: flex-end;
+    }
+
+    .chatbot-message.bot {
+        align-self: flex-start;
+    }
+
+    .message-content {
+        padding: 10px 15px;
+        border-radius: 18px;
+        display: inline-block;
+    }
+
+    .chatbot-message.user .message-content {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .chatbot-message.bot .message-content {
+        background-color: #f1f1f1;
+        color: #333;
+    }
+
+    .chatbot-input {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #eee;
+    }
+
+    .chatbot-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        margin-right: 10px;
+    }
+
+    .chatbot-input button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+</style>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('chatbot-toggle');
+            const window = document.getElementById('chatbot-window');
+            const minimize = document.getElementById('chatbot-minimize');
+            const input = document.getElementById('chatbot-text');
+            const send = document.getElementById('chatbot-send');
+            const messages = document.getElementById('chatbot-messages');
+            
+            // Get current user ID
+            let userId = 1; // Default user ID
+            @if (User.FindFirst("UserId") != null)
+            {
+                @:userId = @User.FindFirst("UserId").Value;
+            }
+            
+            toggle.addEventListener('click', function() {
+                window.style.display = 'flex';
+                toggle.style.display = 'none';
+            });
+            
+            minimize.addEventListener('click', function() {
+                window.style.display = 'none';
+                toggle.style.display = 'flex';
+            });
+            
+            function sendMessage() {
+                const text = input.value.trim();
+                if (!text) return;
+                
+                // Add user message to chat
+                appendMessage(text, 'user');
+                
+                // Clear input
+                input.value = '';
+                
+                // Send message to server
+                fetch('/api/AI/chatbot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: text, userId: userId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Add bot response to chat
+                    appendMessage(data.botResponse, 'bot');
+                    
+                    // If the intent is related_items, fetch and display correlations
+                    if (data.intent === 'related_items' && data.intent !== 'unknown') {
+                        // Extract item name from entities
+                        const itemName = text.toLowerCase();
+                        
+                        // Show searching message
+                        appendMessage('Searching for related items...', 'bot');
+                        
+                        // Here we'd need to search for the item by name, then get correlations
+                        // This is simplified - in a real app you'd need to search for the item first
+                        // then fetch correlations by ID
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    appendMessage('Sorry, there was an error processing your request.', 'bot');
+                });
+            }
+            
+            function appendMessage(text, sender) {
+                const div = document.createElement('div');
+                div.className = `chatbot-message ${sender}`;
+                
+                const content = document.createElement('div');
+                content.className = 'message-content';
+                content.textContent = text;
+                
+                div.appendChild(content);
+                messages.appendChild(div);
+                
+                // Scroll to bottom
+                messages.scrollTop = messages.scrollHeight;
+            }
+            
+            send.addEventListener('click', sendMessage);
+            
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+} 

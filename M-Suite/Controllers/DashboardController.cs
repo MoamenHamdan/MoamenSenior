@@ -144,5 +144,11 @@ namespace M_Suite.Controllers
 
             return View(dashboardVM);
         }
+
+        // GET: Dashboard/AI
+        public IActionResult AI()
+        {
+            return View();
+        }
     }
 } 

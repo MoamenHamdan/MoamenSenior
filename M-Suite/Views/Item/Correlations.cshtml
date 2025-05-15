@@ -1,0 +1,129 @@
+@model M_Suite.Models.Item
+@{
+    ViewData["Title"] = "Related Items";
+}
+
+<div class="container-fluid">
+    <h2>Related Items for @Model.ItDescriptionLan1</h2>
+    <p class="text-muted">These items are frequently purchased together with this product.</p>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Current Item</h5>
+                </div>
+                <div class="card-body">
+                    <h4>@Model.ItDescriptionLan1</h4>
+                    <p><strong>Code:</strong> @Model.ItCode</p>
+                    <p><strong>Type:</strong> @(Model.ItCdIdItgNavigation?.CdDescriptionLan1 ?? "N/A")</p>
+                    @if (Model.ItIsSaleable == 1)
+                    {
+                        <span class="badge bg-success">Saleable</span>
+                    }
+                    @if (Model.ItActive == 1)
+                    {
+                        <span class="badge bg-primary">Active</span>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Frequently Purchased Together</h5>
+                </div>
+                <div class="card-body">
+                    <div id="correlations-loading">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <p class="text-center mt-2">Analyzing purchasing patterns...</p>
+                    </div>
+                    <div id="correlations-container" style="display: none;">
+                        <div id="correlation-items" class="row">
+                            <!-- Correlation items will be loaded here -->
+                        </div>
+                    </div>
+                    <div id="correlations-error" class="alert alert-danger" style="display: none;">
+                        There was an error loading related items.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get item ID from the URL
+            const itemId = @Model.ItId;
+            
+            // Fetch item correlations
+            fetch(`/api/AI/correlations/${itemId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to load correlations');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Hide loading indicator
+                    document.getElementById('correlations-loading').style.display = 'none';
+                    
+                    // Show correlations container
+                    document.getElementById('correlations-container').style.display = 'block';
+                    
+                    // Populate correlations
+                    const correlationsContainer = document.getElementById('correlation-items');
+                    
+                    if (data.length === 0) {
+                        correlationsContainer.innerHTML = '<div class="col-12"><p class="text-center">No related items found. Try analyzing more transaction data.</p></div>';
+                        return;
+                    }
+                    
+                    // Create cards for each correlation
+                    data.forEach(item => {
+                        const percentScore = Math.min(Math.round(item.correlationScore * 100), 100);
+                        
+                        const card = document.createElement('div');
+                        card.className = 'col-md-6 col-lg-4 mb-3';
+                        card.innerHTML = `
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">${item.itemName2}</h5>
+                                    <p class="card-text">Correlation: <strong>${percentScore}%</strong></p>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: ${percentScore}%" 
+                                             aria-valuenow="${percentScore}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <a href="/Item/Details/${item.itemId2}" class="btn btn-outline-primary btn-sm">View Item</a>
+                                    <a href="#" class="btn btn-success btn-sm add-to-transaction" 
+                                       data-item-id="${item.itemId2}" data-item-name="${item.itemName2}">Add to Transaction</a>
+                                </div>
+                            </div>
+                        `;
+                        correlationsContainer.appendChild(card);
+                    });
+                    
+                    // Add event listeners for "Add to Transaction" buttons
+                    document.querySelectorAll('.add-to-transaction').forEach(button => {
+                        button.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const itemId = this.getAttribute('data-item-id');
+                            const itemName = this.getAttribute('data-item-name');
+                            alert(`Added ${itemName} to current transaction. (This would actually add the item in a real implementation)`);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('correlations-loading').style.display = 'none';
+                    document.getElementById('correlations-error').style.display = 'block';
+                });
+        });
+    </script>
+} 

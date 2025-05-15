@@ -22,9 +22,9 @@
                 </div>
                 <div class="col-6 text-end">
                     <h3>@Model.TsBu.BuDescriptionLan1</h3>
-                    <div>@(Model.TsBu.BuAddress1 ?? "Address not available")</div>
-                    <div>@(Model.TsBu.BuPhone ?? "Phone not available")</div>
-                    <div>@(Model.TsBu.BuEmail ?? "Email not available")</div>
+                    <div>@Model.TsBu.BuCode</div>
+                    <div>Contact Information</div>
+                    <div>@Model.TsBu.BuPath</div>
                 </div>
             </div>
 
@@ -167,6 +167,7 @@
                             <div class="col-md-6">
                                 <div><strong>Bank Name:</strong> Sample Bank</div>
                                 <div><strong>Account Name:</strong> @Model.TsBu.BuDescriptionLan1</div>
+                                <div><strong>Business Code:</strong> @Model.TsBu.BuCode</div>
                             </div>
                             <div class="col-md-6">
                                 <div><strong>Account Number:</strong> XXXX-XXXX-XXXX</div>

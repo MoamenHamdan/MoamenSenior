@@ -416,24 +416,17 @@
                     <div class="sidebar-item" onclick="toggleDropdown('dropdown1')">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                                <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
-                                <path d="M3 12A9 3 0 0 0 21 12"></path>
+                                <line x1="12" y1="20" x2="12" y2="10"></line>
+                                <line x1="18" y1="20" x2="18" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="16"></line>
                             </svg>
                         </span>
-                        <span class="label">Master Data</span>
+                        <span class="label">Dashboards</span>
                         <span class="arrow">▾</span>
                     </div>
                     <ul class="dropdown" id="dropdown1">
-                        <li><a class="dropdown-link" asp-controller="BusinessUnit" asp-action="Index">BU</a></li>
-                        <li><a class="dropdown-link" asp-controller="Thirdparty" asp-action="Index">Customers</a></li>
-                        <li><a class="dropdown-link" asp-controller="GeoLocation" asp-action="Index">Geo Location</a></li>
-                        <li><a class="dropdown-link" asp-controller="Item" asp-action="Index">Items</a></li>
-                        <li><a class="dropdown-link" asp-controller="PriceList" asp-action="Index">Price List</a></li>
-                        <li><a class="dropdown-link" asp-controller="PhysicalLocation" asp-action="Index">Warehouse</a></li>
-                        <li><a class="dropdown-link" asp-controller="UOM" asp-action="Index">UOM</a></li>
-                        <li><a class="dropdown-link" asp-controller="CurrencyRate" asp-action="Index">Currency</a></li>
-                        <li><a class="dropdown-link" asp-controller="ItemWarehouse" asp-action="Index">Manage Warehouse</a></li>
+                        <li><a class="dropdown-link" asp-controller="Dashboard" asp-action="Index">Main Dashboard</a></li>
+                        <li><a class="dropdown-link" asp-controller="Dashboard" asp-action="AI">AI & Analytics</a></li>
                     </ul>
                 </li>
                 
@@ -451,9 +444,9 @@
                     </div>
                     <ul class="dropdown" id="dropdown2">
                         <li><a class="dropdown-link" asp-controller="Transaction" asp-action="Index">All Transactions</a></li>
-                        <li><a class="dropdown-link" asp-controller="TransactionItem" asp-action="Index">Sales Order</a></li>
-                        <li><a href="/Transactions/Invoices" class="dropdown-link">Invoices</a></li>
-                        <li><a href="/Transactions/Collections" class="dropdown-link">Collections</a></li>
+                        <li><a class="dropdown-link" asp-controller="Transaction" asp-action="SalesOrders">Sales Orders</a></li>
+                        <li><a class="dropdown-link" asp-controller="Transaction" asp-action="Invoices">Invoices</a></li>
+                      
                     </ul>
                 </li>
                 
@@ -564,5 +557,8 @@
     @await RenderSectionAsync("Scripts", required: false)
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <!-- Include the chatbot partial -->
+    <partial name="_ChatbotPartial" />
 </body>
 </html>

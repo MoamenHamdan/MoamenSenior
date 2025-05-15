@@ -1,0 +1,266 @@
+@{
+    ViewData["Title"] = "AI & Analytics Dashboard";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-brain me-2"></i>AI & Analytics Dashboard</h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        Welcome to M-Suite's AI-powered analytics dashboard. Discover insights about your business and leverage the power of artificial intelligence to optimize your operations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-info text-white">
+                    <h4><i class="fas fa-project-diagram me-2"></i>Item Correlation Analysis</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Discover which items are frequently purchased together. This AI-powered feature helps you identify strong product relationships to improve cross-selling.
+                    </p>
+                    <h5 class="mt-4">Benefits:</h5>
+                    <ul>
+                        <li>Optimize product placement in physical stores</li>
+                        <li>Create effective bundles and promotions</li>
+                        <li>Improve recommendation engines</li>
+                        <li>Enhance customer experience through relevant suggestions</li>
+                    </ul>
+                    <div class="text-center mt-4">
+                        <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#correlationModal">
+                            <i class="fas fa-search me-2"></i>Find Correlations
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-success text-white">
+                    <h4><i class="fas fa-robot me-2"></i>M-Suite Assistant (Chatbot)</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Our AI-powered assistant helps you navigate M-Suite and answers your questions about products, inventory, and operations.
+                    </p>
+                    <h5 class="mt-4">Capabilities:</h5>
+                    <ul>
+                        <li>Get information about items and inventory</li>
+                        <li>Find related products for cross-selling</li>
+                        <li>Get guided assistance for creating transactions</li>
+                        <li>Navigate the system efficiently</li>
+                    </ul>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-success" id="open-chatbot">
+                            <i class="fas fa-comment-dots me-2"></i>Chat with Assistant
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h4><i class="fas fa-chart-line me-2"></i>AI Insights</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-center mb-4">Insights generated from your business data using artificial intelligence.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body text-center">
+                                    <div class="display-4 text-primary mb-3">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <h5 class="card-title">Transaction Patterns</h5>
+                                    <p class="card-text">Detect transaction patterns over time to optimize inventory and staffing.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body text-center">
+                                    <div class="display-4 text-success mb-3">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <h5 class="card-title">Customer Segmentation</h5>
+                                    <p class="card-text">Group customers based on purchasing behavior and preferences.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body text-center">
+                                    <div class="display-4 text-danger mb-3">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <h5 class="card-title">Anomaly Detection</h5>
+                                    <p class="card-text">Identify unusual patterns in transactions or inventory movements.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Item Correlation Modal -->
+<div class="modal fade" id="correlationModal" tabindex="-1" aria-labelledby="correlationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="correlationModalLabel">Find Item Correlations</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Select an item to find products that are frequently purchased together:</p>
+                
+                <div class="mb-3">
+                    <label for="itemSelect" class="form-label">Item</label>
+                    <select class="form-select" id="itemSelect">
+                        <option value="">-- Select an item --</option>
+                        <!-- Items will be loaded dynamically -->
+                    </select>
+                </div>
+                
+                <div id="correlationResults" style="display: none;">
+                    <h5 class="mt-4 mb-3">Correlated Items:</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Correlation Score</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="correlationResultsBody">
+                                <!-- Results will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="loadingCorrelations" style="display: none;">
+                    <div class="d-flex justify-content-center my-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="noCorrelations" class="alert alert-info" style="display: none;">
+                    No correlations found for this item. Try analyzing more transaction data or selecting a different item.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load items for the dropdown
+            fetch('/api/Item') // This endpoint would need to be created
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('itemSelect');
+                    data.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.itId;
+                        option.textContent = `${item.itCode} - ${item.itDescriptionLan1}`;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error loading items:', error));
+            
+            // Handle item selection
+            document.getElementById('itemSelect').addEventListener('change', function() {
+                const itemId = this.value;
+                if (!itemId) return;
+                
+                // Show loading
+                document.getElementById('correlationResults').style.display = 'none';
+                document.getElementById('noCorrelations').style.display = 'none';
+                document.getElementById('loadingCorrelations').style.display = 'block';
+                
+                // Fetch correlations
+                fetch(`/api/AI/correlations/${itemId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('loadingCorrelations').style.display = 'none';
+                        
+                        if (data.length === 0) {
+                            document.getElementById('noCorrelations').style.display = 'block';
+                            return;
+                        }
+                        
+                        // Populate results
+                        const tbody = document.getElementById('correlationResultsBody');
+                        tbody.innerHTML = '';
+                        
+                        data.forEach(item => {
+                            const row = document.createElement('tr');
+                            
+                            // Format correlation as percentage
+                            const percentScore = Math.min(Math.round(item.correlationScore * 100), 100);
+                            
+                            row.innerHTML = `
+                                <td>${item.itemName2}</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: ${percentScore}%" 
+                                             aria-valuenow="${percentScore}" aria-valuemin="0" aria-valuemax="100">${percentScore}%</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="/Item/Details/${item.itemId2}" class="btn btn-sm btn-primary">View</a>
+                                </td>
+                            `;
+                            
+                            tbody.appendChild(row);
+                        });
+                        
+                        document.getElementById('correlationResults').style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Error fetching correlations:', error);
+                        document.getElementById('loadingCorrelations').style.display = 'none';
+                        alert('Error fetching correlations. Please try again.');
+                    });
+            });
+            
+            // Open chatbot when button is clicked
+            document.getElementById('open-chatbot').addEventListener('click', function() {
+                const chatbotToggle = document.getElementById('chatbot-toggle');
+                const chatbotWindow = document.getElementById('chatbot-window');
+                
+                if (chatbotToggle && chatbotWindow) {
+                    chatbotWindow.style.display = 'flex';
+                    chatbotToggle.style.display = 'none';
+                }
+            });
+        });
+    </script>
+} 

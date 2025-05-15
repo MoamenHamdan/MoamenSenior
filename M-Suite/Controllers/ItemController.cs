@@ -191,6 +191,26 @@ namespace M_Suite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Item/Correlations/5
+        public async Task<IActionResult> Correlations(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await _context.Items
+                .Include(i => i.ItCdIdItgNavigation)
+                .FirstOrDefaultAsync(m => m.ItId == id);
+            
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
+
         private bool ItemExists(int id)
         {
             return _context.Items.Any(e => e.ItId == id);
