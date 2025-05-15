@@ -1,66 +1,106 @@
 ﻿@model M_Suite.Models.Uom
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Unit of Measure Details";
 }
 
-<h1>Details</h1>
+<div class="container-fluid uom-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-balance-scale me-2"></i>Unit of Measure Details</h3>
+                <a asp-action="Index" class="btn btn-light btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
 
-<div>
-    <h4>Uom</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UomCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UomCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UomNameLan1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UomNameLan1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UomNameLan2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UomNameLan2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UomNameLan3)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UomNameLan3)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UomRoundingPrecision)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UomRoundingPrecision)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UomIsBase)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UomIsBase)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UomIsSaleable)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UomIsSaleable)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UomOrder)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UomOrder)
-        </dd>
-    </dl>
+        <div class="card-body">
+            <!-- Basic Information -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-3">Code:</dt>
+                        <dd class="col-sm-9">@Model.UomCode</dd>
+
+                        <dt class="col-sm-3">Name (Primary):</dt>
+                        <dd class="col-sm-9">@(Model.UomNameLan1 ?? "-")</dd>
+
+                        <dt class="col-sm-3">Name (Secondary):</dt>
+                        <dd class="col-sm-9">@(Model.UomNameLan2 ?? "-")</dd>
+
+                        <dt class="col-sm-3">Name (Tertiary):</dt>
+                        <dd class="col-sm-9">@(Model.UomNameLan3 ?? "-")</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Settings Information -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Settings</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-3">Rounding Precision:</dt>
+                        <dd class="col-sm-9">@(Model.UomRoundingPrecision?.ToString() ?? "-")</dd>
+
+                        <dt class="col-sm-3">Sort Order:</dt>
+                        <dd class="col-sm-9">@(Model.UomOrder ?? "-")</dd>
+
+                        <dt class="col-sm-3">Is Base Unit:</dt>
+                        <dd class="col-sm-9">
+                            @if (Model.UomIsBase == 1)
+                            {
+                                <span class="badge bg-success">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">No</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-3">Is Saleable:</dt>
+                        <dd class="col-sm-9">
+                            @if (Model.UomIsSaleable == 1)
+                            {
+                                <span class="badge bg-success">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">No</span>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a asp-action="Edit" asp-route-id="@Model.UomId" class="btn btn-primary me-md-2">
+                    <i class="fas fa-edit me-2"></i>Edit
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-list me-2"></i>Back to List
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.UomId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        .uom-container {
+            max-width: 1000px;
+            margin-top: 2rem;
+        }
+
+        .badge {
+            font-size: 0.9em;
+            padding: 0.35em 0.65em;
+        }
+    </style>
+}
