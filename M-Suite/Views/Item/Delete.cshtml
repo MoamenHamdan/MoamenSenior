@@ -1,171 +1,63 @@
 ﻿@model M_Suite.Models.Item
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Item";
 }
 
-<h1>Delete</h1>
+<div class="container-fluid">
+    <div class="card shadow-lg">
+        <div class="card-header bg-danger text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Delete Item</h3>
+            </div>
+        </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Item</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItDescriptionLan1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItDescriptionLan1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItDescriptionLan2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItDescriptionLan2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItDescriptionLan3)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItDescriptionLan3)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItWeight)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItWeight)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasLot)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasLot)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasProductionDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasProductionDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasExpiryDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasExpiryDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasMultipleUom)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasMultipleUom)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasSerial)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasSerial)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsSaleable)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsSaleable)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsService)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsService)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsAsset)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsAsset)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItImpUid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItImpUid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItOrder)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItOrder)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsBadReturn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsBadReturn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdIbdNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdIbdNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdIgpNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdIgpNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdIsgNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdIsgNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdItgNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdItgNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdItpNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdItpNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIt.ItId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItUom)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItUom.UomId)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ItId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+        <div class="card-body">
+            <h4 class="text-danger">Are you sure you want to delete this item?</h4>
+            <hr />
+
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                Deleting this item will permanently remove it from the system. This action cannot be undone.
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Item Information</h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">Code</dt>
+                        <dd class="col-sm-8">@Model.ItCode</dd>
+
+                        <dt class="col-sm-4">Description</dt>
+                        <dd class="col-sm-8">@Model.ItDescriptionLan1</dd>
+
+                        <dt class="col-sm-4">UOM</dt>
+                        <dd class="col-sm-8">@Model.ItUom?.UomNameLan1</dd>
+
+                        <dt class="col-sm-4">Status</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.ItActive == 1)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Inactive</span>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <form asp-action="Delete" class="mt-4">
+                <input type="hidden" asp-for="ItId" />
+                <button type="submit" class="btn btn-danger me-2">
+                    <i class="fas fa-trash-alt me-1"></i> Delete
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-times me-1"></i> Cancel
+                </a>
+            </form>
+        </div>
+    </div>
 </div>

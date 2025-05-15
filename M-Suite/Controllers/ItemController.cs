@@ -54,13 +54,13 @@ namespace M_Suite.Controllers
         // GET: Item/Create
         public IActionResult Create()
         {
-            ViewData["ItCdIdIbd"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            ViewData["ItCdIdIgp"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            ViewData["ItCdIdIsg"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            ViewData["ItCdIdItp"] = new SelectList(_context.Codescs, "CdId", "CdId");
-            ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItId");
-            ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomId");
+            ViewData["ItCdIdIbd"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1");
+            ViewData["ItCdIdIgp"] = new SelectList(_context.Codescs, "CdId", "CdCode");
+            ViewData["ItCdIdIsg"] = new SelectList(_context.Codescs, "CdId", "CdFcCode");
+            ViewData["ItCdIdItg"] = new SelectList(_context.Codescs, "CdId", "CdNum1");
+            ViewData["ItCdIdItp"] = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1");
+            ViewData["ItItId"] = new SelectList(_context.Items, "ItId", "ItDescriptionLan1");
+            ViewData["ItUomId"] = new SelectList(_context.Uoms, "UomId", "UomNameLan1");
             return View();
         }
 

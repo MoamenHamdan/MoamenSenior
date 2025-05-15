@@ -1,179 +1,192 @@
 ﻿@model IEnumerable<M_Suite.Models.Item>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Items";
 }
 
-<h1>Index</h1>
+<div class="container-fluid item-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-boxes me-2"></i>Items</h3>
+                <a asp-action="Create" class="btn btn-light">
+                    <i class="fas fa-plus me-1"></i> Create New
+                </a>
+            </div>
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItDescriptionLan1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItDescriptionLan2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItDescriptionLan3)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItWeight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasLot)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasProductionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasExpiryDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasMultipleUom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItHasSerial)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIsDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIsSaleable)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIsService)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIsAsset)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItImpUid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItOrder)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIsBadReturn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCdIdIbdNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCdIdIgpNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCdIdIsgNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCdIdItgNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItCdIdItpNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItIt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItUom)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItDescriptionLan1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItDescriptionLan2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItDescriptionLan3)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItWeight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasLot)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasProductionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasExpiryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasMultipleUom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItHasSerial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsSaleable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsService)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsAsset)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItImpUid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItOrder)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIsBadReturn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCdIdIbdNavigation.CdId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCdIdIgpNavigation.CdId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCdIdIsgNavigation.CdId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCdIdItgNavigation.CdId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItCdIdItpNavigation.CdId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItIt.ItId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItUom.UomId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ItId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ItId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ItId">Delete</a>
-            </td>
-        </tr>
+        <div class="card-body">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="table-responsive">
+                <table class="table item-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>UOM</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th class="actions-header">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-label="Code">
+                                    <div class="cell-content">
+                                        @item.ItCode
+                                    </div>
+                                </td>
+                                <td data-label="Description">
+                                    <div class="cell-content">
+                                        @item.ItDescriptionLan1
+                                    </div>
+                                </td>
+                                <td data-label="UOM">
+                                    <div class="cell-content">
+                                        @item.ItUom?.UomNameLan1
+                                    </div>
+                                </td>
+                                <td data-label="Type">
+                                    <div class="cell-content">
+                                        @if (item.ItIsSaleable == 1)
+                                        {
+                                            <span class="badge bg-success me-1">Saleable</span>
+                                        }
+                                        @if (item.ItIsService == 1)
+                                        {
+                                            <span class="badge bg-info me-1">Service</span>
+                                        }
+                                        @if (item.ItIsAsset == 1)
+                                        {
+                                            <span class="badge bg-warning">Asset</span>
+                                        }
+                                    </div>
+                                </td>
+                                <td data-label="Status">
+                                    <div class="cell-content">
+                                        @if (item.ItActive == 1)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Inactive</span>
+                                        }
+                                    </div>
+                                </td>
+                                <td class="actions-cell">
+                                    <div class="action-buttons">
+                                        <a asp-action="Edit" asp-route-id="@item.ItId" class="btn-action edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.ItId" class="btn-action details" title="Details">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.ItId" class="btn-action delete" title="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        .item-container {
+            max-width: 100%;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.35em 0.65em;
+        }
+
+        .item-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+            .item-table th {
+                background-color: #f8f9fa;
+                padding: 1rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                font-size: 0.75rem;
+                letter-spacing: 0.5px;
+            }
+
+            .item-table td {
+                padding: 1rem;
+                vertical-align: middle;
+                border-top: 1px solid #e9ecef;
+            }
+
+        .actions-cell {
+            white-space: nowrap;
+            width: 1%;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border-radius: 50%;
+            color: #6c757d;
+            background-color: transparent;
+            border: 1px solid #dee2e6;
+            transition: all 0.2s;
+        }
+
+            .btn-action:hover {
+                background-color: #f8f9fa;
+            }
+
+            .btn-action.edit:hover {
+                color: #0d6efd;
+                border-color: #0d6efd;
+            }
+
+            .btn-action.details:hover {
+                color: #0dcaf0;
+                border-color: #0dcaf0;
+            }
+
+            .btn-action.delete:hover {
+                color: #dc3545;
+                border-color: #dc3545;
+            }
+    </style>
 }
-    </tbody>
-</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

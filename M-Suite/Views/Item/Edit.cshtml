@@ -1,154 +1,202 @@
 ﻿@model M_Suite.Models.Item
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Item";
 }
 
-<h1>Edit</h1>
+<div class="container-fluid">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Item</h3>
+            </div>
+        </div>
 
-<h4>Item</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ItId" />
-            <div class="form-group">
-                <label asp-for="ItItId" class="control-label"></label>
-                <select asp-for="ItItId" class="form-control" asp-items="ViewBag.ItItId"></select>
-                <span asp-validation-for="ItItId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItUomId" class="control-label"></label>
-                <select asp-for="ItUomId" class="form-control" asp-items="ViewBag.ItUomId"></select>
-                <span asp-validation-for="ItUomId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdItg" class="control-label"></label>
-                <select asp-for="ItCdIdItg" class="form-control" asp-items="ViewBag.ItCdIdItg"></select>
-                <span asp-validation-for="ItCdIdItg" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdIbd" class="control-label"></label>
-                <select asp-for="ItCdIdIbd" class="form-control" asp-items="ViewBag.ItCdIdIbd"></select>
-                <span asp-validation-for="ItCdIdIbd" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdIgp" class="control-label"></label>
-                <select asp-for="ItCdIdIgp" class="form-control" asp-items="ViewBag.ItCdIdIgp"></select>
-                <span asp-validation-for="ItCdIdIgp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdIsg" class="control-label"></label>
-                <select asp-for="ItCdIdIsg" class="form-control" asp-items="ViewBag.ItCdIdIsg"></select>
-                <span asp-validation-for="ItCdIdIsg" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCdIdItp" class="control-label"></label>
-                <select asp-for="ItCdIdItp" class="form-control" asp-items="ViewBag.ItCdIdItp"></select>
-                <span asp-validation-for="ItCdIdItp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItCode" class="control-label"></label>
-                <input asp-for="ItCode" class="form-control" />
-                <span asp-validation-for="ItCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItDescriptionLan1" class="control-label"></label>
-                <input asp-for="ItDescriptionLan1" class="form-control" />
-                <span asp-validation-for="ItDescriptionLan1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItDescriptionLan2" class="control-label"></label>
-                <input asp-for="ItDescriptionLan2" class="form-control" />
-                <span asp-validation-for="ItDescriptionLan2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItDescriptionLan3" class="control-label"></label>
-                <input asp-for="ItDescriptionLan3" class="form-control" />
-                <span asp-validation-for="ItDescriptionLan3" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItWeight" class="control-label"></label>
-                <input asp-for="ItWeight" class="form-control" />
-                <span asp-validation-for="ItWeight" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItHasLot" class="control-label"></label>
-                <input asp-for="ItHasLot" class="form-control" />
-                <span asp-validation-for="ItHasLot" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItHasProductionDate" class="control-label"></label>
-                <input asp-for="ItHasProductionDate" class="form-control" />
-                <span asp-validation-for="ItHasProductionDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItHasExpiryDate" class="control-label"></label>
-                <input asp-for="ItHasExpiryDate" class="form-control" />
-                <span asp-validation-for="ItHasExpiryDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItHasMultipleUom" class="control-label"></label>
-                <input asp-for="ItHasMultipleUom" class="form-control" />
-                <span asp-validation-for="ItHasMultipleUom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItHasSerial" class="control-label"></label>
-                <input asp-for="ItHasSerial" class="form-control" />
-                <span asp-validation-for="ItHasSerial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsDescription" class="control-label"></label>
-                <input asp-for="ItIsDescription" class="form-control" />
-                <span asp-validation-for="ItIsDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsSaleable" class="control-label"></label>
-                <input asp-for="ItIsSaleable" class="form-control" />
-                <span asp-validation-for="ItIsSaleable" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsService" class="control-label"></label>
-                <input asp-for="ItIsService" class="form-control" />
-                <span asp-validation-for="ItIsService" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsAsset" class="control-label"></label>
-                <input asp-for="ItIsAsset" class="form-control" />
-                <span asp-validation-for="ItIsAsset" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItActive" class="control-label"></label>
-                <input asp-for="ItActive" class="form-control" />
-                <span asp-validation-for="ItActive" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItImpUid" class="control-label"></label>
-                <input asp-for="ItImpUid" class="form-control" />
-                <span asp-validation-for="ItImpUid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItOrder" class="control-label"></label>
-                <input asp-for="ItOrder" class="form-control" />
-                <span asp-validation-for="ItOrder" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItIsBadReturn" class="control-label"></label>
-                <input asp-for="ItIsBadReturn" class="form-control" />
-                <span asp-validation-for="ItIsBadReturn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        <div class="card-body">
+            <form asp-action="Edit" class="row g-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ItId" />
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ItCode" class="form-label">Item Code</label>
+                        <input asp-for="ItCode" class="form-control" />
+                        <span asp-validation-for="ItCode" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ItDescriptionLan1" class="form-label">Description (Primary)</label>
+                        <input asp-for="ItDescriptionLan1" class="form-control" />
+                        <span asp-validation-for="ItDescriptionLan1" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ItUomId" class="form-label">Unit of Measure</label>
+                        <select asp-for="ItUomId" class="form-select" asp-items="ViewBag.ItUomId"></select>
+                        <span asp-validation-for="ItUomId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ItCdIdItg" class="form-label">Item Group</label>
+                        <select asp-for="ItCdIdItg" class="form-select" asp-items="ViewBag.ItCdIdItg"></select>
+                        <span asp-validation-for="ItCdIdItg" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <h5 class="mt-4 mb-3">Item Properties</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-check form-switch">
+                                <input type="hidden" asp-for="ItIsSaleable" value="0" />
+                                <input class="form-check-input" type="checkbox"
+                                       id="ItIsSaleableCheckbox"
+                                @(Model.ItIsSaleable == 1 ? "checked" : "") />
+                                <label class="form-check-label" for="ItIsSaleableCheckbox">Saleable</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-switch">
+                                <input type="hidden" asp-for="ItHasLot" value="0" />
+                                <input class="form-check-input" type="checkbox"
+                                       id="ItHasLotCheckbox"
+                                @(Model.ItHasLot == 1 ? "checked" : "") />
+                                <label class="form-check-label" for="ItHasLotCheckbox">Has Lot</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-switch">
+                                <input type="hidden" asp-for="ItHasProductionDate" value="0" />
+                                <input class="form-check-input" type="checkbox"
+                                       id="ItHasProductionDateCheckbox"
+                                @(Model.ItHasProductionDate == 1 ? "checked" : "") />
+                                <label class="form-check-label" for="ItHasProductionDateCheckbox">Has Production Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-switch">
+                                <input type="hidden" asp-for="ItHasExpiryDate" value="0" />
+                                <input class="form-check-input" type="checkbox"
+                                       id="ItHasExpiryDateCheckbox"
+                                @(Model.ItHasExpiryDate == 1 ? "checked" : "") />
+                                <label class="form-check-label" for="ItHasExpiryDateCheckbox">Has Expiry Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-switch">
+                                <input type="hidden" asp-for="ItIsService" value="0" />
+                                <input class="form-check-input" type="checkbox"
+                                       id="ItIsServiceCheckbox"
+                                @(Model.ItIsService == 1 ? "checked" : "") />
+                                <label class="form-check-label" for="ItIsServiceCheckbox">Service</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-switch">
+                                <input type="hidden" asp-for="ItIsAsset" value="0" />
+                                <input class="form-check-input" type="checkbox"
+                                       id="ItIsAssetCheckbox"
+                                @(Model.ItIsAsset == 1 ? "checked" : "") />
+                                <label class="form-check-label" for="ItIsAssetCheckbox">Asset</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-switch">
+                                <input type="hidden" asp-for="ItActive" value="0" />
+                                <input class="form-check-input" type="checkbox"
+                                       id="ItActiveCheckbox"
+                                @(Model.ItActive == 1 ? "checked" : "") />
+                                <label class="form-check-label" for="ItActiveCheckbox">Active</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="fas fa-save me-1"></i> Save
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Handle the checkbox values for short fields
+        document.addEventListener('DOMContentLoaded', function() {
+            // Saleable
+            const saleableCheckbox = document.getElementById('ItIsSaleableCheckbox');
+            const saleableHidden = document.querySelector('input[name="ItIsSaleable"]');
+            saleableCheckbox.addEventListener('change', function() {
+                saleableHidden.value = this.checked ? '1' : '0';
+            });
+
+            // Has Lot
+            const hasLotCheckbox = document.getElementById('ItHasLotCheckbox');
+            const hasLotHidden = document.querySelector('input[name="ItHasLot"]');
+            hasLotCheckbox.addEventListener('change', function() {
+                hasLotHidden.value = this.checked ? '1' : '0';
+            });
+
+            // Has Production Date
+            const hasProdDateCheckbox = document.getElementById('ItHasProductionDateCheckbox');
+            const hasProdDateHidden = document.querySelector('input[name="ItHasProductionDate"]');
+            hasProdDateCheckbox.addEventListener('change', function() {
+                hasProdDateHidden.value = this.checked ? '1' : '0';
+            });
+
+            // Has Expiry Date
+            const hasExpiryDateCheckbox = document.getElementById('ItHasExpiryDateCheckbox');
+            const hasExpiryDateHidden = document.querySelector('input[name="ItHasExpiryDate"]');
+            hasExpiryDateCheckbox.addEventListener('change', function() {
+                hasExpiryDateHidden.value = this.checked ? '1' : '0';
+            });
+
+            // Service
+            const serviceCheckbox = document.getElementById('ItIsServiceCheckbox');
+            const serviceHidden = document.querySelector('input[name="ItIsService"]');
+            serviceCheckbox.addEventListener('change', function() {
+                serviceHidden.value = this.checked ? '1' : '0';
+            });
+
+            // Asset
+            const assetCheckbox = document.getElementById('ItIsAssetCheckbox');
+            const assetHidden = document.querySelector('input[name="ItIsAsset"]');
+            assetCheckbox.addEventListener('change', function() {
+                assetHidden.value = this.checked ? '1' : '0';
+            });
+
+            // Active
+            const activeCheckbox = document.getElementById('ItActiveCheckbox');
+            const activeHidden = document.querySelector('input[name="ItActive"]');
+            activeCheckbox.addEventListener('change', function() {
+                activeHidden.value = this.checked ? '1' : '0';
+            });
+
+            // Initialize values
+            if (saleableCheckbox.checked) saleableHidden.value = '1';
+            if (hasLotCheckbox.checked) hasLotHidden.value = '1';
+            if (hasProdDateCheckbox.checked) hasProdDateHidden.value = '1';
+            if (hasExpiryDateCheckbox.checked) hasExpiryDateHidden.value = '1';
+            if (serviceCheckbox.checked) serviceHidden.value = '1';
+            if (assetCheckbox.checked) assetHidden.value = '1';
+            if (activeCheckbox.checked) activeHidden.value = '1';
+        });
+    </script>
 }

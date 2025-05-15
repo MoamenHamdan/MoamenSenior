@@ -1,168 +1,145 @@
 ﻿@model M_Suite.Models.Item
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Item Details";
 }
 
-<h1>Details</h1>
+<div class="container-fluid">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-info-circle me-2"></i>Item Details</h3>
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.ItId" class="btn btn-light me-2">
+                        <i class="fas fa-edit me-1"></i> Edit
+                    </a>
+                    <a asp-action="Index" class="btn btn-light">
+                        <i class="fas fa-arrow-left me-1"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
 
-<div>
-    <h4>Item</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItDescriptionLan1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItDescriptionLan1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItDescriptionLan2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItDescriptionLan2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItDescriptionLan3)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItDescriptionLan3)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItWeight)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItWeight)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasLot)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasLot)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasProductionDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasProductionDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasExpiryDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasExpiryDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasMultipleUom)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasMultipleUom)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItHasSerial)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItHasSerial)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsSaleable)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsSaleable)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsService)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsService)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsAsset)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsAsset)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItImpUid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItImpUid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItOrder)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItOrder)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIsBadReturn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIsBadReturn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdIbdNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdIbdNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdIgpNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdIgpNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdIsgNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdIsgNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdItgNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdItgNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItCdIdItpNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItCdIdItpNavigation.CdId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItIt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItIt.ItId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItUom)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItUom.UomId)
-        </dd>
-    </dl>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Basic Information</h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">Code</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ItCode)</dd>
+
+                        <dt class="col-sm-4">Description (Primary)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ItDescriptionLan1)</dd>
+
+                        <dt class="col-sm-4">Description (Secondary)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ItDescriptionLan2)</dd>
+
+                        <dt class="col-sm-4">Description (Tertiary)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ItDescriptionLan3)</dd>
+
+                        <dt class="col-sm-4">Weight</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ItWeight)</dd>
+                    </dl>
+                </div>
+
+                <div class="col-md-6">
+                    <h5 class="mb-3">Classifications</h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">UOM</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ItUom.UomNameLan1)</dd>
+
+                        <dt class="col-sm-4">Item Group</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ItCdIdItgNavigation.CdDescriptionLan1)</dd>
+
+                        <dt class="col-sm-4">Item Type</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ItCdIdItpNavigation.CdDescriptionLan1)</dd>
+
+                        <dt class="col-sm-4">Item Brand</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ItCdIdIbdNavigation.CdDescriptionLan1)</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h5 class="mb-3">Properties</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="property-card @(Model.ItIsSaleable == 1 ? "active" : "")">
+                                <div class="property-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="property-label">Saleable</div>
+                                <div class="property-value">@(Model.ItIsSaleable == 1 ? "Yes" : "No")</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="property-card @(Model.ItIsService == 1 ? "active" : "")">
+                                <div class="property-icon">
+                                    <i class="fas fa-concierge-bell"></i>
+                                </div>
+                                <div class="property-label">Service</div>
+                                <div class="property-value">@(Model.ItIsService == 1 ? "Yes" : "No")</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="property-card @(Model.ItIsAsset == 1 ? "active" : "")">
+                                <div class="property-icon">
+                                    <i class="fas fa-boxes"></i>
+                                </div>
+                                <div class="property-label">Asset</div>
+                                <div class="property-value">@(Model.ItIsAsset == 1 ? "Yes" : "No")</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="property-card @(Model.ItActive == 1 ? "active" : "")">
+                                <div class="property-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="property-label">Active</div>
+                                <div class="property-value">@(Model.ItActive == 1 ? "Yes" : "No")</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ItId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Styles {
+    <style>
+        .property-card {
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+            .property-card.active {
+                background-color: #f8f9fa;
+                border-color: #0d6efd;
+            }
+
+            .property-card .property-icon {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+                color: #6c757d;
+            }
+
+            .property-card.active .property-icon {
+                color: #0d6efd;
+            }
+
+            .property-card .property-label {
+                font-weight: 600;
+                margin-bottom: 0.25rem;
+            }
+
+            .property-card .property-value {
+                font-size: 0.9rem;
+                color: #6c757d;
+            }
+    </style>
+}
