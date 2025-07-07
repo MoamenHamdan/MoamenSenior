@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using M_Suite.Data;
+using Microsoft.AspNetCore.Hosting;
 
 namespace M_Suite.Services
 {
@@ -15,34 +16,59 @@ namespace M_Suite.Services
         private readonly MSuiteContext _context;
         private readonly MLContext _mlContext;
         private ITransformer _model = null!;
-        private readonly string _modelPath = Path.Combine("wwwroot", "models", "chatbot_intent_model.zip");
+        private readonly string _modelPath;
         private readonly Dictionary<string, BotResponse> _responses;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ChatbotService(MSuiteContext context)
+        public ChatbotService(MSuiteContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
             _mlContext = new MLContext(seed: 0);
             
+            // Use WebRootPath to get the absolute path to wwwroot folder
+            string wwwrootPath = _webHostEnvironment.WebRootPath;
+            string modelsDirectory = Path.Combine(wwwrootPath, "models");
+            _modelPath = Path.Combine(modelsDirectory, "chatbot_intent_model.zip");
+            
             // Create directory if it doesn't exist
-            Directory.CreateDirectory(Path.Combine("wwwroot", "models"));
+            try 
+            {
+                if (!Directory.Exists(modelsDirectory))
+                {
+                    Directory.CreateDirectory(modelsDirectory);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating model directory: {ex.Message}");
+            }
             
             // Initialize responses
             _responses = InitializeResponses();
             
             // Train or load model
-            if (File.Exists(_modelPath))
+            try
             {
-                LoadModel();
-            }
-            else
-            {
-                TrainModel();
-            }
+                if (File.Exists(_modelPath))
+                {
+                    LoadModel();
+                }
+                else
+                {
+                    TrainModel();
+                }
 
-            // Ensure _model is initialized
-            if (_model == null)
+                // Ensure _model is initialized
+                if (_model == null)
+                {
+                    TrainModel();
+                }
+            }
+            catch (Exception ex)
             {
-                TrainModel();
+                Console.WriteLine($"Error initializing chatbot model: {ex.Message}");
+                // Continue without crashing - we'll handle null model in the methods
             }
         }
 
@@ -219,51 +245,80 @@ namespace M_Suite.Services
 
         public string GetIntent(string query)
         {
-            var predictEngine = _mlContext.Model.CreatePredictionEngine<ChatIntent, ChatIntentPrediction>(_model);
-            var prediction = predictEngine.Predict(new ChatIntent { Query = query });
-            
-            return prediction.Intent;
+            try
+            {
+                if (_model == null)
+                {
+                    return "unknown";
+                }
+                
+                var predictEngine = _mlContext.Model.CreatePredictionEngine<ChatIntent, ChatIntentPrediction>(_model);
+                var prediction = predictEngine.Predict(new ChatIntent { Query = query });
+                
+                return prediction.Intent;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting intent: {ex.Message}");
+                return "unknown";
+            }
         }
 
         public async System.Threading.Tasks.Task<ChatMessage> ProcessMessageAsync(string message, int userId)
         {
-            // Identify intent
-            string intent = GetIntent(message);
-            
-            // If uncertain about intent, use unknown
-            if (string.IsNullOrEmpty(intent))
+            try
             {
-                intent = "unknown";
+                // Identify intent
+                string intent = GetIntent(message);
+                
+                // If uncertain about intent, use unknown
+                if (string.IsNullOrEmpty(intent))
+                {
+                    intent = "unknown";
+                }
+                
+                // Find response for intent
+                if (!_responses.TryGetValue(intent, out var botResponse))
+                {
+                    botResponse = _responses["unknown"];
+                }
+                
+                // Extract entities (simplified for now)
+                var entities = ExtractEntities(message);
+                
+                // Generate response
+                string response = botResponse.DynamicResponseGenerator != null && entities.Any() 
+                    ? botResponse.DynamicResponseGenerator(entities) 
+                    : botResponse.Response;
+                
+                // Create chat message
+                var chatMessage = new ChatMessage
+                {
+                    UserMessage = message,
+                    BotResponse = response,
+                    Timestamp = DateTime.Now,
+                    UserId = userId,
+                    Intent = intent,
+                    Confidence = 1.0f // Simplified, would normally use model confidence
+                };
+                
+                // In a real implementation, you might save the message to the database here
+                
+                return chatMessage;
             }
-            
-            // Find response for intent
-            if (!_responses.TryGetValue(intent, out var botResponse))
+            catch (Exception ex)
             {
-                botResponse = _responses["unknown"];
+                Console.WriteLine($"Error processing message: {ex.Message}");
+                return new ChatMessage
+                {
+                    UserMessage = message,
+                    BotResponse = "Sorry, I'm having trouble understanding right now. Please try again later.",
+                    Timestamp = DateTime.Now,
+                    UserId = userId,
+                    Intent = "error",
+                    Confidence = 0.0f
+                };
             }
-            
-            // Extract entities (simplified for now)
-            var entities = ExtractEntities(message);
-            
-            // Generate response
-            string response = botResponse.DynamicResponseGenerator != null && entities.Any() 
-                ? botResponse.DynamicResponseGenerator(entities) 
-                : botResponse.Response;
-            
-            // Create chat message
-            var chatMessage = new ChatMessage
-            {
-                UserMessage = message,
-                BotResponse = response,
-                Timestamp = DateTime.Now,
-                UserId = userId,
-                Intent = intent,
-                Confidence = 1.0f // Simplified, would normally use model confidence
-            };
-            
-            // In a real implementation, you might save the message to the database here
-            
-            return chatMessage;
         }
 
         private Dictionary<string, string> ExtractEntities(string message)
