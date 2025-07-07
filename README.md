@@ -1,73 +1,88 @@
+# M-Suite Enterprise Application
 
-📌 Project Overview
+## Overview
+M-Suite is a robust enterprise web application designed to streamline business operations for organizations of all sizes. It covers sales, warehousing, inventory management, user authentication, geo-location tracking, and advanced AI-powered analytics. Built with ASP.NET Core MVC and Entity Framework Core, M-Suite is scalable, secure, and easy to extend.
 
-M-Suite is a robust enterprise application designed to streamline business operations, including sales, warehousing, inventory management, and user authentication.
-The platform leverages ASP.NET Core MVC and Entity Framework Core to provide a scalable and secure system for managing transactions and user activities.
+## Features
+- **User Authentication:** Secure login system using cookie-based authentication.
+- **Warehouse & Inventory Management:** Track products, stock levels, and transactions efficiently.
+- **Sales & Order Processing:** Manage orders, customers, and sales activities.
+- **Geo-Location Tracking:** Monitor deliveries and field operations in real time.
+- **Reporting & Analytics:** Generate actionable business insights.
+- **AI Capabilities:**
+  - Chatbot assistant for user support and navigation
+  - Item correlation analysis for cross-selling and recommendations
+  - AI dashboard for insights and anomaly detection
 
-🚀 Features
+## Tech Stack
+- **Backend:** ASP.NET Core MVC
+- **Database:** Microsoft SQL Server (Entity Framework Core, Database-First)
+- **Authentication:** Cookie-based
+- **Frontend:** HTML, CSS, JavaScript, Bootstrap
+- **AI/ML:** ML.NET, Matrix Factorization
+- **Version Control:** Git & GitHub
 
-    🔐 User Authentication: Secure login system using cookies authentication.
+## Getting Started
+### 1. Clone the Repository
+```bash
+git clone https://github.com/MALIA/M-Suite.git
+cd M-Suite
+```
 
-    🏬 Warehouse & Inventory Management: Track products and transactions efficiently.
-
-    📊 Sales & Order Processing: Manage orders and customer interactions.
-
-    📍 Geo-Location Tracking: Monitor deliveries and field operations.
-
-    📈 Reporting & Analytics: Generate real-time insights.
-
-🛠️ Tech Stack
-
-    Framework: ASP.NET Core MVC
-
-    Database: Microsoft SQL Server (EF Core - Database First)
-
-    Authentication: Cookie-based authentication
-
-    Frontend: HTML / CSS / JAVASCRIPT
-
-    Version Control: Git & GitHub
-
-🏗️ Setup Instructions
-
-    1️⃣ Clone the Repository
-
-      git clone https://github.com/MALIA/M-Suite.git
-      cd M-Suite
-
-    2️⃣ Configure Database Connection
-
-      Update the appsettings.json file with your SQL Server connection string:
-
+### 2. Configure the Database Connection
+Edit `M-Suite/appsettings.json` and update the connection string:
+```json
 "ConnectionStrings": {
   "MSuiteContext": "Server=YOUR_SERVER;Database=YOUR_DB;Trusted_Connection=True;TrustServerCertificate=True;"
 }
+```
 
-  3️⃣ Install Dependencies
+### 3. Install Dependencies
+```bash
+dotnet restore
+```
 
-    dotnet restore
+### 4. Apply Migrations (If Needed)
+```bash
+dotnet ef database update
+```
 
-  4️⃣ Apply Migrations (If Needed)
+### 5. Run the Application
+```bash
+dotnet run
+```
 
-    dotnet ef database update
+## Usage
+- Access the web app at `http://localhost:5000` (or the port specified in your launch settings).
+- Log in with your credentials to access features based on your role (admin, supervisor, etc.).
+- Use the AI dashboard for analytics and the chatbot for assistance.
 
-  5️⃣ Run the Application
+## AI Features
+- **Chatbot Assistant:** Natural language interface for help and navigation.
+- **Item Correlation Analysis:** Discover product relationships and optimize sales.
+- **AI Dashboard:** Visualize insights, patterns, and anomalies.
 
-    dotnet run
+## Contribution Guidelines
+1. **Fork the Repository**
+2. **Create a New Branch:**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Commit Changes:**
+   ```bash
+   git commit -m "Describe your changes"
+   ```
+4. **Push to GitHub:**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. **Create a Pull Request**
 
-  📝 Contribution Guidelines
+## License
+This project is proprietary to Malia Groups. For licensing inquiries, please contact the maintainers.
 
-    We welcome contributions! Please follow these steps:
-    
-    Fork the Repository
-    
-    Create a New Branch: git checkout -b feature-name
-    
-    Commit Changes: git commit -m "Your commit message"
-    
-    Push to GitHub: git push origin feature-name
-    
-    Create a Pull Request (PR)
+---
+For more information, see the in-app documentation or contact the project maintainers.
 
 
 
