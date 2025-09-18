@@ -14,6 +14,8 @@ M-Suite is a robust enterprise web application designed to streamline business o
   - Item correlation analysis for cross-selling and recommendations
   - AI dashboard for insights and anomaly detection
 
+
+
 ## Tech Stack
 - **Backend:** ASP.NET Core MVC
 - **Database:** Microsoft SQL Server (Entity Framework Core, Database-First)
