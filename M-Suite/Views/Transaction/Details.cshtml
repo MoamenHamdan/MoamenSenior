@@ -1,8 +1,12 @@
 ﻿@model M_Suite.Models.Transaction
+@using M_Suite.Helpers
+@using M_Suite.Helpers
 
 @{
     ViewData["Title"] = "Transaction Details";
+    var breadcrumbs = ViewHelper.CreateBreadcrumbs("Transaction", "Details", Model.TsNumber);
 }
+@await Html.PartialAsync("_Breadcrumbs", breadcrumbs)
 
 <div class="container-fluid transaction-container">
     <div class="card shadow-lg">
@@ -27,10 +31,10 @@
                         <dd class="col-sm-9">@Model.TsNumber</dd>
 
                         <dt class="col-sm-3">Transaction Date:</dt>
-                        <dd class="col-sm-9">@Model.TsDate.ToShortDateString()</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatDate(Model.TsDate)</dd>
 
                         <dt class="col-sm-3">Due Date:</dt>
-                        <dd class="col-sm-9">@(Model.TsDueDate?.ToShortDateString() ?? "N/A")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatDate(Model.TsDueDate)</dd>
 
                         <dt class="col-sm-3">Business Unit:</dt>
                         <dd class="col-sm-9">@(Model.TsBu?.BuCode ?? "N/A")</dd>
@@ -80,25 +84,25 @@
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-3">Total Amount:</dt>
-                        <dd class="col-sm-9">@Model.TsTotal.ToString("C")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatCurrency(Model.TsTotal)</dd>
 
                         <dt class="col-sm-3">Total (Base Currency):</dt>
-                        <dd class="col-sm-9">@(Model.TsTotalBc?.ToString("C") ?? "N/A")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatCurrency(Model.TsTotalBc)</dd>
 
                         <dt class="col-sm-3">Total Discount:</dt>
-                        <dd class="col-sm-9">@Model.TsTotalDiscount.ToString("C")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatCurrency(Model.TsTotalDiscount)</dd>
 
                         <dt class="col-sm-3">Total Tax:</dt>
-                        <dd class="col-sm-9">@(Model.TsTotalTax?.ToString("C") ?? "N/A")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatCurrency(Model.TsTotalTax)</dd>
 
                         <dt class="col-sm-3">Final Amount:</dt>
-                        <dd class="col-sm-9">@(Model.TsTotalFinal?.ToString("C") ?? "N/A")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatCurrency(Model.TsTotalFinal)</dd>
 
                         <dt class="col-sm-3">Currency Rate:</dt>
                         <dd class="col-sm-9">@Model.TsCurRate</dd>
 
                         <dt class="col-sm-3">Discount Amount:</dt>
-                        <dd class="col-sm-9">@(Model.TsDiscountAmount?.ToString("C") ?? "N/A")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatCurrency(Model.TsDiscountAmount)</dd>
                     </dl>
                 </div>
             </div>
@@ -114,13 +118,13 @@
                         <dd class="col-sm-9">@(Model.TsRemarks ?? "N/A")</dd>
 
                         <dt class="col-sm-3">Created Date:</dt>
-                        <dd class="col-sm-9">@(Model.TsCreateDate?.ToString("g") ?? "N/A")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatDateTime(Model.TsCreateDate)</dd>
 
                         <dt class="col-sm-3">Modified Date:</dt>
-                        <dd class="col-sm-9">@(Model.TsModifiedDate?.ToString("g") ?? "N/A")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatDateTime(Model.TsModifiedDate)</dd>
 
                         <dt class="col-sm-3">Exported Date:</dt>
-                        <dd class="col-sm-9">@(Model.TsExportedDate?.ToString("g") ?? "N/A")</dd>
+                        <dd class="col-sm-9">@FormatHelper.FormatDateTime(Model.TsExportedDate)</dd>
                     </dl>
                 </div>
             </div>

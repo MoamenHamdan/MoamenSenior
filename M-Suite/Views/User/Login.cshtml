@@ -32,22 +32,25 @@
 
             @if (ViewBag.Error != null)
             {
-                <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>@ViewBag.Error
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             }
 
             <div class="form-group floating-input">
-                <input type="text" id="username" name="username" class="form-input" placeholder="Username" required>
+                <input type="text" id="username" name="username" class="form-input" placeholder="Username" required autocomplete="username">
                 <i class="fas fa-user input-icon"></i>
             </div>
             
             <div class="form-group floating-input">
-                <input type="password" id="password" name="password" class="form-input" placeholder="Password" required>
+                <input type="password" id="password" name="password" class="form-input" placeholder="Password" required autocomplete="current-password">
                 <i class="fas fa-lock input-icon"></i>
             </div>
             
             <div class="form-options">
                 <label class="remember-me">
-                    <input type="checkbox" id="remember" name="remember">
+                    <input type="checkbox" id="remember" name="remember" value="true">
                     <span class="checkmark"></span>
                     Remember me
                 </label>
@@ -59,7 +62,7 @@
                 <i class="fas fa-arrow-right button-icon"></i>
             </button>
 
-           
+            <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
         </form>
 
         <!-- Support Section -->

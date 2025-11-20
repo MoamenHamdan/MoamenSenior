@@ -1,8 +1,12 @@
 ﻿@model M_Suite.Models.Item
+@using M_Suite.Helpers
 
 @{
     ViewData["Title"] = "Create Item";
+    var breadcrumbs = ViewHelper.CreateBreadcrumbs("Item", "Create");
 }
+@await Html.PartialAsync("_Breadcrumbs", breadcrumbs)
+@await Html.PartialAsync("_ValidationSummary")
 
 <div class="container-fluid item-container">
     <div class="card shadow-lg">
@@ -17,7 +21,6 @@
 
         <div class="card-body">
             <form asp-action="Create" class="needs-validation" novalidate>
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
                 <!-- Basic Information Section -->
                 <div class="card mb-4">

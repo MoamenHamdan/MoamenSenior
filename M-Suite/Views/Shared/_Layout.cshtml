@@ -225,6 +225,52 @@
             background-color: #f5f7fb;
         }
 
+        /* Breadcrumb styling */
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0.5rem 0;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "›";
+            color: #6c757d;
+        }
+
+        .breadcrumb-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb-item a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-item.active {
+            color: #6c757d;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+
+            .card-header .d-flex {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+
+            .card-header .btn-group {
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .card-header .btn-group .btn {
+                flex: 1;
+            }
+        }
+
         .logo-placeholder {
             width: 120px;
             height: 40px;
@@ -450,6 +496,32 @@
                     </ul>
                 </li>
                 
+                <!-- Master Data -->
+                <li class="option">
+                    <div class="sidebar-item" onclick="toggleDropdown('dropdown4')">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </span>
+                        <span class="label">Master Data</span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <ul class="dropdown" id="dropdown4">
+                        <li><a class="dropdown-link" asp-controller="Item" asp-action="Index">Items</a></li>
+                        <li><a class="dropdown-link" asp-controller="ItemWarehouse" asp-action="Index">Item Warehouse</a></li>
+                        <li><a class="dropdown-link" asp-controller="UOM" asp-action="Index">Units of Measure</a></li>
+                        <li><a class="dropdown-link" asp-controller="PriceList" asp-action="Index">Price Lists</a></li>
+                        <li><a class="dropdown-link" asp-controller="BusinessUnit" asp-action="Index">Business Units</a></li>
+                        <li><a class="dropdown-link" asp-controller="PhysicalLocation" asp-action="Index">Physical Locations</a></li>
+                        <li><a class="dropdown-link" asp-controller="Thirdparty" asp-action="Index">Third Parties</a></li>
+                        <li><a class="dropdown-link" asp-controller="CurrencyRate" asp-action="Index">Currency Rates</a></li>
+                        <li><a class="dropdown-link" asp-controller="GeoLocation" asp-action="Index">Geo Locations</a></li>
+                    </ul>
+                </li>
+                
                 <!-- Security Management -->
                 <li class="option">
                     <div class="sidebar-item" onclick="toggleDropdown('dropdown3')">
@@ -470,8 +542,24 @@
         </div>
 
         <div class="main-content">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>@TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>@TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
             @RenderBody()
         </div>
+        
+        @await Html.PartialAsync("_LoadingSpinner")
     </div>
     
     <script>

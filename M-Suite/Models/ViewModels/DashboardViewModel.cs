@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace M_Suite.Models.ViewModels
 {
@@ -50,8 +51,13 @@ namespace M_Suite.Models.ViewModels
 
     public class TopCustomerViewModel
     {
+        [Required]
         public required string CustomerName { get; set; }
+        
+        [Range(0, double.MaxValue)]
         public decimal PurchaseAmount { get; set; }
+        
+        [Range(0, int.MaxValue)]
         public int TransactionCount { get; set; }
     }
 

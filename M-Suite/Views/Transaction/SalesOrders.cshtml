@@ -1,17 +1,25 @@
 @model IEnumerable<M_Suite.Models.Transaction>
+@using M_Suite.Helpers
 
 @{
     ViewData["Title"] = "Sales Orders";
+    var breadcrumbs = ViewHelper.CreateBreadcrumbs("Transaction", "SalesOrders");
 }
+@await Html.PartialAsync("_Breadcrumbs", breadcrumbs)
 
 <div class="container-fluid">
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white">
             <div class="d-flex justify-content-between align-items-center">
                 <h3 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Sales Orders</h3>
-                <a asp-action="Create" asp-route-type="2" asp-route-status="1000" class="btn btn-light btn-sm">
-                    <i class="fas fa-plus me-1"></i> Create New Order
-                </a>
+                <div class="btn-group">
+                    <a asp-controller="Export" asp-action="ExportTransactions" class="btn btn-outline-light btn-sm me-2">
+                        <i class="fas fa-download me-1"></i> Export CSV
+                    </a>
+                    <a asp-action="Create" asp-route-type="2" asp-route-status="1000" class="btn btn-light btn-sm">
+                        <i class="fas fa-plus me-1"></i> Create New Order
+                    </a>
+                </div>
             </div>
         </div>
 

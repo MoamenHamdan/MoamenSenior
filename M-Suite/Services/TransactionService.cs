@@ -205,6 +205,33 @@ namespace M_Suite.Services
         /// </summary>
         public async System.Threading.Tasks.Task<Transaction> CreateTransactionWithItemsAsync(Transaction transaction, List<TransactionItem> items)
         {
+            // Validate stock availability for outgoing transactions (sales orders, invoices)
+            if (items != null && items.Any() && (transaction.TsTstId == 2 || transaction.TsTstId == 3))
+            {
+                foreach (var item in items)
+                {
+                    if (item.TsiItId.HasValue && item.TsiPlIdWhs.HasValue && item.TsiQuantity > 0)
+                    {
+                        var stock = await _context.ItemWarehouses
+                            .FirstOrDefaultAsync(iw => iw.ItwItId == item.TsiItId.Value && 
+                                                       iw.ItwPlIdWhs == item.TsiPlIdWhs.Value);
+                        
+                        if (stock == null)
+                        {
+                            throw new InvalidOperationException($"Item {item.TsiItId} is not available in warehouse {item.TsiPlIdWhs}");
+                        }
+                        
+                        var availableQuantity = (stock.ItwQuantity ?? 0) - (stock.ItwQuantityReserved ?? 0);
+                        if (availableQuantity < item.TsiQuantity)
+                        {
+                            var itemInfo = await _context.Items.FindAsync(item.TsiItId.Value);
+                            var itemName = itemInfo?.ItDescriptionLan1 ?? $"Item {item.TsiItId}";
+                            throw new InvalidOperationException($"Insufficient stock for {itemName}. Available: {availableQuantity}, Requested: {item.TsiQuantity}");
+                        }
+                    }
+                }
+            }
+
             // Set default values if not specified
             transaction.TsDate = transaction.TsDate == default ? DateTime.Now : transaction.TsDate;
             transaction.TsCreateDate = DateTime.Now;
@@ -215,33 +242,47 @@ namespace M_Suite.Services
                 transaction.TsNumber = await GenerateTransactionNumberAsync(transaction.TsTstId);
             }
             
-            // Add transaction to context
-            _context.Transactions.Add(transaction);
-            await _context.SaveChangesAsync();
-            
-            // Add items to transaction
-            if (items.Any())
+            // Use database transaction for atomicity
+            using var dbTransaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                short lineSequence = 1;
-                foreach (var item in items)
+                // Add transaction to context
+                _context.Transactions.Add(transaction);
+                await _context.SaveChangesAsync();
+                
+                // Add items to transaction
+                if (items != null && items.Any())
                 {
-                    item.TsiTsId = transaction.TsId;
-                    item.TsiLineSequence = lineSequence++;
-                    CalculateItemTotal(item);
-                    _context.TransactionItems.Add(item);
+                    short lineSequence = 1;
+                    foreach (var item in items)
+                    {
+                        item.TsiTsId = transaction.TsId;
+                        item.TsiLineSequence = lineSequence++;
+                        CalculateItemTotal(item);
+                        _context.TransactionItems.Add(item);
+                    }
+                    
+                    await _context.SaveChangesAsync();
                 }
                 
-                await _context.SaveChangesAsync();
+                // Calculate transaction totals
+                await RecalculateTransactionTotalsAsync(transaction.TsId);
+                
+                // Commit transaction
+                await dbTransaction.CommitAsync();
             }
-            
-            // Calculate transaction totals
-            await RecalculateTransactionTotalsAsync(transaction.TsId);
+            catch
+            {
+                await dbTransaction.RollbackAsync();
+                throw;
+            }
             
             return transaction;
         }
 
         /// <summary>
         /// Generates a transaction number based on type and date
+        /// Uses a retry mechanism to handle race conditions
         /// </summary>
         private async System.Threading.Tasks.Task<string> GenerateTransactionNumberAsync(int transactionTypeId)
         {
@@ -256,19 +297,66 @@ namespace M_Suite.Services
                     : type.TstDescriptionLan1.ToUpper();
             }
             
-            // Get current sequence for this type
-            var todayStart = DateTime.Today;
-            var todayEnd = todayStart.AddDays(1).AddTicks(-1);
-            
-            var maxNumber = await _context.Transactions
-                .Where(t => t.TsTstId == transactionTypeId && t.TsDate >= todayStart && t.TsDate <= todayEnd)
-                .CountAsync();
-            
             // Format: PREFIX-YYYYMMDD-SEQUENCE
             string dateStr = DateTime.Now.ToString("yyyyMMdd");
-            string sequenceStr = (maxNumber + 1).ToString("D4");
             
-            return $"{prefix}-{dateStr}-{sequenceStr}";
+            // Use a retry mechanism to handle race conditions
+            int maxRetries = 5;
+            for (int retry = 0; retry < maxRetries; retry++)
+            {
+                try
+                {
+                    // Get current sequence for this type and date
+                    var todayStart = DateTime.Today;
+                    var todayEnd = todayStart.AddDays(1).AddTicks(-1);
+                    
+                    // Get the maximum sequence number for today
+                    var existingNumbers = await _context.Transactions
+                        .Where(t => t.TsTstId == transactionTypeId && 
+                                   t.TsDate >= todayStart && 
+                                   t.TsDate <= todayEnd &&
+                                   !string.IsNullOrEmpty(t.TsNumber) &&
+                                   t.TsNumber.StartsWith($"{prefix}-{dateStr}-"))
+                        .Select(t => t.TsNumber)
+                        .ToListAsync();
+                    
+                    int maxSequence = 0;
+                    foreach (var number in existingNumbers)
+                    {
+                        // Extract sequence from format: PREFIX-YYYYMMDD-SEQUENCE
+                        var parts = number.Split('-');
+                        if (parts.Length >= 3 && int.TryParse(parts[2], out int seq))
+                        {
+                            maxSequence = Math.Max(maxSequence, seq);
+                        }
+                    }
+                    
+                    string sequenceStr = (maxSequence + 1).ToString("D4");
+                    string newNumber = $"{prefix}-{dateStr}-{sequenceStr}";
+                    
+                    // Verify uniqueness (double-check)
+                    bool exists = await _context.Transactions
+                        .AnyAsync(t => t.TsNumber == newNumber);
+                    
+                    if (!exists)
+                    {
+                        return newNumber;
+                    }
+                    
+                    // If exists, retry with incremented sequence
+                    await System.Threading.Tasks.Task.Delay(10 * (retry + 1)); // Small delay before retry
+                }
+                catch (Exception)
+                {
+                    if (retry == maxRetries - 1)
+                        throw;
+                    await System.Threading.Tasks.Task.Delay(50 * (retry + 1));
+                }
+            }
+            
+            // Fallback: use timestamp-based unique number
+            string timestamp = DateTime.Now.ToString("HHmmssfff");
+            return $"{prefix}-{dateStr}-{timestamp}";
         }
     }
 } 

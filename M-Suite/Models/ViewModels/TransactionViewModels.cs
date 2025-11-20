@@ -7,7 +7,9 @@ namespace M_Suite.Models.ViewModels
 {
     public class TransactionCreateViewModel
     {
+        [Required(ErrorMessage = "Transaction is required")]
         public Transaction Transaction { get; set; } = new Transaction();
+        
         public List<TransactionItem> TransactionItems { get; set; } = new List<TransactionItem>();
         
         // For dropdowns

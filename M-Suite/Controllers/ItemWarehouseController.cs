@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using M_Suite.Data;
 using M_Suite.Models;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace M_Suite.Controllers
 {
+    [Authorize]
     public class ItemWarehouseController : Controller
     {
         private readonly MSuiteContext _context;
@@ -75,14 +77,50 @@ namespace M_Suite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ItwPlIdWhs,ItwItId,ItwUomId,ItwQuantity,ItwQuantityDamage,ItwQuantityReserved,ItwQuantityPreviewed,ItwRemarks")] ItemWarehouse itemWarehouse)
         {
+            // Additional validation
+            if (itemWarehouse.ItwItId == null || itemWarehouse.ItwItId == 0)
+            {
+                ModelState.AddModelError("ItwItId", "Item is required.");
+            }
+            if (itemWarehouse.ItwPlIdWhs == null || itemWarehouse.ItwPlIdWhs == 0)
+            {
+                ModelState.AddModelError("ItwPlIdWhs", "Warehouse is required.");
+            }
+            if (itemWarehouse.ItwQuantity < 0)
+            {
+                ModelState.AddModelError("ItwQuantity", "Quantity cannot be negative.");
+            }
+
+            // Check for duplicate item-warehouse combination
+            if (itemWarehouse.ItwItId.HasValue && itemWarehouse.ItwPlIdWhs.HasValue)
+            {
+                var exists = await _context.ItemWarehouses
+                    .AnyAsync(iw => iw.ItwItId == itemWarehouse.ItwItId.Value && 
+                                   iw.ItwPlIdWhs == itemWarehouse.ItwPlIdWhs.Value);
+                if (exists)
+                {
+                    ModelState.AddModelError("", "This item already exists in the selected warehouse. Please edit the existing record instead.");
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                itemWarehouse.ItwCreationDate = DateTime.UtcNow;
-
-
-                _context.Add(itemWarehouse);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    itemWarehouse.ItwCreationDate = DateTime.UtcNow;
+                    _context.Add(itemWarehouse);
+                    await _context.SaveChangesAsync();
+                    TempData["Success"] = "Item warehouse record created successfully";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. The item may already exist in this warehouse.");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "An error occurred: " + ex.Message);
+                }
             }
 
             PopulateDropdowns(itemWarehouse);
@@ -117,6 +155,20 @@ namespace M_Suite.Controllers
                 return NotFound();
             }
 
+            // Additional validation
+            if (itemWarehouse.ItwItId == null || itemWarehouse.ItwItId == 0)
+            {
+                ModelState.AddModelError("ItwItId", "Item is required.");
+            }
+            if (itemWarehouse.ItwPlIdWhs == null || itemWarehouse.ItwPlIdWhs == 0)
+            {
+                ModelState.AddModelError("ItwPlIdWhs", "Warehouse is required.");
+            }
+            if (itemWarehouse.ItwQuantity < 0)
+            {
+                ModelState.AddModelError("ItwQuantity", "Quantity cannot be negative.");
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -135,6 +187,8 @@ namespace M_Suite.Controllers
 
                     _context.Update(existingItem);
                     await _context.SaveChangesAsync();
+                    TempData["Success"] = "Item warehouse record updated successfully";
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -144,10 +198,17 @@ namespace M_Suite.Controllers
                     }
                     else
                     {
-                        throw;
+                        ModelState.AddModelError("", "The record you attempted to edit was modified by another user. Please refresh and try again.");
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (DbUpdateException ex)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Please check your data and try again.");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "An error occurred: " + ex.Message);
+                }
             }
 
             PopulateDropdowns(itemWarehouse);
@@ -181,14 +242,38 @@ namespace M_Suite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var itemWarehouse = await _context.ItemWarehouses.FindAsync(id);
-            if (itemWarehouse != null)
+            try
             {
-                _context.ItemWarehouses.Remove(itemWarehouse);
-                await _context.SaveChangesAsync();
-            }
+                var itemWarehouse = await _context.ItemWarehouses.FindAsync(id);
+                if (itemWarehouse != null)
+                {
+                    // Check if item has transactions
+                    var hasTransactions = await _context.TransactionItems
+                        .AnyAsync(ti => ti.TsiItId == itemWarehouse.ItwItId && ti.TsiPlIdWhs == itemWarehouse.ItwPlIdWhs);
+                    
+                    if (hasTransactions)
+                    {
+                        TempData["Error"] = "Cannot delete item warehouse record that has associated transactions.";
+                        return RedirectToAction(nameof(Index));
+                    }
 
-            return RedirectToAction(nameof(Index));
+                    _context.ItemWarehouses.Remove(itemWarehouse);
+                    await _context.SaveChangesAsync();
+                    TempData["Success"] = "Item warehouse record deleted successfully";
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException ex)
+            {
+                TempData["Error"] = "Unable to delete item warehouse record. It may be in use.";
+                return RedirectToAction(nameof(Delete), new { id });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "An error occurred while deleting the record.";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private bool ItemWarehouseExists(int id)

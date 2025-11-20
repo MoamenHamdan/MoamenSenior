@@ -9,9 +9,11 @@ using M_Suite.Data;
 using M_Suite.Models;
 using M_Suite.Services;
 using M_Suite.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace M_Suite.Controllers
 {
+    [Authorize]
     public class TransactionController : Controller
     {
         private readonly MSuiteContext _context;
@@ -391,14 +393,70 @@ namespace M_Suite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TransactionCreateViewModel viewModel)
         {
+            // Additional validation
+            if (viewModel.Transaction == null)
+            {
+                ModelState.AddModelError("", "Transaction data is required.");
+            }
+            else
+            {
+                if (viewModel.Transaction.TsDate == default)
+                {
+                    viewModel.Transaction.TsDate = DateTime.Now;
+                }
+
+                if (viewModel.Transaction.TsBuId == null || viewModel.Transaction.TsBuId == 0)
+                {
+                    ModelState.AddModelError("Transaction.TsBuId", "Business Unit is required.");
+                }
+
+                if (viewModel.Transaction.TsTstId == null || viewModel.Transaction.TsTstId == 0)
+                {
+                    ModelState.AddModelError("Transaction.TsTstId", "Transaction Type is required.");
+                }
+
+                // Validate items if provided
+                if (viewModel.TransactionItems != null && viewModel.TransactionItems.Any())
+                {
+                    for (int i = 0; i < viewModel.TransactionItems.Count; i++)
+                    {
+                        var item = viewModel.TransactionItems[i];
+                        if (item.TsiItId == null || item.TsiItId == 0)
+                        {
+                            ModelState.AddModelError($"TransactionItems[{i}].TsiItId", "Item is required.");
+                        }
+                        if (item.TsiQuantity <= 0)
+                        {
+                            ModelState.AddModelError($"TransactionItems[{i}].TsiQuantity", "Quantity must be greater than 0.");
+                        }
+                        if (item.TsiPrice < 0)
+                        {
+                            ModelState.AddModelError($"TransactionItems[{i}].TsiPrice", "Price cannot be negative.");
+                        }
+                    }
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // Set current user if not set
+                    if (viewModel.Transaction.TsUsId == null && User.Identity?.IsAuthenticated == true)
+                    {
+                        var currentUser = await _context.Users.FirstOrDefaultAsync(u => u.UsLogin == User.Identity.Name);
+                        if (currentUser != null)
+                        {
+                            viewModel.Transaction.TsUsId = currentUser.UsId;
+                        }
+                    }
+
                     // Create the transaction with items
                     var transaction = await _transactionService.CreateTransactionWithItemsAsync(
                         viewModel.Transaction, 
-                        viewModel.TransactionItems);
+                        viewModel.TransactionItems ?? new List<TransactionItem>());
+                    
+                    TempData["Success"] = "Transaction created successfully";
                     
                     // Redirect to appropriate page based on transaction type
                     if (transaction.TsTstId == 2) // Sales Order
@@ -416,18 +474,18 @@ namespace M_Suite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "An error occurred: " + ex.Message);
+                    ModelState.AddModelError("", "An error occurred while creating the transaction: " + ex.Message);
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            viewModel.BusinessUnits = new SelectList(_context.BusinessUnits, "BuId", "BuDescriptionLan1", viewModel.Transaction.TsBuId);
-            viewModel.CurrencyCodes = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", viewModel.Transaction.TsCdIdCur);
-            viewModel.SourceCodes = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", viewModel.Transaction.TsCdIdSrc);
-            viewModel.Customers = new SelectList(_context.ThirdpartySites, "ThpsId", "ThpsNameLan1", viewModel.Transaction.TsThpsIdBill);
-            viewModel.TransactionStatuses = new SelectList(_context.Transactionstatuses, "TssId", "TssDescriptionLan1", viewModel.Transaction.TsTssId);
-            viewModel.TransactionTypes = new SelectList(_context.Transactiontypes, "TstId", "TstDescriptionLan1", viewModel.Transaction.TsTstId);
-            viewModel.Users = new SelectList(_context.Users, "UsId", "UsFirstName", viewModel.Transaction.TsUsId);
+            viewModel.BusinessUnits = new SelectList(_context.BusinessUnits, "BuId", "BuDescriptionLan1", viewModel.Transaction?.TsBuId);
+            viewModel.CurrencyCodes = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", viewModel.Transaction?.TsCdIdCur);
+            viewModel.SourceCodes = new SelectList(_context.Codescs, "CdId", "CdDescriptionLan1", viewModel.Transaction?.TsCdIdSrc);
+            viewModel.Customers = new SelectList(_context.ThirdpartySites, "ThpsId", "ThpsNameLan1", viewModel.Transaction?.TsThpsIdBill);
+            viewModel.TransactionStatuses = new SelectList(_context.Transactionstatuses, "TssId", "TssDescriptionLan1", viewModel.Transaction?.TsTssId);
+            viewModel.TransactionTypes = new SelectList(_context.Transactiontypes, "TstId", "TstDescriptionLan1", viewModel.Transaction?.TsTstId);
+            viewModel.Users = new SelectList(_context.Users.Where(u => u.UsDeleted == 0), "UsId", "UsLogin", viewModel.Transaction?.TsUsId);
             viewModel.Items = GetItemsSelectList();
             viewModel.Uoms = new SelectList(_context.Uoms, "UomId", "UomNameLan1");
             viewModel.Warehouses = new SelectList(_context.PhysicalLocations, "PlId", "PlDescriptionLan1");

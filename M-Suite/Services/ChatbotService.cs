@@ -52,7 +52,16 @@ namespace M_Suite.Services
             {
                 if (File.Exists(_modelPath))
                 {
-                    LoadModel();
+                    try
+                    {
+                        LoadModel();
+                    }
+                    catch (Exception loadEx)
+                    {
+                        // If loading fails, try to train a new model
+                        Console.WriteLine($"Error loading chatbot model: {loadEx.Message}. Training new model...");
+                        TrainModel();
+                    }
                 }
                 else
                 {
@@ -62,13 +71,16 @@ namespace M_Suite.Services
                 // Ensure _model is initialized
                 if (_model == null)
                 {
+                    Console.WriteLine("Chatbot model is null, attempting to train...");
                     TrainModel();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error initializing chatbot model: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 // Continue without crashing - we'll handle null model in the methods
+                // The chatbot will still work but with limited functionality
             }
         }
 
@@ -247,6 +259,32 @@ namespace M_Suite.Services
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    return "unknown";
+                }
+
+                if (_model == null)
+                {
+                    // Try to reload model if it's null
+                    try
+                    {
+                        if (File.Exists(_modelPath))
+                        {
+                            LoadModel();
+                        }
+                        else
+                        {
+                            TrainModel();
+                        }
+                    }
+                    catch
+                    {
+                        // If reload fails, return unknown
+                        return "unknown";
+                    }
+                }
+
                 if (_model == null)
                 {
                     return "unknown";
@@ -255,11 +293,12 @@ namespace M_Suite.Services
                 var predictEngine = _mlContext.Model.CreatePredictionEngine<ChatIntent, ChatIntentPrediction>(_model);
                 var prediction = predictEngine.Predict(new ChatIntent { Query = query });
                 
-                return prediction.Intent;
+                return prediction?.Intent ?? "unknown";
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error getting intent: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 return "unknown";
             }
         }

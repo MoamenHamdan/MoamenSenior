@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using M_Suite.Data;
 using M_Suite.Models;
 using M_Suite.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace M_Suite.Controllers
 {
+    [Authorize]
     public class TransactionItemController : Controller
     {
         private readonly MSuiteContext _context;

@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<M_Suite.Models.User>
+@using M_Suite.Helpers
 
 @{
     ViewData["Title"] = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var breadcrumbs = ViewHelper.CreateBreadcrumbs("User", "Index");
 }
+@await Html.PartialAsync("_Breadcrumbs", breadcrumbs)
 @section Styles {
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />

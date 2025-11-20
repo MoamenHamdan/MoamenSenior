@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using M_Suite.Data;
 using M_Suite.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace M_Suite.Controllers
 {
+    [Authorize]
     public class GeoLocationController : Controller
     {
         private readonly MSuiteContext _context;

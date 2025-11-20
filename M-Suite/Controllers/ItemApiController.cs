@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using M_Suite.Data;
 using M_Suite.Models;
+using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace M_Suite.Controllers
 {
     [Route("api/Item")]
     [ApiController]
+    [Authorize]
     public class ItemApiController : ControllerBase
     {
         private readonly MSuiteContext _context;

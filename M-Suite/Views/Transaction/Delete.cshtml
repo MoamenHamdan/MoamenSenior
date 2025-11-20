@@ -1,8 +1,11 @@
 ﻿@model M_Suite.Models.Transaction
+@using M_Suite.Helpers
 
 @{
     ViewData["Title"] = "Delete Transaction";
+    var breadcrumbs = ViewHelper.CreateBreadcrumbs("Transaction", "Delete", Model.TsNumber);
 }
+@await Html.PartialAsync("_Breadcrumbs", breadcrumbs)
 
 <div class="container-fluid transaction-container">
     <div class="card shadow-lg">
@@ -47,7 +50,7 @@
                         <dd class="col-sm-8">@(Model.TsTss?.TssDescriptionLan1 ?? "N/A")</dd>
 
                         <dt class="col-sm-4">Total Amount:</dt>
-                        <dd class="col-sm-8">@Model.TsTotal.ToString("C")</dd>
+                        <dd class="col-sm-8">@FormatHelper.FormatCurrency(Model.TsTotal)</dd>
                     </dl>
                 </div>
             </div>
@@ -60,13 +63,13 @@
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-4">Total Discount:</dt>
-                        <dd class="col-sm-8">@Model.TsTotalDiscount.ToString("C")</dd>
+                        <dd class="col-sm-8">@FormatHelper.FormatCurrency(Model.TsTotalDiscount)</dd>
 
                         <dt class="col-sm-4">Total Tax:</dt>
-                        <dd class="col-sm-8">@(Model.TsTotalTax?.ToString("C") ?? "N/A")</dd>
+                        <dd class="col-sm-8">@FormatHelper.FormatCurrency(Model.TsTotalTax)</dd>
 
                         <dt class="col-sm-4">Final Amount:</dt>
-                        <dd class="col-sm-8">@(Model.TsTotalFinal?.ToString("C") ?? "N/A")</dd>
+                        <dd class="col-sm-8">@FormatHelper.FormatCurrency(Model.TsTotalFinal)</dd>
 
                         <dt class="col-sm-4">Currency:</dt>
                         <dd class="col-sm-8">@(Model.TsCdIdCurNavigation?.CdDescriptionLan1 ?? "N/A")</dd>
